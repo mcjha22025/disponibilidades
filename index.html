@@ -10,16 +10,20 @@
   <style>
     body { font-family: Arial; padding: 1rem; }
     table.dataTable thead th {
-      background: #007acc; color: white;
+      background: #007acc;
+      color: white;
     }
   </style>
 </head>
 <body>
   <h1>Disponibilidades (últimas 15 h)</h1>
-  <table id="tbl" class="display">
+  <table id="tbl" class="display" style="width:100%">
     <thead>
       <tr>
-        <th>Date</th><th>Time</th><th>Message</th>
+        <th>Aplicante</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Message</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -34,22 +38,35 @@
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const lines = text.trim().split('\n').slice(1);
+
+      // Si tu CSV está separado por comas, usa ','.
+      // Si está por tabulaciones, cambia a '\t'.
+      const delimiter = ',';
+
       lines.forEach(line => {
-        const [d,t,m] = line.split(',');
-        $('#tbl tbody').append(
-          `<tr><td>${d}</td><td>${t}</td><td>${m}</td></tr>`
-        );
+        const [aplicante, d, t, m] = line.split(delimiter);
+        $('#tbl tbody').append(`
+          <tr>
+            <td>${aplicante}</td>
+            <td>${d}</td>
+            <td>${t}</td>
+            <td>${m}</td>
+          </tr>
+        `);
       });
+
       $('#tbl').DataTable({
         responsive: true,
-        order: [[0,'desc'],[1,'desc']],
+        order: [[1, 'desc'], [2, 'desc']],
         language: {
           search: "Buscar:",
           lengthMenu: "Mostrar _MENU_",
           info: "Mostrando _START_–_END_ de _TOTAL_",
           paginate: {
-            first:"Primera", last:"Última",
-            next:"Sig.", previous:"Ant."
+            first: "Primera",
+            last: "Última",
+            next: "Sig.",
+            previous: "Ant."
           }
         }
       });
