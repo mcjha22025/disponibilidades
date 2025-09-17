@@ -8,10 +8,24 @@
     href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
   />
   <style>
-    body { font-family: Arial; padding: 1rem; }
+    body {
+      font-family: Arial;
+      padding: 1rem;
+    }
+
     table.dataTable thead th {
       background: #007acc;
       color: white;
+    }
+
+    /* Ajustes rápido para que label y select queden alineados */
+    #tbl_filter label {
+      display: inline-block;
+      margin-right: 1rem;
+    }
+
+    #tbl_filter select {
+      margin-right: 2rem;
     }
   </style>
 </head>
@@ -35,12 +49,10 @@
   ></script>
   <script>
     $(async () => {
+      // 1) Cargo CSV y populizo la tabla
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const lines = text.trim().split('\n').slice(1);
-
-      // Si tu CSV está separado por comas, usa ','.
-      // Si está por tabulaciones, cambia a '\t'.
       const delimiter = ',';
 
       lines.forEach(line => {
@@ -55,7 +67,9 @@
         `);
       });
 
-      $('#tbl').DataTable({
+      // 2) Inicializo DataTable
+      const table = $('#tbl').DataTable({
+        dom: 'ftrip',  // f = filter, t = table, r = processing, i = info, p = pagination
         responsive: true,
         order: [[1, 'desc'], [2, 'desc']],
         language: {
@@ -69,6 +83,29 @@
             previous: "Ant."
           }
         }
+      });
+
+      // 3) Construyo el dropdown de Aplicante y lo inserto junto al search
+      const filterLabel = $(`
+        <label>
+          Aplicante:
+          <select id="filter-aplicante">
+            <option value="">Todos</option>
+          </select>
+        </label>
+      `);
+      $('#tbl_filter').prepend(filterLabel);
+
+      // 4) Lleno opciones únicas y ordenadas
+      table.column(0).data().unique().sort().each(function(d) {
+        filterLabel.find('select').append(
+          `<option value="${d}">${d}</option>`
+        );
+      });
+
+      // 5) Al cambiar el dropdown, filtro la columna 0 y redibujo la tabla
+      filterLabel.find('select').on('change', function() {
+        table.column(0).search(this.value).draw();
       });
     });
   </script>
