@@ -15,38 +15,46 @@
       font-family: Arial, sans-serif;
       background: #f5f5f5;
     }
+
     header {
       display: flex;
       align-items: center;
       margin-bottom: 1.5rem;
     }
+
     #logo {
-      max-height: 60px;
+      max-height: 180px;    /* antes 60px; ahora 3× más grande */
       margin-right: 1rem;
     }
+
     header h1 {
       font-size: 1.75rem;
       color: #333;
       margin: 0;
     }
+
     table.dataTable thead th {
       background: #007acc;
       color: #fff;
     }
+
     #tbl_filter {
       display: flex;
       align-items: center;
       margin-bottom: 0.5rem;
     }
+
     #tbl_filter label {
       display: inline-flex;
       align-items: center;
       margin-right: 1.5rem;
       font-weight: 500;
     }
+
     #tbl_filter label span {
       margin-right: 0.5rem;
     }
+
     #tbl_filter select {
       padding: 0.2rem 0.5rem;
       font-size: 0.9rem;
@@ -55,7 +63,6 @@
 </head>
 <body>
   <header>
-    <!-- Asegúrate de que el archivo CJJ.png esté en este mismo folder -->
     <img src="CJJ.png" alt="CJJ Visas y Asesorías logo" id="logo" />
     <h1>Account Tracking & Availability Calendar</h1>
   </header>
@@ -79,6 +86,7 @@
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
+
       rows.forEach(line => {
         const [aplicante, d, t, m] = line.split(',');
         $('#tbl tbody').append(`
