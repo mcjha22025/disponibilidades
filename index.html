@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Disponibilidades</title>
+  <title>Account Tracking & Availability Calendar</title>
   <link
     rel="stylesheet"
     href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
@@ -13,12 +13,23 @@
       padding: 1rem;
     }
 
+    header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    #logo {
+      height: 50px;      /* ajusta al tamaño que prefieras */
+      margin-right: 1rem;
+    }
+
     table.dataTable thead th {
       background: #007acc;
       color: white;
     }
 
-    /* Ajustes rápido para que label y select queden alineados */
+    /* Alinea el label y el select junto al buscador */
     #tbl_filter label {
       display: inline-block;
       margin-right: 1rem;
@@ -30,7 +41,11 @@
   </style>
 </head>
 <body>
-  <h1>Disponibilidades (últimas 15 h)</h1>
+  <header>
+    <img src="CJJ.png" alt="Logo" id="logo" />
+    <h1>Account Tracking & Availability Calendar</h1>
+  </header>
+
   <table id="tbl" class="display" style="width:100%">
     <thead>
       <tr>
@@ -49,7 +64,7 @@
   ></script>
   <script>
     $(async () => {
-      // 1) Cargo CSV y populizo la tabla
+      // Cargo CSV y construyo filas
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const lines = text.trim().split('\n').slice(1);
@@ -67,9 +82,9 @@
         `);
       });
 
-      // 2) Inicializo DataTable
+      // Inicializo DataTable con filtro global
       const table = $('#tbl').DataTable({
-        dom: 'ftrip',  // f = filter, t = table, r = processing, i = info, p = pagination
+        dom: 'ftrip',
         responsive: true,
         order: [[1, 'desc'], [2, 'desc']],
         language: {
@@ -85,7 +100,7 @@
         }
       });
 
-      // 3) Construyo el dropdown de Aplicante y lo inserto junto al search
+      // Inserto dropdown de Aplicante junto al buscador
       const filterLabel = $(`
         <label>
           Aplicante:
@@ -96,14 +111,14 @@
       `);
       $('#tbl_filter').prepend(filterLabel);
 
-      // 4) Lleno opciones únicas y ordenadas
-      table.column(0).data().unique().sort().each(function(d) {
+      // Lleno el select con valores únicos
+      table.column(0).data().unique().sort().each(d => {
         filterLabel.find('select').append(
           `<option value="${d}">${d}</option>`
         );
       });
 
-      // 5) Al cambiar el dropdown, filtro la columna 0 y redibujo la tabla
+      // Al cambiar, filtro por Aplicante
       filterLabel.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
