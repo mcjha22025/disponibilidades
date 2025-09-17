@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Account Tracking & Availability Calendar</title>
   <link
     rel="stylesheet"
@@ -9,40 +10,62 @@
   />
   <style>
     body {
-      font-family: Arial;
+      margin: 0;
       padding: 1rem;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
     }
 
     header {
       display: flex;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     #logo {
-      height: 50px;      /* ajusta al tamaño que prefieras */
+      max-height: 60px;
       margin-right: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      color: #333;
+      margin: 0;
     }
 
     table.dataTable thead th {
       background: #007acc;
-      color: white;
+      color: #fff;
     }
 
-    /* Alinea el label y el select junto al buscador */
+    /* Estilos para el filtro de Aplicante junto al buscador */
+    #tbl_filter {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
     #tbl_filter label {
-      display: inline-block;
-      margin-right: 1rem;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 1.5rem;
+      font-weight: 500;
+    }
+
+    #tbl_filter label span {
+      margin-right: 0.5rem;
     }
 
     #tbl_filter select {
-      margin-right: 2rem;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="CII.png" alt="CJJ Visas y Asesorías Logo" id="logo" />
+    <!-- Logo en la carpeta web junto a index.html -->
+    <img src="CJJ.png" alt="CJJ Visas y Asesorías logo" id="logo" />
     <h1>Account Tracking & Availability Calendar</h1>
   </header>
 
@@ -64,7 +87,7 @@
   ></script>
   <script>
     $(async () => {
-      // 1) Cargo CSV y construyo filas
+      // 1) Cargo latest.csv y genero filas
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const lines = text.trim().split('\n').slice(1);
@@ -82,7 +105,7 @@
         `);
       });
 
-      // 2) Inicializo DataTable
+      // 2) Inicializo DataTable 
       const table = $('#tbl').DataTable({
         dom: 'ftrip',
         responsive: true,
@@ -100,26 +123,26 @@
         }
       });
 
-      // 3) Inserto dropdown de Aplicante junto al buscador
-      const filterLabel = $(`
+      // 3) Construyo y agrego el filtro de Aplicante
+      const filter = $(`
         <label>
-          Aplicante:
+          <span>Aplicante:</span>
           <select id="filter-aplicante">
             <option value="">Todos</option>
           </select>
         </label>
       `);
-      $('#tbl_filter').prepend(filterLabel);
+      $('#tbl_filter').prepend(filter);
 
-      // 4) Lleno el select con valores únicos
-      table.column(0).data().unique().sort().each(d => {
-        filterLabel.find('select').append(
-          `<option value="${d}">${d}</option>`
+      // 4) Relleno el select con valores únicos de la columna 0
+      table.column(0).data().unique().sort().each(val => {
+        filter.find('select').append(
+          `<option value="${val}">${val}</option>`
         );
       });
 
-      // 5) Al cambiar, filtro por Aplicante
-      filterLabel.find('select').on('change', function() {
+      // 5) Al cambiar el select, aplico el filtro
+      filter.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
     });
