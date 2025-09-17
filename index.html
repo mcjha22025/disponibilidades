@@ -23,7 +23,7 @@
     }
 
     #logo {
-      max-height: 180px;    /* antes 60px; ahora 3× más grande */
+      max-height: 180px; /* tamaño aumentado 3× */
       margin-right: 1rem;
     }
 
@@ -38,6 +38,7 @@
       color: #fff;
     }
 
+    /* Contenedor único para length + filtros */
     #tbl_filter {
       display: flex;
       align-items: center;
@@ -55,7 +56,8 @@
       margin-right: 0.5rem;
     }
 
-    #tbl_filter select {
+    #tbl_filter select,
+    #tbl_filter input {
       padding: 0.2rem 0.5rem;
       font-size: 0.9rem;
     }
@@ -83,6 +85,7 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     $(async () => {
+      // 1) Cargo latest.csv y construyo filas
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
@@ -99,10 +102,18 @@
         `);
       });
 
+      // 2) Inicializo DataTable con lengthMenu y rowCallback para resaltado
       const table = $('#tbl').DataTable({
-        dom: 'ftrip',
+        dom: 'lftrip',               // l = length, f = filter, t = table, r = processing, i = info, p = paging
         responsive: true,
         order: [[1, 'desc'], [2, 'desc']],
+        lengthMenu: [[20, 50, 100], [20, 50, 100]],
+        rowCallback: (row, data) => {
+          // si el texto de Message (columna índice 3) contiene "2025", pinto la fila
+          if (data[3].includes('2025')) {
+            $(row).css('background-color', '#fff9c4');
+          }
+        },
         language: {
           search: "Buscar:",
           lengthMenu: "Mostrar _MENU_",
@@ -116,20 +127,28 @@
         }
       });
 
-      const filter = $(`
-        <label><span>Aplicante:</span>
+      // 3) Muevo el selector de length dentro del contenedor de filtros
+      $('#tbl_length label').insertBefore('#tbl_filter label:first');
+      $('#tbl_length').remove();
+
+      // 4) Inserto filtro de Aplicante
+      const filterLabel = $(`
+        <label id="filter-aplicante-label">
+          <span>Aplicante:</span>
           <select id="filter-aplicante">
             <option value="">Todos</option>
           </select>
         </label>
       `);
-      $('#tbl_filter').prepend(filter);
+      $('#tbl_filter').append(filterLabel);
 
+      // 5) Lleno opciones únicas y aplico filtro al cambio
       table.column(0).data().unique().sort().each(val => {
-        filter.find('select').append(`<option value="${val}">${val}</option>`);
+        filterLabel.find('select').append(
+          `<option value="${val}">${val}</option>`
+        );
       });
-
-      filter.find('select').on('change', function() {
+      filterLabel.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
     });
