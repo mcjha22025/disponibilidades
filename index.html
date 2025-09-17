@@ -15,47 +15,38 @@
       font-family: Arial, sans-serif;
       background: #f5f5f5;
     }
-
     header {
       display: flex;
       align-items: center;
       margin-bottom: 1.5rem;
     }
-
     #logo {
       max-height: 60px;
       margin-right: 1rem;
     }
-
     header h1 {
       font-size: 1.75rem;
       color: #333;
       margin: 0;
     }
-
     table.dataTable thead th {
       background: #007acc;
       color: #fff;
     }
-
-    /* Estilos para el filtro de Aplicante junto al buscador */
     #tbl_filter {
       display: flex;
       align-items: center;
       margin-bottom: 0.5rem;
     }
-
     #tbl_filter label {
       display: inline-flex;
       align-items: center;
       margin-right: 1.5rem;
       font-weight: 500;
     }
-
     #tbl_filter label span {
       margin-right: 0.5rem;
     }
-
     #tbl_filter select {
       padding: 0.2rem 0.5rem;
       font-size: 0.9rem;
@@ -64,7 +55,7 @@
 </head>
 <body>
   <header>
-    <!-- Logo en la carpeta web junto a index.html -->
+    <!-- Asegúrate de que el archivo CJJ.png esté en este mismo folder -->
     <img src="CJJ.png" alt="CJJ Visas y Asesorías logo" id="logo" />
     <h1>Account Tracking & Availability Calendar</h1>
   </header>
@@ -82,19 +73,14 @@
   </table>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script
-    src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"
-  ></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     $(async () => {
-      // 1) Cargo latest.csv y genero filas
       const resp = await fetch('latest.csv');
       const text = await resp.text();
-      const lines = text.trim().split('\n').slice(1);
-      const delimiter = ',';
-
-      lines.forEach(line => {
-        const [aplicante, d, t, m] = line.split(delimiter);
+      const rows = text.trim().split('\n').slice(1);
+      rows.forEach(line => {
+        const [aplicante, d, t, m] = line.split(',');
         $('#tbl tbody').append(`
           <tr>
             <td>${aplicante}</td>
@@ -105,7 +91,6 @@
         `);
       });
 
-      // 2) Inicializo DataTable 
       const table = $('#tbl').DataTable({
         dom: 'ftrip',
         responsive: true,
@@ -123,10 +108,8 @@
         }
       });
 
-      // 3) Construyo y agrego el filtro de Aplicante
       const filter = $(`
-        <label>
-          <span>Aplicante:</span>
+        <label><span>Aplicante:</span>
           <select id="filter-aplicante">
             <option value="">Todos</option>
           </select>
@@ -134,14 +117,10 @@
       `);
       $('#tbl_filter').prepend(filter);
 
-      // 4) Relleno el select con valores únicos de la columna 0
       table.column(0).data().unique().sort().each(val => {
-        filter.find('select').append(
-          `<option value="${val}">${val}</option>`
-        );
+        filter.find('select').append(`<option value="${val}">${val}</option>`);
       });
 
-      // 5) Al cambiar el select, aplico el filtro
       filter.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
