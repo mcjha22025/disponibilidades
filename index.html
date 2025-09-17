@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Account Tracking & Availability Calendar</title>
   <link
     rel="stylesheet"
@@ -23,7 +23,7 @@
     }
 
     #logo {
-      max-height: 180px; /* tamaño aumentado 3× */
+      max-height: 180px;
       margin-right: 1rem;
     }
 
@@ -33,41 +33,44 @@
       margin: 0;
     }
 
-    table.dataTable thead th {
-      background: #007acc;
-      color: #fff;
-    }
-
-    /* Contenedor único para length + filtros */
-    #tbl_filter {
+    /* Controles encima de la tabla */
+    #controls {
       display: flex;
       align-items: center;
-      margin-bottom: 0.5rem;
+      gap: 1rem;
+      margin-bottom: 1rem;
     }
 
-    #tbl_filter label {
+    #controls label {
       display: inline-flex;
       align-items: center;
-      margin-right: 1.5rem;
       font-weight: 500;
     }
 
-    #tbl_filter label span {
+    #controls label span {
       margin-right: 0.5rem;
     }
 
-    #tbl_filter select,
-    #tbl_filter input {
+    #controls select {
       padding: 0.2rem 0.5rem;
       font-size: 0.9rem;
+    }
+
+    table.dataTable thead th {
+      background: #007acc;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="CJJ.png" alt="CJJ Visas y Asesorías logo" id="logo" />
+    <img src="CJJ.png" alt="CJJ Visas y Asesorías logo" id="logo"/>
     <h1>Account Tracking & Availability Calendar</h1>
   </header>
+
+  <div id="controls">
+    <!-- Aquí iremos inyectando Availability, Mostrar, Aplicante y Buscar -->
+  </div>
 
   <table id="tbl" class="display" style="width:100%">
     <thead>
@@ -85,11 +88,12 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     $(async () => {
-      // 1) Cargo latest.csv y construyo filas
+      // 1) Cargo el CSV
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
 
+      // 2) Lleno la tabla
       rows.forEach(line => {
         const [aplicante, d, t, m] = line.split(',');
         $('#tbl tbody').append(`
@@ -102,14 +106,29 @@
         `);
       });
 
-      // 2) Inicializo DataTable con lengthMenu y rowCallback para resaltado
+      // 3) Configuro la lógica de Availability con DataTables ext.search
+      $.fn.dataTable.ext.search.push((settings, data) => {
+        const availVal = $('#filter-availability').val();
+        if (!availVal) return true;
+        // si el mensaje incluye el valor (por ejemplo "2025")
+        return data[3].includes(availVal);
+      });
+
+      // 4) Calculo dinámicamente las opciones de "Mostrar"
+      const total = rows.length;
+      const maxLen = Math.ceil(total / 10) * 10;
+      const lengthOpts = [];
+      for (let i = 10; i <= maxLen; i += 10) lengthOpts.push(i);
+
+      // 5) Inicializo DataTable
       const table = $('#tbl').DataTable({
-        dom: 'lftrip',               // l = length, f = filter, t = table, r = processing, i = info, p = paging
+        dom: 'lfrtip',
         responsive: true,
         order: [[1, 'desc'], [2, 'desc']],
-        lengthMenu: [[20, 50, 100], [20, 50, 100]],
+        lengthMenu: [lengthOpts, lengthOpts],
+        pageLength: lengthOpts[0],
         rowCallback: (row, data) => {
-          // si el texto de Message (columna índice 3) contiene "2025", pinto la fila
+          // resalto toda la fila si el mensaje contiene "2025"
           if (data[3].includes('2025')) {
             $(row).css('background-color', '#fff9c4');
           }
@@ -127,12 +146,17 @@
         }
       });
 
-      // 3) Muevo el selector de length dentro del contenedor de filtros
-      $('#tbl_length label').insertBefore('#tbl_filter label:first');
-      $('#tbl_length').remove();
-
-      // 4) Inserto filtro de Aplicante
-      const filterLabel = $(`
+      // 6) Construyo y agrego filtros
+      const availFilter = $(`
+        <label id="filter-availability-label">
+          <span>Availability:</span>
+          <select id="filter-availability">
+            <option value="">Todos</option>
+            <option value="2025">2025</option>
+          </select>
+        </label>
+      `);
+      const aplicFilter = $(`
         <label id="filter-aplicante-label">
           <span>Aplicante:</span>
           <select id="filter-aplicante">
@@ -140,17 +164,26 @@
           </select>
         </label>
       `);
-      $('#tbl_filter').append(filterLabel);
 
-      // 5) Lleno opciones únicas y aplico filtro al cambio
+      // lleno aplicantes
       table.column(0).data().unique().sort().each(val => {
-        filterLabel.find('select').append(
+        aplicFilter.find('select').append(
           `<option value="${val}">${val}</option>`
         );
       });
-      filterLabel.find('select').on('change', function() {
+
+      // dispara redraw al cambiar filtros
+      availFilter.find('select').on('change', () => table.draw());
+      aplicFilter.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
+
+      // 7) Muevo los controles al contenedor en el orden deseado
+      const ctr = $('#controls');
+      availFilter.appendTo(ctr);
+      $('#tbl_length').appendTo(ctr);
+      aplicFilter.appendTo(ctr);
+      $('#tbl_filter').appendTo(ctr);
     });
   </script>
 </body>
