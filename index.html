@@ -42,7 +42,7 @@
 </head>
 <body>
   <header>
-    <img src="CJJ.png" alt="Logo" id="logo" />
+    <img src="CII.png" alt="CJJ Visas y Asesorías Logo" id="logo" />
     <h1>Account Tracking & Availability Calendar</h1>
   </header>
 
@@ -64,7 +64,7 @@
   ></script>
   <script>
     $(async () => {
-      // Cargo CSV y construyo filas
+      // 1) Cargo CSV y construyo filas
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const lines = text.trim().split('\n').slice(1);
@@ -82,7 +82,7 @@
         `);
       });
 
-      // Inicializo DataTable con filtro global
+      // 2) Inicializo DataTable
       const table = $('#tbl').DataTable({
         dom: 'ftrip',
         responsive: true,
@@ -100,7 +100,7 @@
         }
       });
 
-      // Inserto dropdown de Aplicante junto al buscador
+      // 3) Inserto dropdown de Aplicante junto al buscador
       const filterLabel = $(`
         <label>
           Aplicante:
@@ -111,14 +111,14 @@
       `);
       $('#tbl_filter').prepend(filterLabel);
 
-      // Lleno el select con valores únicos
+      // 4) Lleno el select con valores únicos
       table.column(0).data().unique().sort().each(d => {
         filterLabel.find('select').append(
           `<option value="${d}">${d}</option>`
         );
       });
 
-      // Al cambiar, filtro por Aplicante
+      // 5) Al cambiar, filtro por Aplicante
       filterLabel.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
