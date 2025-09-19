@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -33,7 +33,7 @@
       margin: 0;
     }
 
-    /* Controles encima de la tabla */
+    /* Controls panel */
     #controls {
       display: flex;
       align-items: center;
@@ -62,22 +62,28 @@
       background: #007acc;
       color: #fff;
     }
+
+    /* Alternate stripe for non-special rows */
+    table.dataTable.display.stripe tbody tr.odd {
+      background-color: #ffffff;
+    }
+    table.dataTable.display.stripe tbody tr.even {
+      background-color: #f5f5f5;
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="CJJ.png" alt="CJJ Visas y Asesorías logo" id="logo"/>
+    <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo"/>
     <h1>Account Tracking & Availability Calendar</h1>
   </header>
 
-  <div id="controls">
-    <!-- Availability filter, page length, applicant filter, search, refresh go here -->
-  </div>
+  <div id="controls"></div>
 
-  <table id="tbl" class="display" style="width:100%">
+  <table id="tbl" class="display stripe" style="width:100%">
     <thead>
       <tr>
-        <th>Aplicante</th>
+        <th>Applicant</th>
         <th>Date</th>
         <th>Time</th>
         <th>Message</th>
@@ -90,17 +96,17 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     $(async () => {
-      // 1) Cargo el CSV
+      // 1) Load the CSV
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
 
-      // 2) Lleno la tabla
+      // 2) Populate table body
       rows.forEach(line => {
-        const [aplicante, d, t, m] = line.split(',');
+        const [applicant, d, t, m] = line.split(',');
         $('#tbl tbody').append(`
           <tr>
-            <td>${aplicante}</td>
+            <td>${applicant}</td>
             <td>${d}</td>
             <td>${t}</td>
             <td>${m}</td>
@@ -108,7 +114,7 @@
         `);
       });
 
-      // 3) Busco todas las fechas year-month en los mensajes
+      // 3) Extract availability year-month options
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
       rows.forEach(line => {
@@ -127,7 +133,7 @@
       });
       const availOpts = Array.from(availSet).sort().reverse();
 
-      // 4) Configuro la lógica de Availability con DataTables ext.search
+      // 4) Availability filter logic
       $.fn.dataTable.ext.search.push((settings, data) => {
         const availVal = $('#filter-availability').val();
         if (!availVal) return true;
@@ -136,13 +142,13 @@
         return data[3].includes(`${year}-${monNum}-`);
       });
 
-      // 5) Calculo dinámicamente las opciones de "Mostrar"
+      // 5) Page length options
       const total = rows.length;
       const maxLen = Math.ceil(total / 10) * 10;
       const lengthOpts = [];
       for (let i = 10; i <= maxLen; i += 10) lengthOpts.push(i);
 
-      // 6) Inicializo DataTable
+      // 6) Initialize DataTable
       const table = $('#tbl').DataTable({
         dom: 'lfrtip',
         responsive: true,
@@ -164,49 +170,47 @@
           }
         },
         language: {
-          search: "Buscar:",
-          lengthMenu: "Mostrar _MENU_",
-          info: "Mostrando _START_–_END_ de _TOTAL_",
+          search: "Search:",
+          lengthMenu: "Show _MENU_",
+          info: "Showing _START_–_END_ of _TOTAL_",
           paginate: {
-            first: "Primera",
-            last: "Última",
-            next: "Sig.",
-            previous: "Ant."
+            first: "First",
+            last: "Last",
+            next: "Next",
+            previous: "Prev"
           }
         }
       });
 
-      // 7) Construyo y agrego filtros
+      // 7) Build and attach filters
       const availFilter = $(`
         <label id="filter-availability-label">
           <span>Availability:</span>
           <select id="filter-availability">
-            <option value="">Todos</option>
+            <option value="">All</option>
             ${availOpts.map(v => `<option value="${v}">${v}</option>`).join('')}
           </select>
         </label>
       `);
 
-      const aplicFilter = $(`
-        <label id="filter-aplicante-label">
-          <span>Aplicante:</span>
-          <select id="filter-aplicante">
-            <option value="">Todos</option>
+      const applicantFilter = $(`
+        <label id="filter-applicant-label">
+          <span>Applicant:</span>
+          <select id="filter-applicant">
+            <option value="">All</option>
           </select>
         </label>
       `);
       table.column(0).data().unique().sort().each(val => {
-        aplicFilter.find('select').append(
-          `<option value="${val}">${val}</option>`
-        );
+        applicantFilter.find('select').append(`<option value="${val}">${val}</option>`);
       });
 
       availFilter.find('select').on('change', () => table.draw());
-      aplicFilter.find('select').on('change', function() {
+      applicantFilter.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
 
-      // 8) Agrego control de refresh automático / manual
+      // 8) Refresh controls with persistence
       const refreshControl = $(`
         <label id="refresh-label">
           <span>Refresh:</span>
@@ -217,30 +221,36 @@
             <option value="30">30s</option>
             <option value="60">60s</option>
           </select>
-          <button id="refresh-now">Ahora</button>
+          <button id="refresh-now">Now</button>
         </label>
       `);
+
       let refreshTimer;
       function setRefreshInterval(sec) {
         clearInterval(refreshTimer);
         const i = parseInt(sec, 10);
         if (!isNaN(i)) {
+          localStorage.setItem('refresh-interval', i);
           refreshTimer = setInterval(() => location.reload(), i * 1000);
         }
       }
+
       refreshControl.find('#refresh-interval').on('change', function() {
         setRefreshInterval(this.value);
       });
-      refreshControl.find('#refresh-now').on('click', () => location.reload());
-      // inicia en auto 5s
-      refreshControl.find('#refresh-interval').val('5');
-      setRefreshInterval('5');
 
-      // 9) Muevo los controles al contenedor en el orden deseado
+      refreshControl.find('#refresh-now').on('click', () => location.reload());
+
+      // On load: restore saved interval or default to 5
+      const saved = localStorage.getItem('refresh-interval') || '5';
+      refreshControl.find('#refresh-interval').val(saved);
+      setRefreshInterval(saved);
+
+      // 9) Append controls in order
       const ctr = $('#controls');
       availFilter.appendTo(ctr);
       $('#tbl_length').appendTo(ctr);
-      aplicFilter.appendTo(ctr);
+      applicantFilter.appendTo(ctr);
       $('#tbl_filter').appendTo(ctr);
       refreshControl.appendTo(ctr);
     });
