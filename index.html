@@ -130,19 +130,17 @@
       });
       const availOpts = Array.from(availSet).sort().reverse();
 
-      // 4) Multi‐select filter logic (availability & applicant)
+      // 4) Multi-select & cascading filter logic
       $.fn.dataTable.ext.search.push((settings, data) => {
-        // data[0] = applicant, data[3] = message
-        // get only real selections (exclude empty “All”)
-        const selApps  = ($('#filter-applicant').val()  || []).filter(v => v);
-        const selAvail = ($('#filter-availability').val() || []).filter(v => v);
+        const selApps  = $('#filter-applicant').val()  || [];
+        const selAvail = $('#filter-availability').val() || [];
 
-        // if applicant(s) selected, row must match one
+        // Applicant filtering
         if (selApps.length && !selApps.includes(data[0])) {
           return false;
         }
 
-        // if availability period(s) selected, row must match at least one
+        // Availability filtering
         if (selAvail.length) {
           const ok = selAvail.some(v => {
             const [year, abbr] = v.split('-');
@@ -155,7 +153,7 @@
         return true;
       });
 
-      // 5) Page‐length options
+      // 5) Page-length options
       const total  = rows.length;
       const maxLen = Math.ceil(total / 10) * 10;
       const lengthOpts = [];
@@ -169,9 +167,9 @@
         lengthMenu: [lengthOpts, lengthOpts],
         pageLength: lengthOpts[0],
         rowCallback: (row, data) => {
-          const m = data[3].match(/\b(\d{4})-(\d{2})-\d{2}\b/);
-          if (m) {
-            const year = m[1], mon = parseInt(m[2], 10);
+          const dateMatch = data[3].match(/\b(\d{4})-(\d{2})-\d{2}\b/);
+          if (dateMatch) {
+            const year = dateMatch[1], mon = parseInt(dateMatch[2], 10);
             if (year === "2025") {
               $(row).css('background-color', '#fff9c4');
             } else if (year === "2026" && mon <= 4) {
@@ -192,11 +190,11 @@
         }
       });
 
-      // 7) Build and attach multi‐select filters
+      // 7) Build and attach multi-select filters
       const availFilter = $(`
         <label id="filter-availability-label">
           <span>Availability:</span>
-          <select id="filter-availability" multiple size="${Math.min(availOpts.length, 5)}">
+          <select id="filter-availability" multiple>
             <option value="">All</option>
             ${availOpts.map(v => `<option value="${v}">${v}</option>`).join('')}
           </select>
@@ -206,21 +204,47 @@
       const applicantFilter = $(`
         <label id="filter-applicant-label">
           <span>Applicant:</span>
-          <select id="filter-applicant" multiple size="${Math.min(table.column(0).data().unique().length, 5)}">
+          <select id="filter-applicant" multiple>
             <option value="">All</option>
           </select>
         </label>
       `);
-
       table.column(0).data().unique().sort().each(val => {
         applicantFilter.find('select').append(`<option value="${val}">${val}</option>`);
       });
 
-      // 8) Bind filter change to redraw
-      availFilter.find('select').on('change',  () => table.draw());
+      // 8) Cascading: availability → applicant
+      availFilter.find('select').on('change', () => {
+        const sel = $('#filter-availability').val() || [];
+        const validApps = new Set();
+        rows.forEach(line => {
+          const [app, , , msg] = line.split(',');
+          if (!sel.length) validApps.add(app);
+          else {
+            if (sel.some(v => {
+              const [year, abbr] = v.split('-');
+              const num = ('0' + (monthNames.indexOf(abbr) + 1)).slice(-2);
+              return msg.includes(`${year}-${num}-`);
+            })) {
+              validApps.add(app);
+            }
+          }
+        });
+        const $app = $('#filter-applicant');
+        const prev = $app.val() || [];
+        $app.empty().append('<option value="">All</option>');
+        Array.from(validApps).sort().forEach(a => {
+          $app.append(`<option value="${a}">${a}</option>`);
+        });
+        // restore any previously selected that remain valid
+        $app.val(prev.filter(v => validApps.has(v)));
+        table.draw();
+      });
+
+      // 9) Applicant change → redraw
       applicantFilter.find('select').on('change', () => table.draw());
 
-      // 9) Append controls in original order
+      // 10) Append controls in original order
       const ctr = $('#controls');
       availFilter.appendTo(ctr);
       $('#tbl_length').appendTo(ctr);
