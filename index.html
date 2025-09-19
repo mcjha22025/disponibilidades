@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -14,26 +14,23 @@
       font-family: Arial, sans-serif;
       background: #f5f5f5;
     }
-
     header {
       display: flex;
-      justify-content: center;
+      align-items: center;
       margin-bottom: 1.5rem;
     }
-
     #logo {
       max-height: 180px;
+      margin-right: 1rem;
     }
-
-    /* Panel de controles */
+    /* Controls panel */
     #controls {
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 1rem;
       margin-bottom: 1rem;
-      align-items: center;
+      flex-wrap: wrap;
     }
-
     #controls label {
       display: inline-flex;
       align-items: center;
@@ -50,40 +47,34 @@
       border-radius: 3px;
       color: #fff;
     }
-
-    /* Estilos de la tabla */
     table.dataTable thead th {
       background: #007acc;
       color: #fff;
     }
     table.dataTable.display.stripe tbody tr.odd {
-      background-color: #fff;
+      background-color: #ffffff;
     }
     table.dataTable.display.stripe tbody tr.even {
       background-color: #f5f5f5;
     }
-
-    /* Botón “Now” */
     #refresh-now {
-      background: #d32f2f;
+      background-color: #d32f2f;
       cursor: pointer;
     }
     #refresh-now:hover {
-      background: #b71c1c;
+      background-color: #b71c1c;
     }
-
-    /* Select de intervalos */
     #refresh-interval {
-      background: #1976d2;
+      background-color: #1976d2;
     }
     #refresh-interval:hover {
-      background: #115293;
+      background-color: #115293;
     }
   </style>
 </head>
 <body>
   <header>
-    <!-- Solo el banner que me enviaste (CJJ.png) -->
+    <!-- Sólo el banner / logo, sin texto extra en HTML -->
     <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo"/>
   </header>
 
@@ -105,14 +96,12 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     $(async () => {
-      // 1) Leer CSV
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
 
-      // 2) Renderizar filas
       rows.forEach(line => {
-        const [applicant,d,t,m] = line.split(',');
+        const [applicant, d, t, m] = line.split(',');
         $('#tbl tbody').append(\`
           <tr>
             <td>\${applicant}</td>
@@ -122,7 +111,6 @@
           </tr>\`);
       });
 
-      // 3) Calcular opciones de availability
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
       rows.forEach(line => {
@@ -130,8 +118,7 @@
         const re = /\\b(\\d{4})-(\\d{2})-\\d{2}\\b/g;
         let m;
         while ((m = re.exec(msg)) !== null) {
-          const [,,mm] = m;
-          const year = m[1], mon = parseInt(mm,10);
+          const year = m[1], mon = parseInt(m[2],10);
           if (year==="2025" || (year==="2026" && mon<=4)) {
             availSet.add(\`\${year}-\${monthNames[mon-1]}\`);
           }
@@ -139,27 +126,24 @@
       });
       const availOpts = Array.from(availSet).sort().reverse();
 
-      // 4) Filtro availability
       $.fn.dataTable.ext.search.push((_, data) => {
         const sel = $('#filter-availability').val();
         if (!sel) return true;
-        const [year,abbr] = sel.split('-');
+        const [year, abbr] = sel.split('-');
         const num = ('0' + (monthNames.indexOf(abbr)+1)).slice(-2);
         return data[3].includes(\`\${year}-\${num}-\`);
       });
 
-      // 5) Length menu
       const total = rows.length;
       const maxLen = Math.ceil(total/10)*10;
       const lengthOpts = [];
       for (let i=10; i<=maxLen; i+=10) lengthOpts.push(i);
 
-      // 6) Iniciar DataTable
       const table = $('#tbl').DataTable({
         dom: 'lfrtip',
         responsive: true,
         order: [[1,'desc'],[2,'desc']],
-        lengthMenu: [lengthOpts, lengthOpts],
+        lengthMenu: [lengthOpts,lengthOpts],
         pageLength: lengthOpts[0],
         rowCallback: (row,data) => {
           const msg = data[3];
@@ -167,7 +151,7 @@
           if (m) {
             const year=m[1], mon=parseInt(m[2],10);
             if (year==="2025") $(row).css('background-color','#fff9c4');
-            else if (year==="2026"&&mon<=4) $(row).css('background-color','#ffe0b2');
+            else if (year==="2026" && mon<=4) $(row).css('background-color','#ffe0b2');
           }
         },
         language: {
@@ -178,31 +162,27 @@
         }
       });
 
-      // 7) Construir filtros
       const availFilter = $(\`
         <label><span>Availability:</span>
           <select id="filter-availability">
             <option value="">All</option>
-            \${availOpts.map(v=>\`<option>\${v}</option>\`).join('')}
+            \${availOpts.map(v=>\`<option value="\${v}">\${v}</option>\`).join('')}
           </select>
         </label>\`);
-
       const applicantFilter = $(\`
         <label><span>Applicant:</span>
           <select id="filter-applicant">
             <option value="">All</option>
           </select>
         </label>\`);
-      table.column(0).data().unique().sort().each(val=>{
-        applicantFilter.find('select').append(\`<option>\${val}</option>\`);
+      table.column(0).data().unique().sort().each(val => {
+        applicantFilter.find('select').append(\`<option value="\${val}">\${val}</option>\`);
       });
-
-      availFilter.find('select').on('change',()=>table.draw());
-      applicantFilter.find('select').on('change',function(){
+      availFilter.find('select').on('change', ()=> table.draw());
+      applicantFilter.find('select').on('change', function(){
         table.column(0).search(this.value).draw();
       });
 
-      // 8) Refresh con Stop por defecto
       const refreshControl = $(\`
         <label><span>Refresh:</span>
           <select id="refresh-interval">
@@ -215,24 +195,21 @@
           </select>
           <button id="refresh-now">Now</button>
         </label>\`);
-
       let timer;
       function setRefresh(val){
         clearInterval(timer);
-        localStorage.setItem('refresh-interval', val);
+        localStorage.setItem('refresh-interval',val);
         const s = parseInt(val,10);
         if (s>0) timer = setInterval(()=>location.reload(), s*1000);
       }
-      refreshControl.find('#refresh-interval').on('change', function(){
+      refreshControl.find('#refresh-interval').on('change',function(){
         setRefresh(this.value);
       });
-      refreshControl.find('#refresh-now').on('click', ()=>location.reload());
-
-      const saved = localStorage.getItem('refresh-interval')||'0';
+      refreshControl.find('#refresh-now').on('click',()=>location.reload());
+      const saved = localStorage.getItem('refresh-interval') || '0';
       refreshControl.find('#refresh-interval').val(saved);
       setRefresh(saved);
 
-      // 9) Inyectar controles
       const ctr = $('#controls');
       availFilter.appendTo(ctr);
       $('#tbl_length').appendTo(ctr);
