@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Account Tracking & Availability Calendar</title>
   <link
     rel="stylesheet"
     href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
@@ -14,15 +15,24 @@
       font-family: Arial, sans-serif;
       background: #f5f5f5;
     }
+
     header {
       display: flex;
       align-items: center;
       margin-bottom: 1.5rem;
     }
+
     #logo {
       max-height: 180px;
       margin-right: 1rem;
     }
+
+    header h1 {
+      font-size: 1.75rem;
+      color: #333;
+      margin: 0;
+    }
+
     /* Controls panel */
     #controls {
       display: flex;
@@ -31,51 +41,41 @@
       margin-bottom: 1rem;
       flex-wrap: wrap;
     }
+
     #controls label {
       display: inline-flex;
       align-items: center;
       font-weight: 500;
     }
+
     #controls label span {
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
+
     #controls select,
     #controls button {
-      padding: .2rem .5rem;
-      font-size: .9rem;
-      border: none;
-      border-radius: 3px;
-      color: #fff;
+      padding: 0.2rem 0.5rem;
+      font-size: 0.9rem;
     }
+
     table.dataTable thead th {
       background: #007acc;
       color: #fff;
     }
+
+    /* Alternate stripe for non-special rows */
     table.dataTable.display.stripe tbody tr.odd {
       background-color: #ffffff;
     }
     table.dataTable.display.stripe tbody tr.even {
       background-color: #f5f5f5;
     }
-    #refresh-now {
-      background-color: #d32f2f;
-      cursor: pointer;
-    }
-    #refresh-now:hover {
-      background-color: #b71c1c;
-    }
-    #refresh-interval {
-      background-color: #1976d2;
-    }
-    #refresh-interval:hover {
-      background-color: #115293;
-    }
   </style>
 </head>
 <body>
   <header>
-    <!-- Sólo el banner / logo, sin texto extra en HTML -->
     <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo"/>
+    <h1>Account Tracking & Availability Calendar</h1>
   </header>
 
   <div id="controls"></div>
@@ -96,97 +96,125 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     $(async () => {
+      // 1) Load the CSV
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
 
+      // 2) Populate table body
       rows.forEach(line => {
         const [applicant, d, t, m] = line.split(',');
-        $('#tbl tbody').append(\`
+        $('#tbl tbody').append(`
           <tr>
-            <td>\${applicant}</td>
-            <td>\${d}</td>
-            <td>\${t}</td>
-            <td>\${m}</td>
-          </tr>\`);
+            <td>${applicant}</td>
+            <td>${d}</td>
+            <td>${t}</td>
+            <td>${m}</td>
+          </tr>
+        `);
       });
 
+      // 3) Extract availability year-month options
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
       rows.forEach(line => {
         const msg = line.split(',')[3];
-        const re = /\\b(\\d{4})-(\\d{2})-\\d{2}\\b/g;
-        let m;
-        while ((m = re.exec(msg)) !== null) {
-          const year = m[1], mon = parseInt(m[2],10);
-          if (year==="2025" || (year==="2026" && mon<=4)) {
-            availSet.add(\`\${year}-\${monthNames[mon-1]}\`);
+        const re = /\b(\d{4})-(\d{2})-\d{2}\b/g;
+        let match;
+        while ((match = re.exec(msg)) !== null) {
+          const year = match[1], mon = parseInt(match[2],10);
+          if (year === "2025") {
+            availSet.add(`${year}-${monthNames[mon-1]}`);
+          }
+          if (year === "2026" && mon <= 4) {
+            availSet.add(`${year}-${monthNames[mon-1]}`);
           }
         }
       });
       const availOpts = Array.from(availSet).sort().reverse();
 
-      $.fn.dataTable.ext.search.push((_, data) => {
-        const sel = $('#filter-availability').val();
-        if (!sel) return true;
-        const [year, abbr] = sel.split('-');
-        const num = ('0' + (monthNames.indexOf(abbr)+1)).slice(-2);
-        return data[3].includes(\`\${year}-\${num}-\`);
+      // 4) Availability filter logic
+      $.fn.dataTable.ext.search.push((settings, data) => {
+        const availVal = $('#filter-availability').val();
+        if (!availVal) return true;
+        const [year, monAbbr] = availVal.split('-');
+        const monNum = ('0' + (monthNames.indexOf(monAbbr) + 1)).slice(-2);
+        return data[3].includes(`${year}-${monNum}-`);
       });
 
+      // 5) Page length options
       const total = rows.length;
-      const maxLen = Math.ceil(total/10)*10;
+      const maxLen = Math.ceil(total / 10) * 10;
       const lengthOpts = [];
-      for (let i=10; i<=maxLen; i+=10) lengthOpts.push(i);
+      for (let i = 10; i <= maxLen; i += 10) lengthOpts.push(i);
 
+      // 6) Initialize DataTable
       const table = $('#tbl').DataTable({
         dom: 'lfrtip',
         responsive: true,
-        order: [[1,'desc'],[2,'desc']],
-        lengthMenu: [lengthOpts,lengthOpts],
+        order: [[1, 'desc'], [2, 'desc']],
+        lengthMenu: [lengthOpts, lengthOpts],
         pageLength: lengthOpts[0],
-        rowCallback: (row,data) => {
+        rowCallback: (row, data) => {
           const msg = data[3];
-          const m = msg.match(/\\b(\\d{4})-(\\d{2})-\\d{2}\\b/);
-          if (m) {
-            const year=m[1], mon=parseInt(m[2],10);
-            if (year==="2025") $(row).css('background-color','#fff9c4');
-            else if (year==="2026" && mon<=4) $(row).css('background-color','#ffe0b2');
+          const dateMatch = msg.match(/\b(\d{4})-(\d{2})-\d{2}\b/);
+          if (dateMatch) {
+            const year = dateMatch[1];
+            const mon = parseInt(dateMatch[2],10);
+            if (year === "2025") {
+              $(row).css('background-color', '#fff9c4');
+            }
+            else if (year === "2026" && mon <= 4) {
+              $(row).css('background-color', '#ffe0b2');
+            }
           }
         },
         language: {
           search: "Search:",
           lengthMenu: "Show _MENU_",
           info: "Showing _START_–_END_ of _TOTAL_",
-          paginate: { first:"First", last:"Last", next:"Next", previous:"Prev" }
+          paginate: {
+            first: "First",
+            last: "Last",
+            next: "Next",
+            previous: "Prev"
+          }
         }
       });
 
-      const availFilter = $(\`
-        <label><span>Availability:</span>
+      // 7) Build and attach filters
+      const availFilter = $(`
+        <label id="filter-availability-label">
+          <span>Availability:</span>
           <select id="filter-availability">
             <option value="">All</option>
-            \${availOpts.map(v=>\`<option value="\${v}">\${v}</option>\`).join('')}
+            ${availOpts.map(v => `<option value="${v}">${v}</option>`).join('')}
           </select>
-        </label>\`);
-      const applicantFilter = $(\`
-        <label><span>Applicant:</span>
+        </label>
+      `);
+
+      const applicantFilter = $(`
+        <label id="filter-applicant-label">
+          <span>Applicant:</span>
           <select id="filter-applicant">
             <option value="">All</option>
           </select>
-        </label>\`);
+        </label>
+      `);
       table.column(0).data().unique().sort().each(val => {
-        applicantFilter.find('select').append(\`<option value="\${val}">\${val}</option>\`);
+        applicantFilter.find('select').append(`<option value="${val}">${val}</option>`);
       });
-      availFilter.find('select').on('change', ()=> table.draw());
-      applicantFilter.find('select').on('change', function(){
+
+      availFilter.find('select').on('change', () => table.draw());
+      applicantFilter.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
 
-      const refreshControl = $(\`
-        <label><span>Refresh:</span>
+      // 8) Refresh controls with persistence
+      const refreshControl = $(`
+        <label id="refresh-label">
+          <span>Refresh:</span>
           <select id="refresh-interval">
-            <option value="0">Stop</option>
             <option value="5">Auto (5s)</option>
             <option value="10">10s</option>
             <option value="20">20s</option>
@@ -194,22 +222,31 @@
             <option value="60">60s</option>
           </select>
           <button id="refresh-now">Now</button>
-        </label>\`);
-      let timer;
-      function setRefresh(val){
-        clearInterval(timer);
-        localStorage.setItem('refresh-interval',val);
-        const s = parseInt(val,10);
-        if (s>0) timer = setInterval(()=>location.reload(), s*1000);
-      }
-      refreshControl.find('#refresh-interval').on('change',function(){
-        setRefresh(this.value);
-      });
-      refreshControl.find('#refresh-now').on('click',()=>location.reload());
-      const saved = localStorage.getItem('refresh-interval') || '0';
-      refreshControl.find('#refresh-interval').val(saved);
-      setRefresh(saved);
+        </label>
+      `);
 
+      let refreshTimer;
+      function setRefreshInterval(sec) {
+        clearInterval(refreshTimer);
+        const i = parseInt(sec, 10);
+        if (!isNaN(i)) {
+          localStorage.setItem('refresh-interval', i);
+          refreshTimer = setInterval(() => location.reload(), i * 1000);
+        }
+      }
+
+      refreshControl.find('#refresh-interval').on('change', function() {
+        setRefreshInterval(this.value);
+      });
+
+      refreshControl.find('#refresh-now').on('click', () => location.reload());
+
+      // On load: restore saved interval or default to 5
+      const saved = localStorage.getItem('refresh-interval') || '5';
+      refreshControl.find('#refresh-interval').val(saved);
+      setRefreshInterval(saved);
+
+      // 9) Append controls in order
       const ctr = $('#controls');
       availFilter.appendTo(ctr);
       $('#tbl_length').appendTo(ctr);
