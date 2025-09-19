@@ -39,6 +39,7 @@
       align-items: center;
       gap: 1rem;
       margin-bottom: 1rem;
+      flex-wrap: wrap;
     }
 
     #controls label {
@@ -51,7 +52,8 @@
       margin-right: 0.5rem;
     }
 
-    #controls select {
+    #controls select,
+    #controls button {
       padding: 0.2rem 0.5rem;
       font-size: 0.9rem;
     }
@@ -69,7 +71,7 @@
   </header>
 
   <div id="controls">
-    <!-- Aquí iremos inyectando Availability, Mostrar, Aplicante y Buscar -->
+    <!-- Availability filter, page length, applicant filter, search, refresh go here -->
   </div>
 
   <table id="tbl" class="display" style="width:100%">
@@ -106,21 +108,41 @@
         `);
       });
 
-      // 3) Configuro la lógica de Availability con DataTables ext.search
+      // 3) Busco todas las fechas year-month en los mensajes
+      const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const availSet = new Set();
+      rows.forEach(line => {
+        const msg = line.split(',')[3];
+        const re = /\b(\d{4})-(\d{2})-\d{2}\b/g;
+        let match;
+        while ((match = re.exec(msg)) !== null) {
+          const year = match[1], mon = parseInt(match[2],10);
+          if (year === "2025") {
+            availSet.add(`${year}-${monthNames[mon-1]}`);
+          }
+          if (year === "2026" && mon <= 4) {
+            availSet.add(`${year}-${monthNames[mon-1]}`);
+          }
+        }
+      });
+      const availOpts = Array.from(availSet).sort().reverse();
+
+      // 4) Configuro la lógica de Availability con DataTables ext.search
       $.fn.dataTable.ext.search.push((settings, data) => {
         const availVal = $('#filter-availability').val();
         if (!availVal) return true;
-        // si el mensaje incluye el valor (por ejemplo "2025")
-        return data[3].includes(availVal);
+        const [year, monAbbr] = availVal.split('-');
+        const monNum = ('0' + (monthNames.indexOf(monAbbr) + 1)).slice(-2);
+        return data[3].includes(`${year}-${monNum}-`);
       });
 
-      // 4) Calculo dinámicamente las opciones de "Mostrar"
+      // 5) Calculo dinámicamente las opciones de "Mostrar"
       const total = rows.length;
       const maxLen = Math.ceil(total / 10) * 10;
       const lengthOpts = [];
       for (let i = 10; i <= maxLen; i += 10) lengthOpts.push(i);
 
-      // 5) Inicializo DataTable
+      // 6) Inicializo DataTable
       const table = $('#tbl').DataTable({
         dom: 'lfrtip',
         responsive: true,
@@ -128,9 +150,17 @@
         lengthMenu: [lengthOpts, lengthOpts],
         pageLength: lengthOpts[0],
         rowCallback: (row, data) => {
-          // resalto toda la fila si el mensaje contiene "2025"
-          if (data[3].includes('2025')) {
-            $(row).css('background-color', '#fff9c4');
+          const msg = data[3];
+          const dateMatch = msg.match(/\b(\d{4})-(\d{2})-\d{2}\b/);
+          if (dateMatch) {
+            const year = dateMatch[1];
+            const mon = parseInt(dateMatch[2],10);
+            if (year === "2025") {
+              $(row).css('background-color', '#fff9c4');
+            }
+            else if (year === "2026" && mon <= 4) {
+              $(row).css('background-color', '#ffe0b2');
+            }
           }
         },
         language: {
@@ -146,16 +176,17 @@
         }
       });
 
-      // 6) Construyo y agrego filtros
+      // 7) Construyo y agrego filtros
       const availFilter = $(`
         <label id="filter-availability-label">
           <span>Availability:</span>
           <select id="filter-availability">
             <option value="">Todos</option>
-            <option value="2025">2025</option>
+            ${availOpts.map(v => `<option value="${v}">${v}</option>`).join('')}
           </select>
         </label>
       `);
+
       const aplicFilter = $(`
         <label id="filter-aplicante-label">
           <span>Aplicante:</span>
@@ -164,26 +195,54 @@
           </select>
         </label>
       `);
-
-      // lleno aplicantes
       table.column(0).data().unique().sort().each(val => {
         aplicFilter.find('select').append(
           `<option value="${val}">${val}</option>`
         );
       });
 
-      // dispara redraw al cambiar filtros
       availFilter.find('select').on('change', () => table.draw());
       aplicFilter.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
       });
 
-      // 7) Muevo los controles al contenedor en el orden deseado
+      // 8) Agrego control de refresh automático / manual
+      const refreshControl = $(`
+        <label id="refresh-label">
+          <span>Refresh:</span>
+          <select id="refresh-interval">
+            <option value="5">Auto (5s)</option>
+            <option value="10">10s</option>
+            <option value="20">20s</option>
+            <option value="30">30s</option>
+            <option value="60">60s</option>
+          </select>
+          <button id="refresh-now">Ahora</button>
+        </label>
+      `);
+      let refreshTimer;
+      function setRefreshInterval(sec) {
+        clearInterval(refreshTimer);
+        const i = parseInt(sec, 10);
+        if (!isNaN(i)) {
+          refreshTimer = setInterval(() => location.reload(), i * 1000);
+        }
+      }
+      refreshControl.find('#refresh-interval').on('change', function() {
+        setRefreshInterval(this.value);
+      });
+      refreshControl.find('#refresh-now').on('click', () => location.reload());
+      // inicia en auto 5s
+      refreshControl.find('#refresh-interval').val('5');
+      setRefreshInterval('5');
+
+      // 9) Muevo los controles al contenedor en el orden deseado
       const ctr = $('#controls');
       availFilter.appendTo(ctr);
       $('#tbl_length').appendTo(ctr);
       aplicFilter.appendTo(ctr);
       $('#tbl_filter').appendTo(ctr);
+      refreshControl.appendTo(ctr);
     });
   </script>
 </body>
