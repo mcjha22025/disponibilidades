@@ -96,7 +96,7 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     $(async () => {
-      // 1) Load CSV
+      // 1) Load and parse CSV
       const resp = await fetch('latest.csv');
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
@@ -104,14 +104,14 @@
       // 2) Populate table
       rows.forEach(line => {
         const [applicant, d, t, m] = line.split(',');
-        $('#tbl tbody').append(\`
+        $('#tbl tbody').append(`
           <tr>
-            <td>\${applicant}</td>
-            <td>\${d}</td>
-            <td>\${t}</td>
-            <td>\${m}</td>
+            <td>${applicant}</td>
+            <td>${d}</td>
+            <td>${t}</td>
+            <td>${m}</td>
           </tr>
-        \`);
+        `);
       });
 
       // 3) Build availability options
@@ -119,38 +119,24 @@
       const availSet = new Set();
       rows.forEach(line => {
         const msg = line.split(',')[3];
-        const re = /\\b(\\d{4})-(\\d{2})-\\d{2}\\b/g;
+        const re = /\b(\d{4})-(\d{2})-\d{2}\b/g;
         let match;
         while ((match = re.exec(msg)) !== null) {
-          const year = match[1], mon = parseInt(match[2], 10);
+          const year = match[1], mon = parseInt(match[2],10);
           if (year === "2025" || (year === "2026" && mon <= 4)) {
-            availSet.add(\`\${year}-\${monthNames[mon-1]}\`);
+            availSet.add(`${year}-${monthNames[mon-1]}`);
           }
         }
       });
       const availOpts = Array.from(availSet).sort().reverse();
 
-      // 4) Multi-select filter logic
+      // 4) Availability filter logic
       $.fn.dataTable.ext.search.push((settings, data) => {
-        const selApps  = $('#filter-applicant').val()  || [];
-        const selAvail = $('#filter-availability').val() || [];
-
-        // Applicant filter
-        if (selApps.length && !selApps.includes(data[0])) {
-          return false;
-        }
-
-        // Availability filter
-        if (selAvail.length) {
-          const ok = selAvail.some(v => {
-            const [year, abbr] = v.split('-');
-            const monNum = ('0' + (monthNames.indexOf(abbr) + 1)).slice(-2);
-            return data[3].includes(\`\${year}-\${monNum}-\`);
-          });
-          if (!ok) return false;
-        }
-
-        return true;
+        const val = $('#filter-availability').val();
+        if (!val) return true;
+        const [year, abbr] = val.split('-');
+        const num = ('0' + (monthNames.indexOf(abbr) + 1)).slice(-2);
+        return data[3].includes(`${year}-${num}-`);
       });
 
       // 5) Page-length options
@@ -167,9 +153,10 @@
         lengthMenu: [lengthOpts, lengthOpts],
         pageLength: lengthOpts[0],
         rowCallback: (row, data) => {
-          const dateMatch = data[3].match(/\\b(\\d{4})-(\\d{2})-\\d{2}\\b/);
-          if (dateMatch) {
-            const year = dateMatch[1], mon = parseInt(dateMatch[2], 10);
+          const msg = data[3];
+          const m = msg.match(/\b(\d{4})-(\d{2})-\d{2}\b/);
+          if (m) {
+            const year = m[1], mon = parseInt(m[2],10);
             if (year === "2025") {
               $(row).css('background-color', '#fff9c4');
             } else if (year === "2026" && mon <= 4) {
@@ -191,30 +178,35 @@
       });
 
       // 7) Build and attach filters
-      const availFilter = $(\`
+      const availFilter = $(`
         <label id="filter-availability-label">
           <span>Availability:</span>
-          <select id="filter-availability" multiple>
+          <select id="filter-availability">
             <option value="">All</option>
-            \${availOpts.map(v => \`<option value="\${v}">\${v}</option>\`).join('')}
+            ${availOpts.map(v => `<option value="${v}">${v}</option>`).join('')}
           </select>
         </label>
-      \`);
+      `);
 
-      const applicantFilter = $(\`
+      const applicantFilter = $(`
         <label id="filter-applicant-label">
           <span>Applicant:</span>
-          <select id="filter-applicant" multiple>
+          <select id="filter-applicant">
             <option value="">All</option>
           </select>
         </label>
-      \`);
+      `);
       table.column(0).data().unique().sort().each(val => {
-        applicantFilter.find('select').append(\`<option value="\${val}">\${val}</option>\`);
+        applicantFilter.find('select').append(`<option value="${val}">${val}</option>`);
       });
 
-      // 8) Refresh control
-      const refreshControl = $(\`
+      availFilter.find('select').on('change', () => table.draw());
+      applicantFilter.find('select').on('change', function() {
+        table.column(0).search(this.value).draw();
+      });
+
+      // 8) Refresh controls with Stop option (default) and persistence
+      const refreshControl = $(`
         <label id="refresh-label">
           <span>Refresh:</span>
           <select id="refresh-interval">
@@ -227,7 +219,7 @@
           </select>
           <button id="refresh-now">Now</button>
         </label>
-      \`);
+      `);
 
       let refreshTimer;
       function setRefreshInterval(val) {
@@ -244,21 +236,18 @@
       });
       refreshControl.find('#refresh-now').on('click', () => location.reload());
 
+      // On load: default to “Stop” unless another interval was saved
       const saved = localStorage.getItem('refresh-interval') || '0';
       refreshControl.find('#refresh-interval').val(saved);
       setRefreshInterval(saved);
 
-      // 9) Append controls in original order
+      // 9) Append controls in the correct order
       const ctr = $('#controls');
       availFilter.appendTo(ctr);
       $('#tbl_length').appendTo(ctr);
       applicantFilter.appendTo(ctr);
       $('#tbl_filter').appendTo(ctr);
       refreshControl.appendTo(ctr);
-
-      // 10) Bind filter changes
-      availFilter.find('select').on('change', () => table.draw());
-      applicantFilter.find('select').on('change', () => table.draw());
     });
   </script>
 </body>
