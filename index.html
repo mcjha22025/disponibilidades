@@ -33,7 +33,6 @@
       margin: 0;
     }
 
-    /* Controls panel */
     #controls {
       display: flex;
       align-items: center;
@@ -63,7 +62,6 @@
       color: #fff;
     }
 
-    /* Alternate stripe for non-special rows */
     table.dataTable.display.stripe tbody tr.odd {
       background-color: #ffffff;
     }
@@ -83,6 +81,7 @@
   <table id="tbl" class="display stripe" style="width:100%">
     <thead>
       <tr>
+        <th>Server</th>
         <th>Applicant</th>
         <th>Date</th>
         <th>Time</th>
@@ -101,11 +100,12 @@
       const text = await resp.text();
       const rows = text.trim().split('\n').slice(1);
 
-      // 2) Populate table
+      // 2) Populate table: now with server as first column
       rows.forEach(line => {
-        const [applicant, d, t, m] = line.split(',');
+        const [server, applicant, d, t, m] = line.split(',');
         $('#tbl tbody').append(`
           <tr>
+            <td>${server}</td>
             <td>${applicant}</td>
             <td>${d}</td>
             <td>${t}</td>
@@ -118,7 +118,7 @@
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
       rows.forEach(line => {
-        const msg = line.split(',')[3];
+        const msg = line.split(',')[4];
         const re = /\b(\d{4})-(\d{2})-\d{2}\b/g;
         let match;
         while ((match = re.exec(msg)) !== null) {
@@ -130,13 +130,13 @@
       });
       const availOpts = Array.from(availSet).sort().reverse();
 
-      // 4) Availability filter logic
+      // 4) Availability filter logic (message is column 4)
       $.fn.dataTable.ext.search.push((settings, data) => {
         const val = $('#filter-availability').val();
         if (!val) return true;
         const [year, abbr] = val.split('-');
         const num = ('0' + (monthNames.indexOf(abbr) + 1)).slice(-2);
-        return data[3].includes(`${year}-${num}-`);
+        return data[4].includes(`${year}-${num}-`);
       });
 
       // 5) Page-length options
@@ -149,11 +149,11 @@
       const table = $('#tbl').DataTable({
         dom: 'lfrtip',
         responsive: true,
-        order: [[1, 'desc'], [2, 'desc']],
+        order: [[2, 'desc'], [3, 'desc']],
         lengthMenu: [lengthOpts, lengthOpts],
         pageLength: lengthOpts[0],
         rowCallback: (row, data) => {
-          const msg = data[3];
+          const msg = data[4];
           const m = msg.match(/\b(\d{4})-(\d{2})-\d{2}\b/);
           if (m) {
             const year = m[1], mon = parseInt(m[2],10);
@@ -178,6 +178,8 @@
       });
 
       // 7) Build and attach filters
+
+      // Availability filter
       const availFilter = $(`
         <label id="filter-availability-label">
           <span>Availability:</span>
@@ -187,7 +189,26 @@
           </select>
         </label>
       `);
+      availFilter.find('select').on('change', () => table.draw());
 
+      // Server filter (column 0)
+      const serverFilter = $(`
+        <label id="filter-server-label">
+          <span>Server:</span>
+          <select id="filter-server">
+            <option value="">All</option>
+          </select>
+        </label>
+      `);
+      table.column(0).data().unique().sort().each(val => {
+        serverFilter.find('select')
+          .append(`<option value="${val}">${val}</option>`);
+      });
+      serverFilter.find('select').on('change', function() {
+        table.column(0).search(this.value).draw();
+      });
+
+      // Applicant filter (column 1)
       const applicantFilter = $(`
         <label id="filter-applicant-label">
           <span>Applicant:</span>
@@ -196,16 +217,15 @@
           </select>
         </label>
       `);
-      table.column(0).data().unique().sort().each(val => {
-        applicantFilter.find('select').append(`<option value="${val}">${val}</option>`);
+      table.column(1).data().unique().sort().each(val => {
+        applicantFilter.find('select')
+          .append(`<option value="${val}">${val}</option>`);
       });
-
-      availFilter.find('select').on('change', () => table.draw());
       applicantFilter.find('select').on('change', function() {
-        table.column(0).search(this.value).draw();
+        table.column(1).search(this.value).draw();
       });
 
-      // 8) Refresh controls with Stop option (default) and persistence
+      // 8) Refresh controls with Stop option and persistence
       const refreshControl = $(`
         <label id="refresh-label">
           <span>Refresh:</span>
@@ -220,7 +240,6 @@
           <button id="refresh-now">Now</button>
         </label>
       `);
-
       let refreshTimer;
       function setRefreshInterval(val) {
         clearInterval(refreshTimer);
@@ -230,20 +249,18 @@
           refreshTimer = setInterval(() => location.reload(), sec * 1000);
         }
       }
-
       refreshControl.find('#refresh-interval').on('change', function() {
         setRefreshInterval(this.value);
       });
       refreshControl.find('#refresh-now').on('click', () => location.reload());
-
-      // On load: default to “Stop” unless another interval was saved
       const saved = localStorage.getItem('refresh-interval') || '0';
       refreshControl.find('#refresh-interval').val(saved);
       setRefreshInterval(saved);
 
-      // 9) Append controls in the correct order
+      // 9) Append controls in order
       const ctr = $('#controls');
       availFilter.appendTo(ctr);
+      serverFilter.appendTo(ctr);
       $('#tbl_length').appendTo(ctr);
       applicantFilter.appendTo(ctr);
       $('#tbl_filter').appendTo(ctr);
