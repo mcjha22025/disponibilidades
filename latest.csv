@@ -1,21 +1,41 @@
-﻿Aplicante,Date,Time,Message
-CARMEN_GUTIERREZ,22/09/2025,04:25:15,Fecha disponible más cercana: 2025-10-07
-JULIA_TORRES,22/09/2025,04:25:16,Fecha disponible más cercana: 2025-10-07
-CARMEN_GUTIERREZ,22/09/2025,04:25:16,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
-ALICIA_URBINA,22/09/2025,04:25:16,Fecha disponible más cercana: 2025-10-07
-JULIA_TORRES,22/09/2025,04:25:17,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
-LEANDRA_HUAMAN,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
-MADELEINYS_ESCALONA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
-LILIA_GARCIA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
-JUAN_ARANGO,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
-FIAMA_ESTRADA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
-ARMANDO_ARROYO,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
-RONALD_SILVA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
-ALICIA_URBINA,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
-MADELEINYS_ESCALONA,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: [None]
-ARMANDO_ARROYO,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
-LILIA_GARCIA,22/09/2025,04:25:19,Todos los horarios disponibles para la fecha 2025-10-07: [None]
-LEANDRA_HUAMAN,22/09/2025,04:25:20,Todos los horarios disponibles para la fecha 2025-10-07: [None]
-FIAMA_ESTRADA,22/09/2025,04:25:21,Todos los horarios disponibles para la fecha 2025-10-07: [None]
-JUAN_ARANGO,22/09/2025,04:25:21,Todos los horarios disponibles para la fecha 2025-10-07: [None]
-RONALD_SILVA,22/09/2025,04:25:22,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+﻿Server,Aplicante,Date,Time,Message
+18.212.96.58,MADELEINYS_ESCALONA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+18.212.96.58,MADELEINYS_ESCALONA,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+192.168.0.128,FIAMA_ESTRADA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+192.168.0.128,FIAMA_ESTRADA,22/09/2025,04:25:21,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+192.168.0.176,CARMEN_GUTIERREZ,22/09/2025,04:25:15,Fecha disponible más cercana: 2025-10-07
+192.168.0.176,CARMEN_GUTIERREZ,22/09/2025,04:25:16,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+192.168.0.205,RONALD_SILVA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+192.168.0.205,RONALD_SILVA,22/09/2025,04:25:22,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+192.168.0.77,JULIA_TORRES,22/09/2025,04:25:16,Fecha disponible más cercana: 2025-10-07
+192.168.0.77,JULIA_TORRES,22/09/2025,04:25:17,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+4.155.133.15,ALICIA_URBINA,22/09/2025,04:25:16,Fecha disponible más cercana: 2025-10-07
+4.155.133.15,ALICIA_URBINA,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+4.155.133.15,ARMANDO_ARROYO,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+4.155.133.15,ARMANDO_ARROYO,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+4.246.114.69,LEANDRA_HUAMAN,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+4.246.114.69,LEANDRA_HUAMAN,22/09/2025,04:25:20,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+54.196.243.235,LILIA_GARCIA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+54.196.243.235,LILIA_GARCIA,22/09/2025,04:25:19,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+54.87.206.48,JUAN_ARANGO,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+54.87.206.48,JUAN_ARANGO,22/09/2025,04:25:21,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+ALICIA,URBINA,22/09/2025,04:25:16,Fecha disponible más cercana: 2025-10-07
+ALICIA,URBINA,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+ARMANDO,ARROYO,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+ARMANDO,ARROYO,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+CARMEN,GUTIERREZ,22/09/2025,04:25:15,Fecha disponible más cercana: 2025-10-07
+CARMEN,GUTIERREZ,22/09/2025,04:25:16,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+FIAMA,ESTRADA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+FIAMA,ESTRADA,22/09/2025,04:25:21,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+JUAN,ARANGO,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+JUAN,ARANGO,22/09/2025,04:25:21,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+JULIA,TORRES,22/09/2025,04:25:16,Fecha disponible más cercana: 2025-10-07
+JULIA,TORRES,22/09/2025,04:25:17,Todos los horarios disponibles para la fecha 2025-10-07: ['09:45']
+LEANDRA,HUAMAN,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+LEANDRA,HUAMAN,22/09/2025,04:25:20,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+LILIA,GARCIA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+LILIA,GARCIA,22/09/2025,04:25:19,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+MADELEINYS,ESCALONA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+MADELEINYS,ESCALONA,22/09/2025,04:25:18,Todos los horarios disponibles para la fecha 2025-10-07: [None]
+RONALD,SILVA,22/09/2025,04:25:17,Fecha disponible más cercana: 2025-10-07
+RONALD,SILVA,22/09/2025,04:25:22,Todos los horarios disponibles para la fecha 2025-10-07: [None]
