@@ -36,6 +36,8 @@ server1-azure,CARMEN_ROSAS_SOTOMAYOR,23/09/2025,11:45:19,Fecha disponible más c
 server1-azure,CARMEN_ROSAS_SOTOMAYOR,23/09/2025,11:45:21,Todos los horarios disponibles para la fecha 2026-04-27: [None]
 server1-azure,MARLON_PORRAS,23/09/2025,14:20:23,Fecha disponible más cercana: 2026-08-10
 server1-azure,MARLON_PORRAS,23/09/2025,14:20:25,Fecha disponible más cercana: 2026-08-10
+server1-azure,MARLON_PORRAS,23/09/2025,21:45:19,Fecha disponible más cercana: 2025-11-21
+server1-azure,MARLON_PORRAS,23/09/2025,21:45:20,Todos los horarios disponibles para la fecha 2025-11-21: [None]
 server1-azure,ROSA_MOSCOCO,23/09/2025,04:35:16,Fecha disponible más cercana: 2026-10-06
 server1-azure,ROSA_MOSCOCO,23/09/2025,08:15:20,Fecha disponible más cercana: 2026-11-24
 server1-azure,ROSA_MOSCOCO,23/09/2025,08:15:21,Fecha disponible más cercana: 2026-11-24
@@ -50,6 +52,8 @@ server1-azure,ROSA_MOSCOCO,23/09/2025,09:00:34,Fecha disponible más cercana: 20
 server1-azure,ROSA_MOSCOCO,23/09/2025,09:00:38,Fecha disponible más cercana: 2026-12-17
 server1-local,ANDREA_QUISPE,23/09/2025,14:20:20,Fecha disponible más cercana: 2026-08-10
 server1-local,ANDREA_QUISPE,23/09/2025,14:20:26,Fecha disponible más cercana: 2026-08-10
+server1-local,ANDREA_QUISPE,23/09/2025,21:45:19,Fecha disponible más cercana: 2025-11-21
+server1-local,ANDREA_QUISPE,23/09/2025,21:45:21,Todos los horarios disponibles para la fecha 2025-11-21: [None]
 server1-local,ANGI_ESCALANTE,23/09/2025,04:35:19,Fecha disponible más cercana: 2026-10-06
 server1-local,ANGI_ESCALANTE,23/09/2025,06:30:22,Fecha disponible más cercana: 2026-02-10
 server1-local,ANGI_ESCALANTE,23/09/2025,06:30:24,Todos los horarios disponibles para la fecha 2026-02-10: [None]
@@ -86,14 +90,8 @@ server1-local,CARMEN_GUTIERREZ,23/09/2025,19:10:33,Fecha disponible más cercana
 server1-local,CARMEN_GUTIERREZ,23/09/2025,19:10:36,Fecha disponible más cercana: 2026-10-06
 server1-local,CARMEN_GUTIERREZ,23/09/2025,19:10:40,Fecha disponible más cercana: 2026-10-06
 server1-local,CARMEN_GUTIERREZ,23/09/2025,19:10:42,Fecha disponible más cercana: 2026-10-06
-server2-aws,LILIA_GARCIA,23/09/2025,04:35:20,Fecha disponible más cercana: 2026-10-06
-server2-aws,LILIA_GARCIA,23/09/2025,08:15:18,Fecha disponible más cercana: 2026-11-24
-server2-aws,LILIA_GARCIA,23/09/2025,08:15:21,Fecha disponible más cercana: 2026-11-24
-server2-aws,LILIA_GARCIA,23/09/2025,08:15:23,Fecha disponible más cercana: 2026-11-24
-server2-aws,LILIA_GARCIA,23/09/2025,08:15:25,Fecha disponible más cercana: 2026-11-24
-server2-aws,LILIA_GARCIA,23/09/2025,08:15:32,Fecha disponible más cercana: 2026-11-24
-server2-aws,LILIA_GARCIA,23/09/2025,08:15:36,Fecha disponible más cercana: 2026-11-24
-server2-aws,LILIA_GARCIA,23/09/2025,08:15:42,Fecha disponible más cercana: 2026-11-24
+server1-local,CARMEN_GUTIERREZ,23/09/2025,21:45:19,Fecha disponible más cercana: 2025-11-21
+server1-local,CARMEN_GUTIERREZ,23/09/2025,21:45:23,Todos los horarios disponibles para la fecha 2025-11-21: [None]
 server2-azure,LEANDRA_HUAMAN,23/09/2025,17:20:18,Fecha disponible más cercana: 2026-01-14
 server2-azure,LEANDRA_HUAMAN,23/09/2025,17:20:19,Todos los horarios disponibles para la fecha 2026-01-14: [None]
 server2-azure,LEANDRA_HUAMAN,23/09/2025,19:10:18,Fecha disponible más cercana: 2026-10-06
@@ -102,6 +100,8 @@ server2-azure,LEANDRA_HUAMAN,23/09/2025,19:10:25,Fecha disponible más cercana: 
 server2-azure,LEANDRA_HUAMAN,23/09/2025,19:10:27,Fecha disponible más cercana: 2026-10-06
 server2-azure,LEANDRA_HUAMAN,23/09/2025,19:10:31,Fecha disponible más cercana: 2026-10-06
 server2-azure,LEANDRA_HUAMAN,23/09/2025,19:10:37,Fecha disponible más cercana: 2026-10-06
+server2-azure,LEANDRA_HUAMAN,23/09/2025,21:45:17,Fecha disponible más cercana: 2025-11-21
+server2-azure,LEANDRA_HUAMAN,23/09/2025,21:45:18,Todos los horarios disponibles para la fecha 2025-11-21: ['09:45']
 server2-azure,LISBETH_APONTE,23/09/2025,04:35:19,Fecha disponible más cercana: 2026-10-06
 server2-azure,LISBETH_APONTE,23/09/2025,08:15:17,Fecha disponible más cercana: 2026-11-24
 server2-azure,LISBETH_APONTE,23/09/2025,08:15:19,Fecha disponible más cercana: 2026-11-24
@@ -146,27 +146,8 @@ server2-local,FIAMA_ESTRADA,23/09/2025,09:00:36,Fecha disponible más cercana: 2
 server2-local,FIAMA_ESTRADA,23/09/2025,09:00:42,Fecha disponible más cercana: 2026-12-17
 server2-local,FIAMA_ESTRADA,23/09/2025,14:25:19,Fecha disponible más cercana: 2025-09-29
 server2-local,FIAMA_ESTRADA,23/09/2025,14:25:23,Todos los horarios disponibles para la fecha 2025-09-29: [None]
-server3-aws,ANGEL_ARIAS,23/09/2025,04:35:17,Fecha disponible más cercana: 2026-10-06
-server3-aws,ANGEL_ARIAS,23/09/2025,04:35:19,Fecha disponible más cercana: 2026-10-06
-server3-aws,ANGEL_ARIAS,23/09/2025,06:30:20,Fecha disponible más cercana: 2026-02-10
-server3-aws,ANGEL_ARIAS,23/09/2025,06:30:22,Todos los horarios disponibles para la fecha 2026-02-10: [None]
-server3-aws,ANGEL_ARIAS,23/09/2025,08:15:18,Fecha disponible más cercana: 2026-11-24
-server3-aws,ANGEL_ARIAS,23/09/2025,08:15:21,Fecha disponible más cercana: 2026-11-24
-server3-aws,ANGEL_ARIAS,23/09/2025,08:15:24,Fecha disponible más cercana: 2026-11-24
-server3-aws,ANGEL_ARIAS,23/09/2025,08:15:25,Fecha disponible más cercana: 2026-11-24
-server3-aws,ANGEL_ARIAS,23/09/2025,08:15:31,Fecha disponible más cercana: 2026-11-24
-server3-aws,ANGEL_ARIAS,23/09/2025,08:15:36,Fecha disponible más cercana: 2026-11-24
-server3-aws,ANGEL_ARIAS,23/09/2025,08:15:42,Fecha disponible más cercana: 2026-11-24
-server3-aws,ANGEL_ARIAS,23/09/2025,09:00:25,Fecha disponible más cercana: 2026-12-17
-server3-aws,ANGEL_ARIAS,23/09/2025,09:00:31,Fecha disponible más cercana: 2026-12-17
-server3-aws,ANGEL_ARIAS,23/09/2025,09:00:37,Fecha disponible más cercana: 2026-12-17
-server3-aws,MADELEINYS_ESCALONA,23/09/2025,04:35:18,Fecha disponible más cercana: 2026-10-06
-server3-aws,MADELEINYS_ESCALONA,23/09/2025,08:15:24,Fecha disponible más cercana: 2026-11-24
-server3-aws,MADELEINYS_ESCALONA,23/09/2025,08:15:27,Fecha disponible más cercana: 2026-11-24
-server3-aws,MADELEINYS_ESCALONA,23/09/2025,08:15:28,Fecha disponible más cercana: 2026-11-24
-server3-aws,MADELEINYS_ESCALONA,23/09/2025,08:15:31,Fecha disponible más cercana: 2026-11-24
-server3-aws,MADELEINYS_ESCALONA,23/09/2025,08:15:36,Fecha disponible más cercana: 2026-11-24
-server3-aws,MADELEINYS_ESCALONA,23/09/2025,08:15:42,Fecha disponible más cercana: 2026-11-24
+server3-aws,ROSANA_ZORRILA,23/09/2025,21:45:19,Fecha disponible más cercana: 2025-11-21
+server3-aws,ROSANA_ZORRILA,23/09/2025,21:45:27,Todos los horarios disponibles para la fecha 2025-11-21: [None]
 server3-azure,ANGEL_CAMPOS,23/09/2025,04:35:19,Fecha disponible más cercana: 2026-10-06
 server3-azure,ANGEL_CAMPOS,23/09/2025,06:30:20,Fecha disponible más cercana: 2026-02-10
 server3-azure,ANGEL_CAMPOS,23/09/2025,06:30:23,Todos los horarios disponibles para la fecha 2026-02-10: [None]
@@ -192,6 +173,8 @@ server3-local,ANA_MARIA_CONDOR,23/09/2025,19:10:19,Fecha disponible más cercana
 server3-local,ANA_MARIA_CONDOR,23/09/2025,19:10:36,Fecha disponible más cercana: 2026-10-06
 server3-local,ANA_MARIA_CONDOR,23/09/2025,19:10:39,Fecha disponible más cercana: 2026-10-06
 server3-local,ANA_MARIA_CONDOR,23/09/2025,19:10:41,Fecha disponible más cercana: 2026-10-06
+server3-local,ANA_MARIA_CONDOR,23/09/2025,21:45:17,Fecha disponible más cercana: 2025-11-21
+server3-local,ANA_MARIA_CONDOR,23/09/2025,21:45:20,Todos los horarios disponibles para la fecha 2025-11-21: [None]
 server3-local,JANE_CARRASCO,23/09/2025,08:15:30,Fecha disponible más cercana: 2026-11-24
 server3-local,JANE_CARRASCO,23/09/2025,08:15:33,Fecha disponible más cercana: 2026-11-24
 server3-local,JANE_CARRASCO,23/09/2025,08:15:35,Fecha disponible más cercana: 2026-11-24
@@ -214,18 +197,8 @@ server3-local,RUBI_GOÑE,23/09/2025,19:10:21,Fecha disponible más cercana: 2026
 server3-local,RUBI_GOÑE,23/09/2025,19:10:26,Fecha disponible más cercana: 2026-10-06
 server3-local,RUBI_GOÑE,23/09/2025,19:10:32,Fecha disponible más cercana: 2026-10-06
 server3-local,RUBI_GOÑE,23/09/2025,19:10:38,Fecha disponible más cercana: 2026-10-06
-server4-aws,JUAN_ARANGO,23/09/2025,04:35:17,Fecha disponible más cercana: 2026-10-06
-server4-aws,JUAN_ARANGO,23/09/2025,08:15:29,Fecha disponible más cercana: 2026-11-24
-server4-aws,JUAN_ARANGO,23/09/2025,08:15:32,Fecha disponible más cercana: 2026-11-24
-server4-aws,JUAN_ARANGO,23/09/2025,08:15:33,Fecha disponible más cercana: 2026-11-24
-server4-aws,JUAN_ARANGO,23/09/2025,08:15:34,Fecha disponible más cercana: 2026-11-24
-server4-aws,JUAN_ARANGO,23/09/2025,08:15:40,Fecha disponible más cercana: 2026-11-24
-server4-aws,JUAN_ARANGO,23/09/2025,09:00:29,Fecha disponible más cercana: 2026-12-17
-server4-aws,JUAN_ARANGO,23/09/2025,09:00:31,Fecha disponible más cercana: 2026-12-17
-server4-aws,JUAN_ARANGO,23/09/2025,09:00:33,Fecha disponible más cercana: 2026-12-17
-server4-aws,JUAN_ARANGO,23/09/2025,09:00:37,Fecha disponible más cercana: 2026-12-17
-server4-aws,JUAN_ARANGO,23/09/2025,09:00:43,Fecha disponible más cercana: 2026-12-17
-server4-aws,KIARA_MEDRANO_E_HIJA,23/09/2025,04:35:16,Fecha disponible más cercana: 2026-10-06
+server3-local,RUBI_GOÑE,23/09/2025,21:45:18,Fecha disponible más cercana: 2025-11-21
+server3-local,RUBI_GOÑE,23/09/2025,21:45:19,Todos los horarios disponibles para la fecha 2025-11-21: [None]
 server4-azure,MICHAEL_ABANTO,23/09/2025,04:35:18,Fecha disponible más cercana: 2026-10-06
 server4-azure,MICHAEL_ABANTO,23/09/2025,08:15:18,Fecha disponible más cercana: 2026-11-24
 server4-azure,MICHAEL_ABANTO,23/09/2025,08:15:27,Fecha disponible más cercana: 2026-11-24
@@ -447,3 +420,5 @@ server8-azure,JOSE_TORPOCO,23/09/2025,11:45:19,Fecha disponible más cercana: 20
 server8-azure,JOSE_TORPOCO,23/09/2025,14:25:18,Fecha disponible más cercana: 2025-09-29
 server8-azure,JOSE_TORPOCO,23/09/2025,17:20:18,Fecha disponible más cercana: 2026-01-14
 server8-azure,JOSE_TORPOCO,23/09/2025,17:20:35,Todos los horarios disponibles para la fecha 2026-01-14: [None]
+server8-azure,JOSE_TORPOCO,23/09/2025,21:45:18,Fecha disponible más cercana: 2025-11-21
+server8-azure,JOSE_TORPOCO,23/09/2025,21:45:22,Todos los horarios disponibles para la fecha 2025-11-21: [None]
