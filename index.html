@@ -66,9 +66,10 @@
       background-color: #f5f5f5;
     }
 
-    /* Verde claro para AGENDADO (prioritario) */
+    /* Verde más fuerte para AGENDADO (prioritario) */
     .row-agendado {
-      background-color: #dff7e6 !important;
+      background-color: #24e368 !important;
+      color: #032a18;
     }
 
     /* Amarillo / naranja por disponibilidad (si no es AGENDADO) */
@@ -195,7 +196,7 @@
           // Priority: AGENDADO -> green
           if (/AGENDADO/i.test(msg)) {
             $(row).addClass('row-agendado');
-            // do not return; keep normalized state but AGENDADO takes precedence visually
+            // AGENDADO takes precedence visually; still return to keep performance
             return;
           }
 
