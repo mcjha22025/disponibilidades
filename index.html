@@ -4,10 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Account Tracking & Availability Calendar</title>
-  <link
-    rel="stylesheet"
-    href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
-  />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
   <style>
     body {
       margin: 0;
@@ -76,10 +73,10 @@
 
     /* Amarillo / naranja por disponibilidad (si no es AGENDADO) */
     .row-2025 {
-      background-color: #fff9c4;
+      background-color: #fff9c4 !important;
     }
     .row-2026q1 {
-      background-color: #ffe0b2;
+      background-color: #ffe0b2 !important;
     }
   </style>
 </head>
@@ -108,68 +105,72 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     (async () => {
-      // 1) Load and parse CSV
+      // 1) Load and parse CSV robustly (allow commas inside Message)
       const resp = await fetch('latest.csv');
       const text = await resp.text();
-      const rows = text.trim().split('\n').slice(1).filter(Boolean);
+      const lines = text.trim().split('\n').slice(1).filter(Boolean);
 
-      // 2) Populate table
-      rows.forEach(line => {
-        // split on first 4 commas to avoid issues if message contains commas
+      // Helper to parse CSV line: first 4 commas split, rest -> message
+      function parseLine(line) {
         const parts = line.split(',');
         const server = parts[0] || '';
         const applicant = parts[1] || '';
-        const d = parts[2] || '';
-        const t = parts[3] || '';
-        const m = parts.slice(4).join(',') || '';
+        const date = parts[2] || '';
+        const time = parts[3] || '';
+        const message = parts.slice(4).join(',') || '';
+        return { server, applicant, date, time, message };
+      }
+
+      const rows = lines.map(parseLine);
+
+      // 2) Populate table
+      rows.forEach(r => {
         $('#tbl tbody').append(`
           <tr>
-            <td>${server}</td>
-            <td>${applicant}</td>
-            <td>${d}</td>
-            <td>${t}</td>
-            <td>${m}</td>
+            <td>${r.server}</td>
+            <td>${r.applicant}</td>
+            <td>${r.date}</td>
+            <td>${r.time}</td>
+            <td>${r.message}</td>
           </tr>
         `);
       });
 
-      // 3) Build availability options (incluye AGENDADO)
+      // 3) Build availability options (include AGENDADO as a special option)
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
-      rows.forEach(line => {
-        const parts = line.split(',');
-        const msg = parts.slice(4).join(',') || '';
-        // Extraer YYYY-MM-DD dentro de cualquier mensaje
+      rows.forEach(r => {
+        const msg = (r.message || '').toString();
+        // extract YYYY-MM-DD anywhere in message
         const re = /\b(\d{4})-(\d{2})-\d{2}\b/g;
-        let match;
-        while ((match = re.exec(msg)) !== null) {
-          const year = match[1], mon = parseInt(match[2],10);
+        let m;
+        while ((m = re.exec(msg)) !== null) {
+          const year = m[1], mon = parseInt(m[2], 10);
           if (year === "2025" || (year === "2026" && mon <= 4)) {
             availSet.add(`${year}-${monthNames[mon-1]}`);
           }
         }
-        // Si el mensaje contiene AGENDADO, agregar la opción AGENDADO
-        if (/AGENDADO/i.test(msg)) {
-          availSet.add('AGENDADO');
-        }
+        // Add AGENDADO option if message contains that word
+        if (/AGENDADO/i.test(msg)) availSet.add('AGENDADO');
       });
+
+      // Put AGENDADO first then the rest in descending order
       const availOpts = Array.from(availSet).sort((a,b) => {
-        // Ordenar para poner AGENDADO al principio; luego por valor desc
         if (a === 'AGENDADO') return -1;
         if (b === 'AGENDADO') return 1;
         return b.localeCompare(a);
       });
 
-      // 4) Availability filter logic (message is column 4)
+      // 4) Availability filter logic supporting AGENDADO
       $.fn.dataTable.ext.search.push((settings, data) => {
-        const val = $('#filter-availability').val();
+        const val = $('#filter-availability') ? $('#filter-availability').val() : '';
         if (!val) return true;
         if (val === 'AGENDADO') {
-          return /AGENDADO/i.test(data[4] || '');
+          return /AGENDADO/i.test((data[4] || '').toString());
         }
         const [year, abbr] = val.split('-');
         const num = ('0' + (monthNames.indexOf(abbr) + 1)).slice(-2);
-        return (data[4] || '').includes(`${year}-${num}-`);
+        return (data[4] || '').toString().includes(`${year}-${num}-`);
       });
 
       // 5) Page-length options
@@ -178,7 +179,7 @@
       const lengthOpts = [];
       for (let i = 10; i <= maxLen; i += 10) lengthOpts.push(i);
 
-      // 6) Initialize DataTable
+      // 6) Initialize DataTable with robust rowCallback (no premature return)
       const table = $('#tbl').DataTable({
         dom: 'lfrtip',
         responsive: true,
@@ -186,25 +187,27 @@
         lengthMenu: [lengthOpts, lengthOpts],
         pageLength: lengthOpts[0],
         rowCallback: (row, data) => {
-          const msg = (data[4] || '').toString();
-          // Prioridad 1: si contiene AGENDADO -> verde claro
+          // normalize message once
+          const msg = (data[4] || '').toString().trim();
+          // remove any previous color classes
+          $(row).removeClass('row-agendado row-2025 row-2026q1');
+
+          // Priority: AGENDADO -> green
           if (/AGENDADO/i.test(msg)) {
-            $(row).removeClass('row-2025 row-2026q1').addClass('row-agendado');
+            $(row).addClass('row-agendado');
+            // do not return; keep normalized state but AGENDADO takes precedence visually
             return;
           }
 
-          // Si no es AGENDADO, aplicar la lógica de coloreado por año/mes
+          // If not AGENDADO, check for first YYYY-MM-DD occurrence
           const m = msg.match(/\b(\d{4})-(\d{2})-\d{2}\b/);
           if (m) {
-            const year = m[1], mon = parseInt(m[2],10);
-            $(row).removeClass('row-2025 row-2026q1 row-agendado');
+            const year = m[1], mon = parseInt(m[2], 10);
             if (year === "2025") {
               $(row).addClass('row-2025');
             } else if (year === "2026" && mon <= 4) {
               $(row).addClass('row-2026q1');
             }
-          } else {
-            $(row).removeClass('row-2025 row-2026q1 row-agendado');
           }
         },
         language: {
@@ -244,8 +247,7 @@
         </label>
       `);
       table.column(0).data().unique().sort().each(val => {
-        serverFilter.find('select')
-          .append(`<option value="${val}">${val}</option>`);
+        serverFilter.find('select').append(`<option value="${val}">${val}</option>`);
       });
       serverFilter.find('select').on('change', function() {
         table.column(0).search(this.value).draw();
@@ -261,8 +263,7 @@
         </label>
       `);
       table.column(1).data().unique().sort().each(val => {
-        applicantFilter.find('select')
-          .append(`<option value="${val}">${val}</option>`);
+        applicantFilter.find('select').append(`<option value="${val}">${val}</option>`);
       });
       applicantFilter.find('select').on('change', function() {
         table.column(1).search(this.value).draw();
