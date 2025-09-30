@@ -147,7 +147,8 @@
         let m;
         while ((m = re.exec(msg)) !== null) {
           const year = m[1], mon = parseInt(m[2], 10);
-          if (year === "2025" || (year === "2026" && mon <= 4)) {
+          // Accept 2025 or 2026 up to June (month <= 6)
+          if (year === "2025" || (year === "2026" && mon <= 6)) {
             availSet.add(`${year}-${monthNames[mon-1]}`);
           }
         }
@@ -206,7 +207,7 @@
             const year = m[1], mon = parseInt(m[2], 10);
             if (year === "2025") {
               $(row).addClass('row-2025');
-            } else if (year === "2026" && mon <= 4) {
+            } else if (year === "2026" && mon <= 6) {
               $(row).addClass('row-2026q1');
             }
           }
