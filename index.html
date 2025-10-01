@@ -79,6 +79,11 @@
     .row-2026q1 {
       background-color: #ffe0b2 !important;
     }
+
+    /* Ocultar columna ISO (usada para ordenamiento) */
+    .col-iso {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -97,6 +102,7 @@
         <th>Date</th>
         <th>Time</th>
         <th>Message</th>
+        <th class="col-iso">_ISO</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -122,10 +128,43 @@
         return { server, applicant, date, time, message };
       }
 
+      // Helper to build ISO string from date and time if possible.
+      // Assumes date in YYYY-MM-DD or already ISO-like. If not, fallback to empty string.
+      function buildISO(dateStr, timeStr) {
+        const d = (dateStr || '').trim();
+        const t = (timeStr || '').trim();
+        // Accept YYYY-MM-DD
+        if (/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+          if (/^\d{2}:\d{2}(:\d{2})?$/.test(t)) {
+            return `${d}T${t}`;
+          }
+          if (t) {
+            // time present but in unexpected format: try to extract HH:MM
+            const tm = t.match(/(\d{1,2}:\d{2})/);
+            if (tm) return `${d}T${tm[1]}`;
+          }
+          return `${d}T00:00`;
+        }
+        // fallback: try to extract YYYY-MM-DD from message later (caller can overwrite)
+        return '';
+      }
+
       const rows = lines.map(parseLine);
 
-      // 2) Populate table
+      // 2) Populate table with an extra hidden ISO column
       rows.forEach(r => {
+        // compute iso; if date/time don't produce iso, we'll attempt to extract from message
+        let iso = buildISO(r.date, r.time);
+        if (!iso) {
+          const m = (r.message || '').match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
+          if (m) {
+            const year = m[1], mon = m[2], day = m[3];
+            // try to extract time in message too
+            const tm = (r.message || '').match(/(\d{2}:\d{2}(:\d{2})?)/);
+            iso = tm ? `${year}-${mon}-${day}T${tm[1]}` : `${year}-${mon}-${day}T00:00`;
+          }
+        }
+
         $('#tbl tbody').append(`
           <tr>
             <td>${r.server}</td>
@@ -133,6 +172,7 @@
             <td>${r.date}</td>
             <td>${r.time}</td>
             <td>${r.message}</td>
+            <td class="col-iso">${iso}</td>
           </tr>
         `);
       });
@@ -181,11 +221,15 @@
       const lengthOpts = [];
       for (let i = 10; i <= maxLen; i += 10) lengthOpts.push(i);
 
-      // 6) Initialize DataTable with robust rowCallback (no premature return)
+      // 6) Initialize DataTable with ordering by hidden ISO column (descending = most recent first)
       const table = $('#tbl').DataTable({
         dom: 'lfrtip',
         responsive: true,
-        order: [[2, 'desc'], [3, 'desc']],
+        // order by the ISO column (last column index). We'll hide it via columnDefs.
+        order: [[5, 'desc']],
+        columnDefs: [
+          { targets: [5], visible: false, searchable: false } // hide ISO column
+        ],
         lengthMenu: [lengthOpts, lengthOpts],
         pageLength: lengthOpts[0],
         rowCallback: (row, data) => {
@@ -197,8 +241,7 @@
           // Priority: AGENDADO -> green
           if (/AGENDADO/i.test(msg)) {
             $(row).addClass('row-agendado');
-            // AGENDADO takes precedence visually; still return to keep performance
-            return;
+            return; // AGENDADO takes precedence visually
           }
 
           // If not AGENDADO, check for first YYYY-MM-DD occurrence
