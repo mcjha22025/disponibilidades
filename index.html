@@ -80,8 +80,8 @@
       background-color: #ffe0b2 !important;
     }
 
-    /* Ocultar columna ISO (usada para ordenamiento) */
-    .col-iso {
+    /* Ocultar columnas auxiliares (usadas para ordenamiento) */
+    .col-aux {
       display: none;
     }
   </style>
@@ -102,7 +102,8 @@
         <th>Date</th>
         <th>Time</th>
         <th>Message</th>
-        <th class="col-iso">_ISO</th>
+        <th class="col-aux">PRIORITY</th>
+        <th class="col-aux">_ISO</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -119,7 +120,7 @@
         document.querySelector('body').innerText = 'Error loading latest.json: ' + resp.status + ' ' + txt;
         return;
       }
-      const data = await resp.json(); // array of objects: { Server, Aplicante, Date, Time, Message, ISO }
+      const rawData = await resp.json(); // array of objects: { Server, Aplicante, Date, Time, Message, ISO }
 
       // Utility: escape HTML to avoid injection in table cells
       function escapeHtml(str) {
@@ -131,6 +132,23 @@
           .replace(/"/g, '&quot;')
           .replace(/'/g, '&#039;');
       }
+
+      // Normalize data into DataTables-friendly array and compute PRIORITY:
+      // PRIORITY = 1 if Message contains AGENDADO, else 0.
+      // Keep ISO as-is (yyyy-MM-ddTHH:mm:ss) or ''.
+      const data = rawData.map(item => {
+        const msg = (item.Message || '').toString();
+        const priority = /AGENDADO/i.test(msg) ? 1 : 0;
+        return {
+          Server: item.Server || '',
+          Aplicante: item.Aplicante || '',
+          Date: item.Date || '',
+          Time: item.Time || '',
+          Message: item.Message || '',
+          PRIORITY: priority,
+          ISO: item.ISO || ''
+        };
+      });
 
       // Build availability options from the JSON data (respecting 2025 and 2026 up to June)
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -154,9 +172,11 @@
         return b.localeCompare(a);
       });
 
-      // Initialize DataTable using ajax-supplied data (we already have data array)
-      // Columns map to JSON properties; last column is ISO for ordering and hidden
-      const isoIndex = 5;
+      // Initialize DataTable using data array
+      // We'll order first by PRIORITY desc (AGENDADO first), then by ISO desc (most recent)
+      const priorityIndex = 5; // PRIORITY hidden column index
+      const isoIndex = 6; // ISO hidden column index
+
       const table = $('#tbl').DataTable({
         data: data,
         deferRender: true,
@@ -168,12 +188,13 @@
           { data: 'Date', render: v => escapeHtml(v) },
           { data: 'Time', render: v => escapeHtml(v) },
           { data: 'Message', render: v => escapeHtml(v) },
-          { data: 'ISO', render: v => escapeHtml(v) }
+          { data: 'PRIORITY' }, // hidden numeric
+          { data: 'ISO' }       // hidden ISO
         ],
         columnDefs: [
-          { targets: [isoIndex], visible: false, searchable: false }
+          { targets: [priorityIndex, isoIndex], visible: false, searchable: false }
         ],
-        order: [[isoIndex, 'desc']], // most recent first
+        order: [[priorityIndex, 'desc'], [isoIndex, 'desc']],
         lengthMenu: (function() {
           const total = data.length;
           const maxLen = Math.max(10, Math.ceil(total / 10) * 10);
@@ -183,7 +204,7 @@
         })(),
         pageLength: (function(){ const t = data.length; return Math.min(50, Math.max(10, Math.ceil(t/10)*10)); })(),
         rowCallback: (row, rowData) => {
-          // rowData is the object from JSON
+          // rowData is the object from data array
           const msg = (rowData.Message || '').toString().trim();
           $(row).removeClass('row-agendado row-2025 row-2026q1');
 
@@ -214,6 +235,7 @@
       $.fn.dataTable.ext.search.push((settings, rowDataArray) => {
         const val = $('#filter-availability') ? $('#filter-availability').val() : '';
         if (!val) return true;
+        // rowDataArray is array of visible columns; Message is index 4
         const msg = (rowDataArray[4] || '').toString();
         if (val === 'AGENDADO') return /AGENDADO/i.test(msg);
         const [year, abbr] = val.split('-');
