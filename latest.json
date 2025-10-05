@@ -40,6 +40,14 @@
         "ISO":  "2025-10-05T02:00:22"
     },
     {
+        "Server":  "server1-local",
+        "Aplicante":  "ANDREA_QUISPE",
+        "Date":  "5/10/2025",
+        "Time":  "02:00:21",
+        "Message":  "Fecha dentro del rango encontrada: 2026-01-09",
+        "ISO":  "2025-10-05T02:00:21"
+    },
+    {
         "Server":  "server4-azure",
         "Aplicante":  "DAVID_UBILLUS",
         "Date":  "5/10/2025",
@@ -80,32 +88,8 @@
         "ISO":  "2025-10-05T02:00:21"
     },
     {
-        "Server":  "server1-local",
-        "Aplicante":  "ANDREA_QUISPE",
-        "Date":  "5/10/2025",
-        "Time":  "02:00:21",
-        "Message":  "Fecha dentro del rango encontrada: 2026-01-09",
-        "ISO":  "2025-10-05T02:00:21"
-    },
-    {
-        "Server":  "server7-azure",
-        "Aplicante":  "ELENA_UGAZ",
-        "Date":  "4/10/2025",
-        "Time":  "23:30:21",
-        "Message":  "Fecha dentro del rango encontrada: 2026-07-09",
-        "ISO":  "2025-10-04T23:30:21"
-    },
-    {
         "Server":  "server11-azure",
         "Aplicante":  "MAISHA_PALMA",
-        "Date":  "4/10/2025",
-        "Time":  "23:30:21",
-        "Message":  "available_times : 10:15 | business_times : 10:15",
-        "ISO":  "2025-10-04T23:30:21"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "DAVID_UBILLUS",
         "Date":  "4/10/2025",
         "Time":  "23:30:21",
         "Message":  "available_times : 10:15 | business_times : 10:15",
@@ -136,16 +120,32 @@
         "ISO":  "2025-10-04T23:30:21"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "PATRICK_QUIÑONEZ",
+        "Server":  "server7-azure",
+        "Aplicante":  "ELENA_UGAZ",
+        "Date":  "4/10/2025",
+        "Time":  "23:30:21",
+        "Message":  "Fecha dentro del rango encontrada: 2026-07-09",
+        "ISO":  "2025-10-04T23:30:21"
+    },
+    {
+        "Server":  "server4-azure",
+        "Aplicante":  "DAVID_UBILLUS",
+        "Date":  "4/10/2025",
+        "Time":  "23:30:21",
+        "Message":  "available_times : 10:15 | business_times : 10:15",
+        "ISO":  "2025-10-04T23:30:21"
+    },
+    {
+        "Server":  "server4-azure",
+        "Aplicante":  "DAVID_UBILLUS",
         "Date":  "4/10/2025",
         "Time":  "23:30:20",
         "Message":  "Fecha dentro del rango encontrada: 2026-07-09",
         "ISO":  "2025-10-04T23:30:20"
     },
     {
-        "Server":  "server4-azure",
-        "Aplicante":  "DAVID_UBILLUS",
+        "Server":  "server2-azure",
+        "Aplicante":  "PATRICK_QUIÑONEZ",
         "Date":  "4/10/2025",
         "Time":  "23:30:20",
         "Message":  "Fecha dentro del rango encontrada: 2026-07-09",
@@ -182,197 +182,5 @@
         "Time":  "23:30:19",
         "Message":  "Fecha dentro del rango encontrada: 2026-07-09",
         "ISO":  "2025-10-04T23:30:19"
-    },
-    {
-        "Server":  "laptop-CJJ",
-        "Aplicante":  "SMITH_ZARATE",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:21",
-        "Message":  "available_times : 08:00 | business_times : 08:00",
-        "ISO":  "2025-10-04T21:45:21"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "DAVID_UBILLUS",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:20",
-        "Message":  "available_times : 08:00 | business_times : 08:00",
-        "ISO":  "2025-10-04T21:45:20"
-    },
-    {
-        "Server":  "server2-local",
-        "Aplicante":  "ELY_DEL_MILAGRO_CERDAN",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:20",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:20"
-    },
-    {
-        "Server":  "server2-local",
-        "Aplicante":  "ELY_DEL_MILAGRO_CERDAN",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:20",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:20"
-    },
-    {
-        "Server":  "server10-azure",
-        "Aplicante":  "CESAR_JOYA",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "available_times : 08:00 | business_times : 08:00",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "ZOILA_PRIETO",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "KAREN_BARZOLA",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "ZOILA_PRIETO",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server1-azure",
-        "Aplicante":  "SONALI_ORE",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server1-azure",
-        "Aplicante":  "SONALI_ORE",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server5-azure",
-        "Aplicante":  "EDUARDO_CALVO",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server5-azure",
-        "Aplicante":  "EDUARDO_CALVO",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "KAREN_BARZOLA",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:19",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:19"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "DAVID_UBILLUS",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:18"
-    },
-    {
-        "Server":  "server2-local",
-        "Aplicante":  "ELIO_HIDALGO",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:18",
-        "Message":  "available_times : 08:00 | business_times : 08:00",
-        "ISO":  "2025-10-04T21:45:18"
-    },
-    {
-        "Server":  "laptop-CJJ",
-        "Aplicante":  "SMITH_ZARATE",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:18"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "DAVID_UBILLUS",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:18"
-    },
-    {
-        "Server":  "laptop-CJJ",
-        "Aplicante":  "SMITH_ZARATE",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:18"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "PATRICK_QUIÑONEZ",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:18"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "PATRICK_QUIÑONEZ",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:18"
-    },
-    {
-        "Server":  "server2-local",
-        "Aplicante":  "ELIO_HIDALGO",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:17",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:17"
-    },
-    {
-        "Server":  "server10-azure",
-        "Aplicante":  "CESAR_JOYA",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:17",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:17"
-    },
-    {
-        "Server":  "server10-azure",
-        "Aplicante":  "CESAR_JOYA",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:17",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:17"
-    },
-    {
-        "Server":  "server2-local",
-        "Aplicante":  "ELIO_HIDALGO",
-        "Date":  "4/10/2025",
-        "Time":  "21:45:17",
-        "Message":  "Fecha dentro del rango encontrada: 2025-11-12",
-        "ISO":  "2025-10-04T21:45:17"
     }
 ]
