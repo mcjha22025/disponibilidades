@@ -150,7 +150,7 @@
         };
       });
 
-      // Build availability options from the JSON data (respecting 2025 and 2026 up to June)
+      // Build availability options from the JSON data (respecting 2025 and 2026 up to July)
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
       data.forEach(item => {
@@ -159,7 +159,7 @@
         let m;
         while ((m = re.exec(msg)) !== null) {
           const year = m[1], mon = parseInt(m[2], 10);
-          if (year === "2025" || (year === "2026" && mon <= 6)) {
+          if (year === "2025" || (year === "2026" && mon <= 7)) {
             availSet.add(`${year}-${monthNames[mon-1]}`);
           }
         }
@@ -218,7 +218,7 @@
             const year = m[1], mon = parseInt(m[2], 10);
             if (year === "2025") {
               $(row).addClass('row-2025');
-            } else if (year === "2026" && mon <= 6) {
+            } else if (year === "2026" && mon <= 7) {
               $(row).addClass('row-2026q1');
             }
           }
