@@ -8,14 +8,6 @@
         "ISO":  "2025-10-07T03:50:20"
     },
     {
-        "Server":  "server4-aws",
-        "Aplicante":  "JUAN_ARANGO",
-        "Date":  "7/10/2025",
-        "Time":  "03:50:20",
-        "Message":  "Fecha dentro del rango encontrada: 2026-05-21",
-        "ISO":  "2025-10-07T03:50:20"
-    },
-    {
         "Server":  "server3-aws",
         "Aplicante":  "ANGEL_ARIAS",
         "Date":  "7/10/2025",
@@ -32,12 +24,12 @@
         "ISO":  "2025-10-07T03:50:20"
     },
     {
-        "Server":  "server3-aws",
-        "Aplicante":  "ANGEL_ARIAS",
+        "Server":  "server4-aws",
+        "Aplicante":  "JUAN_ARANGO",
         "Date":  "7/10/2025",
-        "Time":  "03:50:19",
+        "Time":  "03:50:20",
         "Message":  "Fecha dentro del rango encontrada: 2026-05-21",
-        "ISO":  "2025-10-07T03:50:19"
+        "ISO":  "2025-10-07T03:50:20"
     },
     {
         "Server":  "server3-aws",
@@ -65,14 +57,6 @@
     },
     {
         "Server":  "server3-aws",
-        "Aplicante":  "ROSANA_ZORRILA",
-        "Date":  "7/10/2025",
-        "Time":  "03:50:19",
-        "Message":  "Fecha dentro del rango encontrada: 2026-05-21",
-        "ISO":  "2025-10-07T03:50:19"
-    },
-    {
-        "Server":  "server3-aws",
         "Aplicante":  "ANGEL_ARIAS",
         "Date":  "7/10/2025",
         "Time":  "03:50:19",
@@ -88,6 +72,22 @@
         "ISO":  "2025-10-07T03:50:19"
     },
     {
+        "Server":  "server3-aws",
+        "Aplicante":  "ROSANA_ZORRILA",
+        "Date":  "7/10/2025",
+        "Time":  "03:50:19",
+        "Message":  "Fecha dentro del rango encontrada: 2026-05-21",
+        "ISO":  "2025-10-07T03:50:19"
+    },
+    {
+        "Server":  "server3-aws",
+        "Aplicante":  "ANGEL_ARIAS",
+        "Date":  "7/10/2025",
+        "Time":  "03:50:19",
+        "Message":  "Fecha dentro del rango encontrada: 2026-05-21",
+        "ISO":  "2025-10-07T03:50:19"
+    },
+    {
         "Server":  "server2-local",
         "Aplicante":  "ELIZABETH_PINEDA",
         "Date":  "7/10/2025",
@@ -102,125 +102,5 @@
         "Time":  "03:50:17",
         "Message":  "Fecha dentro del rango encontrada: 2026-05-21",
         "ISO":  "2025-10-07T03:50:17"
-    },
-    {
-        "Server":  "server3-local",
-        "Aplicante":  "RUBI_GOÑE",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:21",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:21"
-    },
-    {
-        "Server":  "server3-local",
-        "Aplicante":  "RUBI_GOÑE",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:21",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:21"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "TANIA_LOO",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:21",
-        "Message":  "available_times : 10:00 | business_times : 10:00",
-        "ISO":  "2025-10-07T02:40:21"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "NORMA_HUAMANI",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:20",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:20"
-    },
-    {
-        "Server":  "server3-aws",
-        "Aplicante":  "ANGEL_ARIAS",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:20",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:20"
-    },
-    {
-        "Server":  "server3-aws",
-        "Aplicante":  "ANGEL_ARIAS",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:20",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:20"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "NORMA_HUAMANI",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:20",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:20"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "TANIA_LOO",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:19",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:19"
-    },
-    {
-        "Server":  "server4-local",
-        "Aplicante":  "TANIA_LOO",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:19",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:19"
-    },
-    {
-        "Server":  "server2-local",
-        "Aplicante":  "ELIZABETH_PINEDA",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:19",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:19"
-    },
-    {
-        "Server":  "server2-local",
-        "Aplicante":  "ELIZABETH_PINEDA",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:19",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:19"
-    },
-    {
-        "Server":  "server3-aws",
-        "Aplicante":  "ROSANA_ZORRILA",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:19",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:19"
-    },
-    {
-        "Server":  "server3-aws",
-        "Aplicante":  "ROSANA_ZORRILA",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:19",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:19"
-    },
-    {
-        "Server":  "laptop-CJJ",
-        "Aplicante":  "TERESA_REYES",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:18",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:18"
-    },
-    {
-        "Server":  "laptop-CJJ",
-        "Aplicante":  "TERESA_REYES",
-        "Date":  "7/10/2025",
-        "Time":  "02:40:18",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-10-07T02:40:18"
     }
 ]
