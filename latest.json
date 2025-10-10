@@ -1,1 +1,34 @@
-﻿
+﻿[
+    {
+        "Server":  "server1-aws",
+        "Aplicante":  "MARIA_LAURA_QUISPE_cita_emergencia",
+        "Date":  "10/10/2025",
+        "Time":  "10:10:28",
+        "Message":  "AGENDADO - 10:15 2027-03-09",
+        "ISO":  "2025-10-10T10:10:28"
+    },
+    {
+        "Server":  "server1-aws",
+        "Aplicante":  "MARIA_LAURA_QUISPE_cita_emergencia",
+        "Date":  "10/10/2025",
+        "Time":  "10:10:21",
+        "Message":  "available_times : 10:15 | business_times : 10:15",
+        "ISO":  "2025-10-10T10:10:21"
+    },
+    {
+        "Server":  "server1-aws",
+        "Aplicante":  "MARIA_LAURA_QUISPE_cita_emergencia",
+        "Date":  "10/10/2025",
+        "Time":  "10:10:20",
+        "Message":  "Fecha dentro del rango encontrada: 2027-03-09",
+        "ISO":  "2025-10-10T10:10:20"
+    },
+    {
+        "Server":  "server1-aws",
+        "Aplicante":  "MARIA_LAURA_QUISPE_cita_emergencia",
+        "Date":  "10/10/2025",
+        "Time":  "10:10:20",
+        "Message":  "Fecha dentro del rango encontrada: 2027-03-09",
+        "ISO":  "2025-10-10T10:10:20"
+    }
+]
