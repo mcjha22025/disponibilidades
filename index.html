@@ -66,7 +66,7 @@
       background-color: #f5f5f5;
     }
 
-    /* Verde más fuerte para AGENDADO o AGENDAMIENTO EXITOSO (prioritario) */
+    /* Verde fuerte para AGENDADO o AGENDAMIENTO EXITOSO (prioritario) */
     .row-agendado {
       background-color: #24e368 !important;
       color: #032a18;
@@ -113,14 +113,16 @@
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script>
     (async () => {
+      // Load JSON directly (preprocessed by your PowerShell script)
       const resp = await fetch('latest.json');
       if (!resp.ok) {
         const txt = await resp.text().catch(() => '');
         document.querySelector('body').innerText = 'Error loading latest.json: ' + resp.status + ' ' + txt;
         return;
       }
-      const rawData = await resp.json();
+      const rawData = await resp.json(); // array of objects: { Server, Aplicante, Date, Time, Message, ISO }
 
+      // Utility: escape HTML to avoid injection in table cells
       function escapeHtml(str) {
         if (!str) return '';
         return String(str)
@@ -131,7 +133,7 @@
           .replace(/'/g, '&#039;');
       }
 
-      // PRIORITY = 1 si contiene AGENDADO o AGENDAMIENTO EXITOSO
+      // PRIORITY = 1 si contiene AGENDADO o AGENDAMIENTO EXITOSO; ISO se conserva
       const data = rawData.map(item => {
         const msg = (item.Message || '').toString();
         const priority = /(AGENDADO|AGENDAMIENTO EXITOSO)/i.test(msg) ? 1 : 0;
@@ -146,6 +148,7 @@
         };
       });
 
+      // Availability options (agrega meses y “AGENDADO” si hay AGENDADO o AGENDAMIENTO EXITOSO)
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
       data.forEach(item => {
@@ -167,8 +170,10 @@
         return b.localeCompare(a);
       });
 
-      const priorityIndex = 5;
-      const isoIndex = 6;
+      // Initialize DataTable using data array
+      // Order: PRIORITY desc (AGENDADO primero), luego ISO desc (más reciente)
+      const priorityIndex = 5; // PRIORITY hidden column index
+      const isoIndex = 6; // ISO hidden column index
 
       const table = $('#tbl').DataTable({
         data: data,
@@ -181,8 +186,8 @@
           { data: 'Date', render: v => escapeHtml(v) },
           { data: 'Time', render: v => escapeHtml(v) },
           { data: 'Message', render: v => escapeHtml(v) },
-          { data: 'PRIORITY' },
-          { data: 'ISO' }
+          { data: 'PRIORITY' }, // hidden numeric
+          { data: 'ISO' }       // hidden ISO
         ],
         columnDefs: [
           { targets: [priorityIndex, isoIndex], visible: false, searchable: false }
@@ -223,10 +228,100 @@
         }
       });
 
+      // Custom availability filter (usa Message)
       $.fn.dataTable.ext.search.push((settings, rowDataArray) => {
-        const val = $('#filter-availability') ? $('#filter-availability').val() : '';
+        const $fa = $('#filter-availability');
+        const val = $fa.length ? $fa.val() : '';
         if (!val) return true;
+        // rowDataArray es array de columnas visibles; Message es índice 4
         const msg = (rowDataArray[4] || '').toString();
         if (val === 'AGENDADO') return /(AGENDADO|AGENDAMIENTO EXITOSO)/i.test(msg);
         const [year, abbr] = val.split('-');
-        const num = ('0' + (monthNames.indexOf(abbr)
+        const num = ('0' + (monthNames.indexOf(abbr) + 1)).slice(-2);
+        return msg.includes(`${year}-${num}-`);
+      });
+
+      // Build and attach filters
+
+      // Availability filter
+      const availFilter = $(`
+        <label id="filter-availability-label">
+          <span>Availability:</span>
+          <select id="filter-availability">
+            <option value="">All</option>
+            ${availOpts.map(v => `<option value="${v}">${v}</option>`).join('')}
+          </select>
+        </label>
+      `);
+      availFilter.find('select').on('change', () => table.draw());
+
+      // Server filter (column 0)
+      const serverFilter = $(`
+        <label id="filter-server-label">
+          <span>Server:</span>
+          <select id="filter-server">
+            <option value="">All</option>
+          </select>
+        </label>
+      `);
+      const servers = Array.from(new Set(data.map(d => d.Server))).sort();
+      servers.forEach(s => serverFilter.find('select').append(`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`));
+      serverFilter.find('select').on('change', function() {
+        table.column(0).search(this.value).draw();
+      });
+
+      // Applicant filter (column 1)
+      const applicantFilter = $(`
+        <label id="filter-applicant-label">
+          <span>Applicant:</span>
+          <select id="filter-applicant">
+            <option value="">All</option>
+          </select>
+        </label>
+      `);
+      const applicants = Array.from(new Set(data.map(d => d.Aplicante))).sort();
+      applicants.forEach(a => applicantFilter.find('select').append(`<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`));
+      applicantFilter.find('select').on('change', function() {
+        table.column(1).search(this.value).draw();
+      });
+
+      // Refresh controls with persistence
+      const refreshControl = $(`
+        <label id="refresh-label">
+          <span>Refresh:</span>
+          <select id="refresh-interval">
+            <option value="0">Stop</option>
+            <option value="5">Auto (5s)</option>
+            <option value="10">10s</option>
+            <option value="20">20s</option>
+            <option value="30">30s</option>
+            <option value="60">60s</option>
+          </select>
+          <button id="refresh-now">Now</button>
+        </label>
+      `);
+      let refreshTimer;
+      function setRefreshInterval(val) {
+        clearInterval(refreshTimer);
+        localStorage.setItem('refresh-interval', val);
+        const sec = parseInt(val, 10);
+        if (sec > 0) refreshTimer = setInterval(() => location.reload(), sec * 1000);
+      }
+      refreshControl.find('#refresh-interval').on('change', function() { setRefreshInterval(this.value); });
+      refreshControl.find('#refresh-now').on('click', () => location.reload());
+      const saved = localStorage.getItem('refresh-interval') || '0';
+      refreshControl.find('#refresh-interval').val(saved);
+      setRefreshInterval(saved);
+
+      // Append controls in order (respeta tu layout)
+      const ctr = $('#controls');
+      availFilter.appendTo(ctr);
+      serverFilter.appendTo(ctr);
+      $('#tbl_length').appendTo(ctr);
+      applicantFilter.appendTo(ctr);
+      $('#tbl_filter').appendTo(ctr);
+      refreshControl.appendTo(ctr);
+    })();
+  </script>
+</body>
+</html>
