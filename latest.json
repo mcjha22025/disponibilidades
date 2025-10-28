@@ -4920,8 +4920,8 @@
         "ISO":  "2025-10-28T02:50:18"
     },
     {
-        "Server":  "server4-local",
-        "Aplicante":  "NORMA_HUAMANI",
+        "Server":  "server2-local",
+        "Aplicante":  "LIZZI_RUIZ",
         "Date":  "28/10/2025",
         "Time":  "02:50:16",
         "Message":  "Fecha dentro del rango encontrada: 2026-04-29",
@@ -4944,8 +4944,8 @@
         "ISO":  "2025-10-28T02:50:16"
     },
     {
-        "Server":  "server2-local",
-        "Aplicante":  "LIZZI_RUIZ",
+        "Server":  "server4-local",
+        "Aplicante":  "NORMA_HUAMANI",
         "Date":  "28/10/2025",
         "Time":  "02:50:16",
         "Message":  "Fecha dentro del rango encontrada: 2026-04-29",
@@ -5596,7 +5596,7 @@
         "Aplicante":  "PAREJA_CARLOS_NAJAR",
         "Date":  "28/10/2025",
         "Time":  "01:55:18",
-        "Message":  "Fecha disponible más cercana: 2026-03-12",
+        "Message":  "Fecha disponible más cercana: 2027-05-13",
         "ISO":  "2025-10-28T01:55:18"
     },
     {
@@ -5604,7 +5604,7 @@
         "Aplicante":  "PAREJA_CARLOS_NAJAR",
         "Date":  "28/10/2025",
         "Time":  "01:55:18",
-        "Message":  "Fecha disponible más cercana: 2027-05-13",
+        "Message":  "Fecha disponible más cercana: 2026-03-12",
         "ISO":  "2025-10-28T01:55:18"
     },
     {
@@ -5616,22 +5616,6 @@
         "ISO":  "2025-10-28T01:55:17"
     },
     {
-        "Server":  "server4-azure",
-        "Aplicante":  "DAVID_UBILLUS",
-        "Date":  "28/10/2025",
-        "Time":  "01:55:17",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
-        "ISO":  "2025-10-28T01:55:17"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "DAVID_UBILLUS",
-        "Date":  "28/10/2025",
-        "Time":  "01:55:17",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
-        "ISO":  "2025-10-28T01:55:17"
-    },
-    {
         "Server":  "server10-azure",
         "Aplicante":  "CESAR_JOYA",
         "Date":  "28/10/2025",
@@ -5640,16 +5624,24 @@
         "ISO":  "2025-10-28T01:55:17"
     },
     {
-        "Server":  "server3-aws",
-        "Aplicante":  "ROSANA_ZORRILA",
+        "Server":  "server4-azure",
+        "Aplicante":  "DAVID_UBILLUS",
         "Date":  "28/10/2025",
-        "Time":  "01:55:16",
+        "Time":  "01:55:17",
         "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
-        "ISO":  "2025-10-28T01:55:16"
+        "ISO":  "2025-10-28T01:55:17"
     },
     {
-        "Server":  "server3-aws",
-        "Aplicante":  "ROSANA_ZORRILA",
+        "Server":  "server4-azure",
+        "Aplicante":  "DAVID_UBILLUS",
+        "Date":  "28/10/2025",
+        "Time":  "01:55:17",
+        "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
+        "ISO":  "2025-10-28T01:55:17"
+    },
+    {
+        "Server":  "server1-aws",
+        "Aplicante":  "PAREJA_ROMERO_MENDOZA",
         "Date":  "28/10/2025",
         "Time":  "01:55:16",
         "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
@@ -5680,6 +5672,14 @@
         "ISO":  "2025-10-28T01:55:16"
     },
     {
+        "Server":  "server1-aws",
+        "Aplicante":  "PAREJA_ROMERO_MENDOZA",
+        "Date":  "28/10/2025",
+        "Time":  "01:55:16",
+        "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
+        "ISO":  "2025-10-28T01:55:16"
+    },
+    {
         "Server":  "server2-local",
         "Aplicante":  "ELIO_HIDALGO",
         "Date":  "28/10/2025",
@@ -5688,16 +5688,16 @@
         "ISO":  "2025-10-28T01:55:16"
     },
     {
-        "Server":  "server1-aws",
-        "Aplicante":  "PAREJA_ROMERO_MENDOZA",
+        "Server":  "server3-aws",
+        "Aplicante":  "ROSANA_ZORRILA",
         "Date":  "28/10/2025",
         "Time":  "01:55:16",
         "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
         "ISO":  "2025-10-28T01:55:16"
     },
     {
-        "Server":  "server1-aws",
-        "Aplicante":  "PAREJA_ROMERO_MENDOZA",
+        "Server":  "server3-aws",
+        "Aplicante":  "ROSANA_ZORRILA",
         "Date":  "28/10/2025",
         "Time":  "01:55:16",
         "Message":  "Fecha dentro del rango encontrada: 2026-03-12",
@@ -7366,133 +7366,5 @@
         "Time":  "23:35:13",
         "Message":  "Fecha disponible más cercana: 2027-05-14",
         "ISO":  "2025-10-27T23:35:13"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:44",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:44"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:38",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:38"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:33",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:33"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:29",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:29"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:27",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:27"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:24",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:24"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:21",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:21"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:30:15",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:30:15"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:44",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:44"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:38",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:38"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:32",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:32"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:29",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:29"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:27",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:27"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:25",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:25"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:22",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:22"
-    },
-    {
-        "Server":  "laptop-EMA",
-        "Aplicante":  "PAREJA_CARLOS_NAJAR",
-        "Date":  "27/10/2025",
-        "Time":  "23:25:14",
-        "Message":  "Fecha disponible más cercana: 2027-05-14",
-        "ISO":  "2025-10-27T23:25:14"
     }
 ]
