@@ -1616,16 +1616,16 @@
         "ISO":  "2025-11-01T07:40:25"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "07:40:21",
         "Message":  "Fecha disponible más cercana: 2027-03-02",
         "ISO":  "2025-11-01T07:40:21"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "07:40:21",
         "Message":  "Fecha disponible más cercana: 2027-03-02",
@@ -2296,14 +2296,6 @@
         "ISO":  "2025-11-01T05:45:11"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "05:40:42",
-        "Message":  "Fecha disponible más cercana: 2027-01-29",
-        "ISO":  "2025-11-01T05:40:42"
-    },
-    {
         "Server":  "server2-azure",
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
@@ -2314,14 +2306,22 @@
     {
         "Server":  "server3-azure",
         "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "05:40:42",
+        "Message":  "Fecha disponible más cercana: 2027-01-29",
+        "ISO":  "2025-11-01T05:40:42"
+    },
+    {
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "05:40:36",
         "Message":  "Fecha disponible más cercana: 2027-01-29",
         "ISO":  "2025-11-01T05:40:36"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "05:40:36",
         "Message":  "Fecha disponible más cercana: 2027-01-29",
@@ -2352,16 +2352,16 @@
         "ISO":  "2025-11-01T05:40:29"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "05:40:27",
         "Message":  "Fecha disponible más cercana: 2027-01-29",
         "ISO":  "2025-11-01T05:40:27"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "05:40:27",
         "Message":  "Fecha disponible más cercana: 2027-01-29",
@@ -2468,7 +2468,7 @@
         "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "05:35:18",
-        "Message":  "Fecha disponible más cercana: 2026-10-27",
+        "Message":  "Fecha disponible más cercana: 2026-03-13",
         "ISO":  "2025-11-01T05:35:18"
     },
     {
@@ -2476,7 +2476,7 @@
         "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "05:35:18",
-        "Message":  "Fecha disponible más cercana: 2026-03-13",
+        "Message":  "Fecha disponible más cercana: 2026-10-27",
         "ISO":  "2025-11-01T05:35:18"
     },
     {
@@ -4632,16 +4632,16 @@
         "ISO":  "2025-11-01T03:00:30"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "03:00:27",
         "Message":  "Fecha disponible más cercana: 2026-07-06",
         "ISO":  "2025-11-01T03:00:27"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "03:00:27",
         "Message":  "Fecha disponible más cercana: 2026-07-06",
@@ -4712,14 +4712,6 @@
         "ISO":  "2025-11-01T03:00:12"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "02:55:42",
-        "Message":  "Fecha disponible más cercana: 2026-12-22",
-        "ISO":  "2025-11-01T02:55:42"
-    },
-    {
         "Server":  "server2-azure",
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
@@ -4730,14 +4722,22 @@
     {
         "Server":  "server3-azure",
         "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "02:55:42",
+        "Message":  "Fecha disponible más cercana: 2026-12-22",
+        "ISO":  "2025-11-01T02:55:42"
+    },
+    {
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:55:36",
         "Message":  "Fecha disponible más cercana: 2026-12-22",
         "ISO":  "2025-11-01T02:55:36"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:55:36",
         "Message":  "Fecha disponible más cercana: 2026-12-22",
@@ -4832,6 +4832,22 @@
         "ISO":  "2025-11-01T02:55:16"
     },
     {
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "02:55:15",
+        "Message":  "Fecha disponible más cercana: 2026-02-24",
+        "ISO":  "2025-11-01T02:55:15"
+    },
+    {
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "02:55:15",
+        "Message":  "Fecha disponible más cercana: 2026-11-03",
+        "ISO":  "2025-11-01T02:55:15"
+    },
+    {
         "Server":  "server2-azure",
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
@@ -4848,14 +4864,6 @@
         "ISO":  "2025-11-01T02:55:15"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "02:55:15",
-        "Message":  "Fecha disponible más cercana: 2026-02-24",
-        "ISO":  "2025-11-01T02:55:15"
-    },
-    {
         "Server":  "server2-azure",
         "Aplicante":  "ZARELA_TINOCO_critico",
         "Date":  "1/11/2025",
@@ -4869,14 +4877,6 @@
         "Date":  "1/11/2025",
         "Time":  "02:55:15",
         "Message":  "Fecha dentro del rango encontrada: 2026-02-24",
-        "ISO":  "2025-11-01T02:55:15"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "02:55:15",
-        "Message":  "Fecha disponible más cercana: 2026-11-03",
         "ISO":  "2025-11-01T02:55:15"
     },
     {
@@ -4960,14 +4960,6 @@
         "ISO":  "2025-11-01T02:50:25"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "02:50:21",
-        "Message":  "Fecha disponible más cercana: 2027-02-08",
-        "ISO":  "2025-11-01T02:50:21"
-    },
-    {
         "Server":  "server2-azure",
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
@@ -4978,14 +4970,22 @@
     {
         "Server":  "server3-azure",
         "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "02:50:21",
+        "Message":  "Fecha disponible más cercana: 2027-02-08",
+        "ISO":  "2025-11-01T02:50:21"
+    },
+    {
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:50:19",
         "Message":  "Fecha disponible más cercana: 2026-07-09",
         "ISO":  "2025-11-01T02:50:19"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:50:19",
         "Message":  "Fecha disponible más cercana: 2026-07-09",
@@ -5008,16 +5008,16 @@
         "ISO":  "2025-11-01T02:50:15"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:50:12",
         "Message":  "Fecha disponible más cercana: 2027-02-24",
         "ISO":  "2025-11-01T02:50:12"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:50:12",
         "Message":  "Fecha disponible más cercana: 2027-02-24",
@@ -5296,14 +5296,6 @@
         "ISO":  "2025-11-01T02:35:42"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "02:35:36",
-        "Message":  "Fecha disponible más cercana: 2027-01-29",
-        "ISO":  "2025-11-01T02:35:36"
-    },
-    {
         "Server":  "server2-azure",
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
@@ -5314,14 +5306,22 @@
     {
         "Server":  "server3-azure",
         "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "02:35:36",
+        "Message":  "Fecha disponible más cercana: 2027-01-29",
+        "ISO":  "2025-11-01T02:35:36"
+    },
+    {
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:35:30",
         "Message":  "Fecha disponible más cercana: 2027-01-29",
         "ISO":  "2025-11-01T02:35:30"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:35:30",
         "Message":  "Fecha disponible más cercana: 2027-01-29",
@@ -5392,16 +5392,16 @@
         "ISO":  "2025-11-01T02:35:15"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:35:12",
         "Message":  "Fecha disponible más cercana: 2027-02-05",
         "ISO":  "2025-11-01T02:35:12"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:35:12",
         "Message":  "Fecha disponible más cercana: 2027-02-05",
@@ -5504,16 +5504,16 @@
         "ISO":  "2025-11-01T02:30:18"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:30:15",
         "Message":  "Fecha disponible más cercana: 2027-02-02",
         "ISO":  "2025-11-01T02:30:15"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:30:15",
         "Message":  "Fecha disponible más cercana: 2027-02-02",
@@ -5552,16 +5552,16 @@
         "ISO":  "2025-11-01T02:25:41"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:25:36",
         "Message":  "Fecha disponible más cercana: 2026-10-20",
         "ISO":  "2025-11-01T02:25:36"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:25:36",
         "Message":  "Fecha disponible más cercana: 2026-10-20",
@@ -5576,16 +5576,16 @@
         "ISO":  "2025-11-01T02:25:34"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:25:30",
         "Message":  "Fecha disponible más cercana: 2026-10-20",
         "ISO":  "2025-11-01T02:25:30"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:25:30",
         "Message":  "Fecha disponible más cercana: 2026-10-20",
@@ -5728,16 +5728,16 @@
         "ISO":  "2025-11-01T02:20:26"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:20:22",
         "Message":  "Fecha disponible más cercana: 2026-09-15",
         "ISO":  "2025-11-01T02:20:22"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:20:22",
         "Message":  "Fecha disponible más cercana: 2026-09-15",
@@ -5872,6 +5872,14 @@
         "ISO":  "2025-11-01T02:15:19"
     },
     {
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "02:15:17",
+        "Message":  "Fecha disponible más cercana: 2026-08-27",
+        "ISO":  "2025-11-01T02:15:17"
+    },
+    {
         "Server":  "server3-azure",
         "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
@@ -5880,24 +5888,16 @@
         "ISO":  "2025-11-01T02:15:17"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "02:15:17",
-        "Message":  "Fecha disponible más cercana: 2026-08-27",
-        "ISO":  "2025-11-01T02:15:17"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:15:15",
         "Message":  "Fecha disponible más cercana: 2027-04-05",
         "ISO":  "2025-11-01T02:15:15"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:15:15",
         "Message":  "Fecha disponible más cercana: 2027-04-05",
@@ -6008,16 +6008,16 @@
         "ISO":  "2025-11-01T02:10:22"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:10:21",
         "Message":  "Fecha disponible más cercana: 2027-04-05",
         "ISO":  "2025-11-01T02:10:21"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:10:21",
         "Message":  "Fecha disponible más cercana: 2027-04-05",
@@ -6112,16 +6112,16 @@
         "ISO":  "2025-11-01T02:05:29"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:05:27",
         "Message":  "Fecha disponible más cercana: 2027-01-07",
         "ISO":  "2025-11-01T02:05:27"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "02:05:27",
         "Message":  "Fecha disponible más cercana: 2027-01-07",
@@ -6504,16 +6504,16 @@
         "ISO":  "2025-11-01T01:50:16"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:50:12",
         "Message":  "Fecha disponible más cercana: 2027-04-02",
         "ISO":  "2025-11-01T01:50:12"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:50:12",
         "Message":  "Fecha disponible más cercana: 2027-04-02",
@@ -6576,16 +6576,16 @@
         "ISO":  "2025-11-01T01:45:29"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:45:26",
         "Message":  "Fecha disponible más cercana: 2027-03-23",
         "ISO":  "2025-11-01T01:45:26"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:45:26",
         "Message":  "Fecha disponible más cercana: 2027-03-23",
@@ -6720,16 +6720,16 @@
         "ISO":  "2025-11-01T01:40:23"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:40:21",
         "Message":  "Fecha disponible más cercana: 2026-09-03",
         "ISO":  "2025-11-01T01:40:21"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:40:21",
         "Message":  "Fecha disponible más cercana: 2026-09-03",
@@ -6848,16 +6848,16 @@
         "ISO":  "2025-11-01T01:35:22"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:35:21",
         "Message":  "Fecha disponible más cercana: 2026-12-28",
         "ISO":  "2025-11-01T01:35:21"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:35:21",
         "Message":  "Fecha disponible más cercana: 2026-12-28",
@@ -7064,16 +7064,16 @@
         "ISO":  "2025-11-01T01:25:35"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:25:30",
         "Message":  "Fecha disponible más cercana: 2027-02-05",
         "ISO":  "2025-11-01T01:25:30"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:25:30",
         "Message":  "Fecha disponible más cercana: 2027-02-05",
@@ -7176,6 +7176,14 @@
         "ISO":  "2025-11-01T01:20:42"
     },
     {
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "01:20:36",
+        "Message":  "Fecha disponible más cercana: 2027-03-23",
+        "ISO":  "2025-11-01T01:20:36"
+    },
+    {
         "Server":  "server2-azure",
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
@@ -7184,24 +7192,16 @@
         "ISO":  "2025-11-01T01:20:36"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "01:20:36",
-        "Message":  "Fecha disponible más cercana: 2027-03-23",
-        "ISO":  "2025-11-01T01:20:36"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:20:31",
         "Message":  "Fecha disponible más cercana: 2027-03-23",
         "ISO":  "2025-11-01T01:20:31"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:20:31",
         "Message":  "Fecha disponible más cercana: 2027-03-23",
@@ -7480,16 +7480,16 @@
         "ISO":  "2025-11-01T01:10:28"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:10:27",
         "Message":  "Fecha disponible más cercana: 2027-02-16",
         "ISO":  "2025-11-01T01:10:27"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:10:27",
         "Message":  "Fecha disponible más cercana: 2027-02-16",
@@ -7512,24 +7512,32 @@
         "ISO":  "2025-11-01T01:10:21"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "ZARELA_TINOCO_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:10:15",
-        "Message":  "Fecha dentro del rango encontrada: 2026-02-17",
-        "ISO":  "2025-11-01T01:10:15"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "ZARELA_TINOCO_critico",
-        "Date":  "1/11/2025",
-        "Time":  "01:10:15",
-        "Message":  "Fecha dentro del rango encontrada: 2026-02-17",
+        "Message":  "Fecha disponible más cercana: 2027-02-16",
         "ISO":  "2025-11-01T01:10:15"
     },
     {
         "Server":  "server3-azure",
         "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "01:10:15",
+        "Message":  "Fecha disponible más cercana: 2026-02-17",
+        "ISO":  "2025-11-01T01:10:15"
+    },
+    {
+        "Server":  "server2-azure",
+        "Aplicante":  "ZARELA_TINOCO_critico",
+        "Date":  "1/11/2025",
+        "Time":  "01:10:15",
+        "Message":  "Fecha dentro del rango encontrada: 2026-02-17",
+        "ISO":  "2025-11-01T01:10:15"
+    },
+    {
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:10:15",
         "Message":  "Fecha disponible más cercana: 2026-02-17",
@@ -7545,18 +7553,10 @@
     },
     {
         "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Aplicante":  "ZARELA_TINOCO_critico",
         "Date":  "1/11/2025",
         "Time":  "01:10:15",
-        "Message":  "Fecha disponible más cercana: 2026-02-17",
-        "ISO":  "2025-11-01T01:10:15"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "01:10:15",
-        "Message":  "Fecha disponible más cercana: 2027-02-16",
+        "Message":  "Fecha dentro del rango encontrada: 2026-02-17",
         "ISO":  "2025-11-01T01:10:15"
     },
     {
@@ -7648,35 +7648,11 @@
         "ISO":  "2025-11-01T01:05:28"
     },
     {
-        "Server":  "server4-azure",
-        "Aplicante":  "ANDREA_QUISPE_critico",
-        "Date":  "1/11/2025",
-        "Time":  "01:05:16",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
-        "ISO":  "2025-11-01T01:05:16"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "01:05:16",
-        "Message":  "Fecha disponible más cercana: 2026-03-11",
-        "ISO":  "2025-11-01T01:05:16"
-    },
-    {
         "Server":  "server3-azure",
         "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:05:16",
         "Message":  "Fecha disponible más cercana: 2026-08-26",
-        "ISO":  "2025-11-01T01:05:16"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "ANDREA_QUISPE_critico",
-        "Date":  "1/11/2025",
-        "Time":  "01:05:16",
-        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
         "ISO":  "2025-11-01T01:05:16"
     },
     {
@@ -7688,11 +7664,35 @@
         "ISO":  "2025-11-01T01:05:16"
     },
     {
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Date":  "1/11/2025",
+        "Time":  "01:05:16",
+        "Message":  "Fecha disponible más cercana: 2026-03-11",
+        "ISO":  "2025-11-01T01:05:16"
+    },
+    {
         "Server":  "server2-azure",
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "01:05:16",
         "Message":  "Fecha disponible más cercana: 2026-08-26",
+        "ISO":  "2025-11-01T01:05:16"
+    },
+    {
+        "Server":  "server4-azure",
+        "Aplicante":  "ANDREA_QUISPE_critico",
+        "Date":  "1/11/2025",
+        "Time":  "01:05:16",
+        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
+        "ISO":  "2025-11-01T01:05:16"
+    },
+    {
+        "Server":  "server4-azure",
+        "Aplicante":  "ANDREA_QUISPE_critico",
+        "Date":  "1/11/2025",
+        "Time":  "01:05:16",
+        "Message":  "Fecha dentro del rango encontrada: 2026-03-11",
         "ISO":  "2025-11-01T01:05:16"
     },
     {
@@ -7824,16 +7824,16 @@
         "ISO":  "2025-11-01T00:55:39"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:55:36",
         "Message":  "Fecha disponible más cercana: 2027-04-01",
         "ISO":  "2025-11-01T00:55:36"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:55:36",
         "Message":  "Fecha disponible más cercana: 2027-04-01",
@@ -8412,7 +8412,7 @@
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:35:18",
-        "Message":  "Fecha disponible más cercana: 2026-09-23",
+        "Message":  "Fecha disponible más cercana: 2026-03-02",
         "ISO":  "2025-11-01T00:35:18"
     },
     {
@@ -8428,7 +8428,7 @@
         "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:35:18",
-        "Message":  "Fecha disponible más cercana: 2026-03-02",
+        "Message":  "Fecha disponible más cercana: 2026-09-23",
         "ISO":  "2025-11-01T00:35:18"
     },
     {
@@ -8496,16 +8496,16 @@
         "ISO":  "2025-11-01T00:30:40"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:30:36",
         "Message":  "Fecha disponible más cercana: 2026-08-20",
         "ISO":  "2025-11-01T00:30:36"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:30:36",
         "Message":  "Fecha disponible más cercana: 2026-08-20",
@@ -8528,16 +8528,16 @@
         "ISO":  "2025-11-01T00:30:33"
     },
     {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
+        "Server":  "server3-azure",
+        "Aplicante":  "FIAMA_ESTRADA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:30:31",
         "Message":  "Fecha disponible más cercana: 2026-07-07",
         "ISO":  "2025-11-01T00:30:31"
     },
     {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
+        "Server":  "server2-azure",
+        "Aplicante":  "KATERINE_TIMANA_critico",
         "Date":  "1/11/2025",
         "Time":  "00:30:31",
         "Message":  "Fecha disponible más cercana: 2026-07-07",
@@ -8854,285 +8854,5 @@
         "Time":  "00:20:11",
         "Message":  "Fecha disponible más cercana: 2027-04-05",
         "ISO":  "2025-11-01T00:20:11"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:43",
-        "Message":  "Fecha disponible más cercana: 2027-04-05",
-        "ISO":  "2025-11-01T00:15:43"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:41",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:41"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:38",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:38"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:37",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:37"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:36",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:36"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:33",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:33"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:31",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:31"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:29",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:29"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:27",
-        "Message":  "Fecha disponible más cercana: 2026-12-04",
-        "ISO":  "2025-11-01T00:15:27"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:24",
-        "Message":  "Fecha disponible más cercana: 2026-10-02",
-        "ISO":  "2025-11-01T00:15:24"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:18",
-        "Message":  "Fecha disponible más cercana: 2026-10-02",
-        "ISO":  "2025-11-01T00:15:18"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "ANDREA_QUISPE_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-12-01",
-        "ISO":  "2025-11-01T00:15:18"
-    },
-    {
-        "Server":  "server4-azure",
-        "Aplicante":  "ANDREA_QUISPE_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:18",
-        "Message":  "Fecha dentro del rango encontrada: 2025-12-01",
-        "ISO":  "2025-11-01T00:15:18"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:18",
-        "Message":  "Fecha disponible más cercana: 2025-12-01",
-        "ISO":  "2025-11-01T00:15:18"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:15",
-        "Message":  "Fecha disponible más cercana: 2027-04-05",
-        "ISO":  "2025-11-01T00:15:15"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:14",
-        "Message":  "Fecha disponible más cercana: 2027-04-05",
-        "ISO":  "2025-11-01T00:15:14"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:13",
-        "Message":  "Fecha disponible más cercana: 2027-04-05",
-        "ISO":  "2025-11-01T00:15:13"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:15:11",
-        "Message":  "Fecha disponible más cercana: 2027-04-05",
-        "ISO":  "2025-11-01T00:15:11"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:42",
-        "Message":  "Fecha disponible más cercana: 2027-02-04",
-        "ISO":  "2025-11-01T00:10:42"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:42",
-        "Message":  "Fecha disponible más cercana: 2027-02-04",
-        "ISO":  "2025-11-01T00:10:42"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:38",
-        "Message":  "Fecha disponible más cercana: 2027-02-04",
-        "ISO":  "2025-11-01T00:10:38"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:36",
-        "Message":  "Fecha disponible más cercana: 2027-02-04",
-        "ISO":  "2025-11-01T00:10:36"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:34",
-        "Message":  "Fecha disponible más cercana: 2027-02-04",
-        "ISO":  "2025-11-01T00:10:34"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:33",
-        "Message":  "Fecha disponible más cercana: 2027-02-04",
-        "ISO":  "2025-11-01T00:10:33"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:30",
-        "Message":  "Fecha disponible más cercana: 2027-02-04",
-        "ISO":  "2025-11-01T00:10:30"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:29",
-        "Message":  "Fecha disponible más cercana: 2026-09-28",
-        "ISO":  "2025-11-01T00:10:29"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:27",
-        "Message":  "Fecha disponible más cercana: 2026-09-28",
-        "ISO":  "2025-11-01T00:10:27"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:25",
-        "Message":  "Fecha disponible más cercana: 2026-09-28",
-        "ISO":  "2025-11-01T00:10:25"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:24",
-        "Message":  "Fecha disponible más cercana: 2026-09-28",
-        "ISO":  "2025-11-01T00:10:24"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:22",
-        "Message":  "Fecha disponible más cercana: 2026-09-28",
-        "ISO":  "2025-11-01T00:10:22"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:21",
-        "Message":  "Fecha disponible más cercana: 2026-06-16",
-        "ISO":  "2025-11-01T00:10:21"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:16",
-        "Message":  "Fecha disponible más cercana: 2026-06-16",
-        "ISO":  "2025-11-01T00:10:16"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:16",
-        "Message":  "Fecha disponible más cercana: 2025-11-07",
-        "ISO":  "2025-11-01T00:10:16"
-    },
-    {
-        "Server":  "server2-azure",
-        "Aplicante":  "KATERINE_TIMANA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:12",
-        "Message":  "Fecha disponible más cercana: 2027-04-05",
-        "ISO":  "2025-11-01T00:10:12"
-    },
-    {
-        "Server":  "server3-azure",
-        "Aplicante":  "FIAMA_ESTRADA_critico",
-        "Date":  "1/11/2025",
-        "Time":  "00:10:11",
-        "Message":  "Fecha disponible más cercana: 2027-04-05",
-        "ISO":  "2025-11-01T00:10:11"
     }
 ]
