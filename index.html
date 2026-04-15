@@ -1,327 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Account Tracking & Availability Calendar</title>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Account Tracking & Availability Calendar - Mejorado</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
       margin: 0;
       padding: 1rem;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      background: #f0f2f5;
     }
-
     header {
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
       margin-bottom: 1.5rem;
+      background: white;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-
     #logo {
-      max-height: 180px;
-      margin-right: 1rem;
+      max-height: 80px;
+      width: auto;
     }
-
     header h1 {
-      font-size: 1.75rem;
-      color: #333;
+      font-size: 1.5rem;
+      color: #1e466e;
       margin: 0;
     }
-
+    /* Panel de controles superior */
     #controls {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
       flex-wrap: wrap;
+      align-items: center;
+      gap: 0.8rem;
+      background: white;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
-
     #controls label {
       display: inline-flex;
       align-items: center;
+      gap: 0.4rem;
+      background: #f8f9fc;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+    #controls select, #controls button {
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: white;
+      cursor: pointer;
+    }
+    #controls button {
+      background: #007acc;
+      color: white;
+      border: none;
+      transition: 0.2s;
+    }
+    #controls button:hover {
+      background: #005fa3;
+    }
+    /* Stats compactas */
+    .stats-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: #e9ecef;
+      padding: 0.5rem 1rem;
+      border-radius: 40px;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
       font-weight: 500;
     }
-
-    #controls label span {
-      margin-right: 0.5rem;
+    .stats-bar span {
+      background: white;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-
-    #controls select,
-    #controls button {
-      padding: 0.2rem 0.5rem;
-      font-size: 0.9rem;
-    }
-
+    /* Tabla mejorada */
     table.dataTable thead th {
-      background: #007acc;
-      color: #fff;
+      background: #1e466e;
+      color: white;
+      font-weight: 600;
     }
-
-    table.dataTable.display.stripe tbody tr.odd {
+    table.dataTable tbody tr.odd {
       background-color: #ffffff;
     }
-    table.dataTable.display.stripe tbody tr.even {
-      background-color: #f5f5f5;
+    table.dataTable tbody tr.even {
+      background-color: #f8f9fa;
     }
-
-    /* Verde fuerte para AGENDADO o AGENDAMIENTO EXITOSO (prioritario) */
+    /* Clases de color (sin !important innecesario) */
     .row-agendado {
       background-color: #24e368 !important;
       color: #032a18;
     }
-
-    /* Amarillo / naranja por disponibilidad (si no es AGENDADO) */
     .row-2025 {
       background-color: #fff9c4 !important;
     }
-    .row-2026q1 {
+    .row-2026-hasta-julio {
       background-color: #ffe0b2 !important;
     }
-
-    /* Ocultar columnas auxiliares (usadas para ordenamiento) */
+    /* Ocultar columnas auxiliares */
     .col-aux {
       display: none;
+    }
+    /* Móvil: logo más pequeño */
+    @media (max-width: 640px) {
+      #logo { max-height: 50px; }
+      header h1 { font-size: 1.2rem; }
+      .stats-bar span { font-size: 0.7rem; }
+    }
+    /* Focus visible accesible */
+    select:focus-visible, button:focus-visible {
+      outline: 2px solid #007acc;
+      outline-offset: 2px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo"/>
-    <h1>Account Tracking & Availability Calendar</h1>
-  </header>
+<header>
+  <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo" onerror="this.style.display='none'">
+  <h1>📅 Account Tracking & Availability Calendar</h1>
+</header>
 
-  <div id="controls"></div>
+<div id="controls"></div>
+<div class="stats-bar" id="statsContainer">
+  <span>Cargando...</span>
+</div>
 
-  <table id="tbl" class="display stripe" style="width:100%">
-    <thead>
-      <tr>
-        <th>Server</th>
-        <th>Applicant</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Message</th>
-        <th class="col-aux">PRIORITY</th>
-        <th class="col-aux">_ISO</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<table id="tbl" class="display stripe" style="width:100%">
+  <thead>
+    <tr><th>Server</th><th>Applicant</th><th>Date</th><th>Time</th><th>Message</th><th class="col-aux">PRIORITY</th><th class="col-aux">_ISO</th><th class="col-aux">_hasAgendado</th><th class="col-aux">_yearMonth</th></tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-  <script>
-    (async () => {
-      // Load JSON directly (preprocessed by your PowerShell script)
-      const resp = await fetch('latest.json');
-      if (!resp.ok) {
-        const txt = await resp.text().catch(() => '');
-        document.querySelector('body').innerText = 'Error loading latest.json: ' + resp.status + ' ' + txt;
-        return;
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script>
+  (function() {
+    // ---------- UTILS ----------
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // Precalcular campos por fila
+    function enrichItem(item) {
+      const msg = (item.Message || '').toString();
+      const hasAgendado = /(AGENDADO|AGENDAMIENTO EXITOSO)/i.test(msg);
+      const priority = hasAgendado ? 1 : 0;
+      // Extraer primera fecha YYYY-MM-DD para colorear y filtro rápido
+      let yearMonth = '';
+      const dateMatch = msg.match(/\b(\d{4})-(\d{2})-\d{2}\b/);
+      if (dateMatch) {
+        yearMonth = `${dateMatch[1]}-${dateMatch[2]}`;
       }
-      const rawData = await resp.json(); // array of objects: { Server, Aplicante, Date, Time, Message, ISO }
+      return {
+        Server: item.Server || '',
+        Aplicante: item.Aplicante || '',
+        Date: item.Date || '',
+        Time: item.Time || '',
+        Message: msg,
+        PRIORITY: priority,
+        ISO: item.ISO || '',
+        _hasAgendado: hasAgendado,
+        _yearMonth: yearMonth
+      };
+    }
 
-      // Utility: escape HTML to avoid injection in table cells
-      function escapeHtml(str) {
-        if (!str) return '';
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;');
-      }
-
-      // PRIORITY = 1 si contiene AGENDADO o AGENDAMIENTO EXITOSO; ISO se conserva
-      const data = rawData.map(item => {
-        const msg = (item.Message || '').toString();
-        const priority = /(AGENDADO|AGENDAMIENTO EXITOSO)/i.test(msg) ? 1 : 0;
-        return {
-          Server: item.Server || '',
-          Aplicante: item.Aplicante || '',
-          Date: item.Date || '',
-          Time: item.Time || '',
-          Message: item.Message || '',
-          PRIORITY: priority,
-          ISO: item.ISO || ''
-        };
-      });
-
-      // Availability options (agrega meses y “AGENDADO” si hay AGENDADO o AGENDAMIENTO EXITOSO)
+    // Generar opciones de disponibilidad (a partir de los datos enriquecidos)
+    function buildAvailabilityOptions(dataEnriched) {
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
-      data.forEach(item => {
-        const msg = (item.Message || '').toString();
-        const re = /\b(\d{4})-(\d{2})-\d{2}\b/g;
-        let m;
-        while ((m = re.exec(msg)) !== null) {
-          const year = m[1], mon = parseInt(m[2], 10);
-          if (year === "2025" || (year === "2026" && mon <= 7)) {
-            availSet.add(`${year}-${monthNames[mon-1]}`);
-          }
+      for (const row of dataEnriched) {
+        if (row._hasAgendado) availSet.add('AGENDADO');
+        if (row._yearMonth) {
+          const [year, mon] = row._yearMonth.split('-');
+          const monNum = parseInt(mon, 10);
+          // Sin límite arbitrario, mostramos todas las fechas que aparezcan
+          availSet.add(`${year}-${monthNames[monNum-1]}`);
         }
-        if (/(AGENDADO|AGENDAMIENTO EXITOSO)/i.test(msg)) availSet.add('AGENDADO');
+      }
+      // Orden: AGENDADO primero, luego año ascendente y mes ascendente
+      const agendadoFirst = Array.from(availSet).filter(v => v === 'AGENDADO');
+      const others = Array.from(availSet).filter(v => v !== 'AGENDADO').sort((a,b) => {
+        const [yearA, monA] = a.split('-');
+        const [yearB, monB] = b.split('-');
+        const monthIdx = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+        if (yearA !== yearB) return parseInt(yearA) - parseInt(yearB);
+        return monthIdx.indexOf(monA) - monthIdx.indexOf(monB);
       });
+      return [...agendadoFirst, ...others];
+    }
 
-      const availOpts = Array.from(availSet).sort((a,b) => {
-        if (a === 'AGENDADO') return -1;
-        if (b === 'AGENDADO') return 1;
-        return b.localeCompare(a);
-      });
+    // Actualizar estadísticas
+    function updateStats(table, dataEnriched) {
+      const total = dataEnriched.length;
+      const agendados = dataEnriched.filter(r => r._hasAgendado).length;
+      const disponibilidad2025 = dataEnriched.filter(r => r._yearMonth && r._yearMonth.startsWith('2025')).length;
+      const container = $('#statsContainer');
+      if (container.length) {
+        container.html(`
+          <span>📊 Total: ${total}</span>
+          <span>✅ Agendados: ${agendados}</span>
+          <span>📅 Disp. 2025: ${disponibilidad2025}</span>
+          <span>🔄 Última actualización: ${new Date().toLocaleTimeString()}</span>
+        `);
+      }
+    }
 
-      // Initialize DataTable using data array
-      // Order: PRIORITY desc (AGENDADO primero), luego ISO desc (más reciente)
-      const priorityIndex = 5; // PRIORITY hidden column index
-      const isoIndex = 6; // ISO hidden column index
+    // ----- VARIABLES GLOBALES -----
+    let currentDataEnriched = [];      // datos enriquecidos actuales
+    let dataTable = null;
+    let refreshTimer = null;
+    let currentRefreshSec = 0;
+    let countdownInterval = null;
 
-      const table = $('#tbl').DataTable({
-        data: data,
-        deferRender: true,
-        processing: true,
-        responsive: true,
+    // Cargar JSON y actualizar tabla dinámicamente
+    async function loadAndRefreshData() {
+      try {
+        const resp = await fetch('latest.json?t=' + Date.now()); // evitar caché
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const raw = await resp.json();
+        if (!Array.isArray(raw)) throw new Error('JSON no es array');
+        const newEnriched = raw.map(enrichItem);
+        currentDataEnriched = newEnriched;
+
+        if (dataTable) {
+          // Limpiar y añadir nuevos datos sin perder orden/filtros personalizados
+          dataTable.clear();
+          dataTable.rows.add(currentDataEnriched);
+          dataTable.draw();
+        } else {
+          // primera inicialización
+          initDataTable(currentDataEnriched);
+        }
+        // Actualizar filtros de servidor/aplicante (pueden haber nuevos valores)
+        rebuildDynamicFilters(currentDataEnriched);
+        updateStats(dataTable, currentDataEnriched);
+      } catch (err) {
+        console.error(err);
+        $('#statsContainer').html('<span>⚠️ Error al cargar datos. Reintentando... </span>');
+      }
+    }
+
+    // Reconstruir selects de Server y Applicant (si cambian los datos)
+    function rebuildDynamicFilters(dataEnriched) {
+      const servers = [...new Set(dataEnriched.map(d => d.Server))].sort();
+      const applicants = [...new Set(dataEnriched.map(d => d.Aplicante))].sort();
+      const $serverSelect = $('#filter-server');
+      const $applicantSelect = $('#filter-applicant');
+      if ($serverSelect.length) {
+        const currentVal = $serverSelect.val();
+        $serverSelect.empty().append('<option value="">All</option>');
+        servers.forEach(s => $serverSelect.append(`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`));
+        if (currentVal && servers.includes(currentVal)) $serverSelect.val(currentVal);
+        else $serverSelect.val('');
+      }
+      if ($applicantSelect.length) {
+        const currentVal = $applicantSelect.val();
+        $applicantSelect.empty().append('<option value="">All</option>');
+        applicants.forEach(a => $applicantSelect.append(`<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`));
+        if (currentVal && applicants.includes(currentVal)) $applicantSelect.val(currentVal);
+        else $applicantSelect.val('');
+      }
+    }
+
+    // Inicializar DataTable con los datos
+    function initDataTable(dataEnriched) {
+      if (dataTable) {
+        dataTable.destroy();
+        $('#tbl tbody').empty();
+      }
+      dataTable = $('#tbl').DataTable({
+        data: dataEnriched,
         columns: [
           { data: 'Server', render: v => escapeHtml(v) },
           { data: 'Aplicante', render: v => escapeHtml(v) },
           { data: 'Date', render: v => escapeHtml(v) },
           { data: 'Time', render: v => escapeHtml(v) },
           { data: 'Message', render: v => escapeHtml(v) },
-          { data: 'PRIORITY' }, // hidden numeric
-          { data: 'ISO' }       // hidden ISO
+          { data: 'PRIORITY' },
+          { data: 'ISO' },
+          { data: '_hasAgendado' },
+          { data: '_yearMonth' }
         ],
         columnDefs: [
-          { targets: [priorityIndex, isoIndex], visible: false, searchable: false }
+          { targets: [5,6,7,8], visible: false, searchable: false }
         ],
-        order: [[priorityIndex, 'desc'], [isoIndex, 'desc']],
-        lengthMenu: (function() {
-          const total = data.length;
-          const maxLen = Math.max(10, Math.ceil(total / 10) * 10);
-          const arr = [];
-          for (let i = 10; i <= maxLen; i += 10) arr.push(i);
-          return [arr, arr];
-        })(),
-        pageLength: (function(){ const t = data.length; return Math.min(50, Math.max(10, Math.ceil(t/10)*10)); })(),
-        rowCallback: (row, rowData) => {
-          const msg = (rowData.Message || '').toString().trim();
-          $(row).removeClass('row-agendado row-2025 row-2026q1');
-
-          if (/(AGENDADO|AGENDAMIENTO EXITOSO)/i.test(msg)) {
+        order: [[5, 'desc'], [6, 'desc']], // PRIORITY e ISO
+        pageLength: Math.min(50, Math.max(10, Math.ceil(dataEnriched.length/10)*10)),
+        lengthMenu: [[10,25,50,100,-1], [10,25,50,100,"Todos"]],
+        rowCallback: function(row, rowData) {
+          $(row).removeClass('row-agendado row-2025 row-2026-hasta-julio');
+          if (rowData._hasAgendado) {
             $(row).addClass('row-agendado');
             return;
           }
-
-          const m = msg.match(/\b(\d{4})-(\d{2})-\d{2}\b/);
-          if (m) {
-            const year = m[1], mon = parseInt(m[2], 10);
-            if (year === "2025") {
-              $(row).addClass('row-2025');
-            } else if (year === "2026" && mon <= 7) {
-              $(row).addClass('row-2026q1');
-            }
+          const ym = rowData._yearMonth;
+          if (ym) {
+            const [year, mon] = ym.split('-');
+            if (year === '2025') $(row).addClass('row-2025');
+            else if (year === '2026' && parseInt(mon,10) <= 7) $(row).addClass('row-2026-hasta-julio');
           }
         },
-        language: {
-          search: "Search:",
-          lengthMenu: "Show _MENU_",
-          info: "Showing _START_–_END_ of _TOTAL_",
-          paginate: { first: "First", last: "Last", next: "Next", previous: "Prev" }
+        language: { search: "Buscar:", lengthMenu: "Mostrar _MENU_", info: "Mostrando _START_–_END_ de _TOTAL_", paginate: { first: "Primero", last: "Último", next: "Siguiente", previous: "Anterior" } }
+      });
+
+      // Filtro personalizado de disponibilidad (usa _yearMonth y _hasAgendado)
+      $.fn.dataTable.ext.search.push((settings, rowDataArray, idx, rowDataObj) => {
+        const filterVal = $('#filter-availability').val();
+        if (!filterVal) return true;
+        if (filterVal === 'AGENDADO') return rowDataObj._hasAgendado === true;
+        const [year, monthAbbr] = filterVal.split('-');
+        const monthMap = {Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+        const targetMonth = monthMap[monthAbbr];
+        return rowDataObj._yearMonth === `${year}-${targetMonth}`;
+      });
+
+      // Aplicar filtros guardados después de inicializar
+      restoreFiltersFromStorage();
+    }
+
+    // Persistencia de filtros
+    function saveFiltersToStorage() {
+      const filters = {
+        availability: $('#filter-availability').val() || '',
+        server: $('#filter-server').val() || '',
+        applicant: $('#filter-applicant').val() || '',
+        search: $('#tbl_filter input').val() || ''
+      };
+      localStorage.setItem('dt_filters', JSON.stringify(filters));
+    }
+
+    function restoreFiltersFromStorage() {
+      const saved = localStorage.getItem('dt_filters');
+      if (!saved) return;
+      try {
+        const filters = JSON.parse(saved);
+        if (filters.availability) $('#filter-availability').val(filters.availability);
+        if (filters.server) $('#filter-server').val(filters.server);
+        if (filters.applicant) $('#filter-applicant').val(filters.applicant);
+        if (filters.search) $('#tbl_filter input').val(filters.search);
+        // aplicar búsqueda y filtros
+        if (dataTable) {
+          if (filters.server) dataTable.column(0).search(filters.server);
+          if (filters.applicant) dataTable.column(1).search(filters.applicant);
+          if (filters.search) dataTable.search(filters.search);
+          dataTable.draw();
+        }
+      } catch(e) {}
+    }
+
+    // Configurar refresh automático con contador
+    function setRefreshInterval(seconds) {
+      if (refreshTimer) clearInterval(refreshTimer);
+      if (countdownInterval) clearInterval(countdownInterval);
+      currentRefreshSec = seconds;
+      localStorage.setItem('refresh-interval', seconds);
+      if (seconds > 0) {
+        let remaining = seconds;
+        const $refreshLabel = $('#refresh-label .countdown');
+        if ($refreshLabel.length) $refreshLabel.text(` (${remaining}s)`);
+        countdownInterval = setInterval(() => {
+          if (remaining <= 1) {
+            // no hacemos nada aquí, la recarga la hará el timer principal
+          } else {
+            remaining--;
+            const $cd = $('#refresh-label .countdown');
+            if ($cd.length) $cd.text(` (${remaining}s)`);
+          }
+        }, 1000);
+        refreshTimer = setInterval(() => {
+          loadAndRefreshData();
+          // reiniciar contador visual
+          if (countdownInterval) {
+            clearInterval(countdownInterval);
+            remaining = seconds;
+            countdownInterval = setInterval(() => {
+              if (remaining <= 1) { /* espera siguiente ciclo */ }
+              else { remaining--; const $cd = $('#refresh-label .countdown'); if($cd.length) $cd.text(` (${remaining}s)`); }
+            }, 1000);
+          }
+        }, seconds * 1000);
+      } else {
+        const $cd = $('#refresh-label .countdown');
+        if ($cd.length) $cd.text('');
+      }
+    }
+
+    // Construir controles de filtro y botones
+    async function buildUI() {
+      const controlsDiv = $('#controls');
+      controlsDiv.empty();
+
+      // Availability (se llenará después de cargar datos)
+      const availLabel = $('<label><span>📆 Disponibilidad:</span><select id="filter-availability"><option value="">Todos</option></select></label>');
+      controlsDiv.append(availLabel);
+
+      // Server filter
+      const serverLabel = $('<label><span>🖥️ Servidor:</span><select id="filter-server"><option value="">Todos</option></select></label>');
+      controlsDiv.append(serverLabel);
+
+      // Applicant filter
+      const appLabel = $('<label><span>👤 Solicitante:</span><select id="filter-applicant"><option value="">Todos</option></select></label>');
+      controlsDiv.append(appLabel);
+
+      // Refresh control
+      const refreshLabel = $(`
+        <label id="refresh-label">
+          <span>🔄 Refresco:</span>
+          <select id="refresh-interval">
+            <option value="0">Detener</option>
+            <option value="5">5 seg</option>
+            <option value="10">10 seg</option>
+            <option value="30">30 seg</option>
+            <option value="60">60 seg</option>
+          </select>
+          <button id="refresh-now">▶️ Ahora</button>
+          <span class="countdown" style="margin-left:5px;font-size:0.8rem;"></span>
+        </label>
+      `);
+      controlsDiv.append(refreshLabel);
+
+      // Botón exportar CSV
+      const exportBtn = $('<button id="export-csv">📎 Exportar CSV</button>');
+      controlsDiv.append(exportBtn);
+
+      // Eventos
+      $('#filter-availability, #filter-server, #filter-applicant').on('change', function() {
+        if (dataTable) {
+          if (this.id === 'filter-server') dataTable.column(0).search($(this).val()).draw();
+          else if (this.id === 'filter-applicant') dataTable.column(1).search($(this).val()).draw();
+          else dataTable.draw();
+          saveFiltersToStorage();
         }
       });
+      $('#tbl_filter input').on('keyup', () => saveFiltersToStorage());
 
-      // Custom availability filter (usa Message)
-      $.fn.dataTable.ext.search.push((settings, rowDataArray) => {
-        const $fa = $('#filter-availability');
-        const val = $fa.length ? $fa.val() : '';
-        if (!val) return true;
-        // rowDataArray es array de columnas visibles; Message es índice 4
-        const msg = (rowDataArray[4] || '').toString();
-        if (val === 'AGENDADO') return /(AGENDADO|AGENDAMIENTO EXITOSO)/i.test(msg);
-        const [year, abbr] = val.split('-');
-        const num = ('0' + (monthNames.indexOf(abbr) + 1)).slice(-2);
-        return msg.includes(`${year}-${num}-`);
+      $('#refresh-interval').on('change', function() {
+        const val = parseInt($(this).val(), 10);
+        setRefreshInterval(val);
       });
+      $('#refresh-now').on('click', () => loadAndRefreshData());
+      $('#export-csv').on('click', () => exportToCSV());
 
-      // Build and attach filters
+      // Restaurar intervalo guardado
+      const savedInterval = parseInt(localStorage.getItem('refresh-interval') || '0', 10);
+      $('#refresh-interval').val(savedInterval);
+      setRefreshInterval(savedInterval);
+    }
 
-      // Availability filter
-      const availFilter = $(`
-        <label id="filter-availability-label">
-          <span>Availability:</span>
-          <select id="filter-availability">
-            <option value="">All</option>
-            ${availOpts.map(v => `<option value="${v}">${v}</option>`).join('')}
-          </select>
-        </label>
-      `);
-      availFilter.find('select').on('change', () => table.draw());
-
-      // Server filter (column 0)
-      const serverFilter = $(`
-        <label id="filter-server-label">
-          <span>Server:</span>
-          <select id="filter-server">
-            <option value="">All</option>
-          </select>
-        </label>
-      `);
-      const servers = Array.from(new Set(data.map(d => d.Server))).sort();
-      servers.forEach(s => serverFilter.find('select').append(`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`));
-      serverFilter.find('select').on('change', function() {
-        table.column(0).search(this.value).draw();
-      });
-
-      // Applicant filter (column 1)
-      const applicantFilter = $(`
-        <label id="filter-applicant-label">
-          <span>Applicant:</span>
-          <select id="filter-applicant">
-            <option value="">All</option>
-          </select>
-        </label>
-      `);
-      const applicants = Array.from(new Set(data.map(d => d.Aplicante))).sort();
-      applicants.forEach(a => applicantFilter.find('select').append(`<option value="${escapeHtml(a)}">${escapeHtml(a)}</option>`));
-      applicantFilter.find('select').on('change', function() {
-        table.column(1).search(this.value).draw();
-      });
-
-      // Refresh controls with persistence
-      const refreshControl = $(`
-        <label id="refresh-label">
-          <span>Refresh:</span>
-          <select id="refresh-interval">
-            <option value="0">Stop</option>
-            <option value="5">Auto (5s)</option>
-            <option value="10">10s</option>
-            <option value="20">20s</option>
-            <option value="30">30s</option>
-            <option value="60">60s</option>
-          </select>
-          <button id="refresh-now">Now</button>
-        </label>
-      `);
-      let refreshTimer;
-      function setRefreshInterval(val) {
-        clearInterval(refreshTimer);
-        localStorage.setItem('refresh-interval', val);
-        const sec = parseInt(val, 10);
-        if (sec > 0) refreshTimer = setInterval(() => location.reload(), sec * 1000);
+    function exportToCSV() {
+      if (!dataTable) return;
+      const dataRows = dataTable.rows({ search: 'applied' }).data().toArray();
+      const headers = ['Server', 'Applicant', 'Date', 'Time', 'Message'];
+      const csvRows = [headers.join(',')];
+      for (const row of dataRows) {
+        const line = headers.map(h => {
+          let val = row[h] || '';
+          if (h === 'Message') val = row.Message.replace(/"/g, '""');
+          return `"${val}"`;
+        }).join(',');
+        csvRows.push(line);
       }
-      refreshControl.find('#refresh-interval').on('change', function() { setRefreshInterval(this.value); });
-      refreshControl.find('#refresh-now').on('click', () => location.reload());
-      const saved = localStorage.getItem('refresh-interval') || '0';
-      refreshControl.find('#refresh-interval').val(saved);
-      setRefreshInterval(saved);
+      const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.href = url;
+      link.setAttribute('download', 'export_tracking.csv');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
 
-      // Append controls in order (respeta tu layout)
-      const ctr = $('#controls');
-      availFilter.appendTo(ctr);
-      serverFilter.appendTo(ctr);
-      $('#tbl_length').appendTo(ctr);
-      applicantFilter.appendTo(ctr);
-      $('#tbl_filter').appendTo(ctr);
-      refreshControl.appendTo(ctr);
-    })();
-  </script>
+    // Inicio: construir UI, luego cargar datos por primera vez
+    buildUI().then(() => {
+      loadAndRefreshData();
+    });
+  })();
+</script>
 </body>
 </html>
