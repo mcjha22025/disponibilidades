@@ -15,91 +15,111 @@
       font-family: 'Segoe UI', Roboto, Arial, sans-serif;
       background: #f0f2f5;
     }
+    /* Contenedor principal del header: ahora con flex columna */
     .main-header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 1rem;
+      flex-direction: column;
       background: white;
-      padding: 0.5rem 1rem;
+      padding: 1.5rem 1.5rem;  /* más espacio arriba/abajo */
       border-radius: 12px;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;      /* más separación con los filtros */
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      flex-shrink: 0;
+    /* Título centrado o izquierda, sin logo al lado */
+    .title-area {
+      text-align: left;
+      margin-bottom: 1.2rem;
     }
-    #logo {
-      max-height: 80px;
-      width: auto;
-    }
-    .logo-area h1 {
-      font-size: 1.5rem;
+    .title-area h1 {
+      font-size: 1.8rem;
       color: #1e466e;
       margin: 0;
     }
+    /* Logo debajo del título, más grande */
+    .logo-wrapper {
+      text-align: left;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    #logo {
+      max-height: 240px;   /* triple que antes (80px * 3) */
+      width: auto;
+      display: block;
+    }
+    /* Contenedor de filtros: más separación y espacio interno */
     .filters-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.8rem;
-      justify-content: flex-end;
-      flex: 1;
+      gap: 1.2rem;
+      justify-content: flex-start;
+      margin-top: 1rem;
+      background: transparent;
     }
     .filter-group {
       background: #f8f9fc;
       border-radius: 12px;
-      padding: 0.5rem;
-      min-width: 180px;
+      padding: 0.8rem;
+      min-width: 200px;
       border: 1px solid #ddd;
     }
     .filter-group.wide {
-      min-width: 240px;
+      min-width: 260px;
     }
     .filter-group label {
       font-weight: bold;
       display: block;
-      margin-bottom: 0.3rem;
-      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
       color: #1e466e;
     }
     .filter-group input.search-input {
       width: 100%;
-      padding: 0.3rem;
-      margin-bottom: 0.5rem;
+      padding: 0.4rem;
+      margin-bottom: 0.7rem;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
     }
+    /* Checkbox list: aumentamos tamaño de filas y checkboxes */
     .checkbox-list {
-      max-height: 200px;
+      max-height: 240px;
       overflow-y: auto;
       border: 1px solid #e0e0e0;
       border-radius: 6px;
       background: white;
-      padding: 0.3rem;
+      padding: 0.5rem;
     }
     .checkbox-list div {
-      padding: 0.2rem 0;
-      font-size: 0.85rem;
+      padding: 0.4rem 0;      /* más altura entre opciones */
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
     }
-    .checkbox-list input {
-      margin-right: 0.4rem;
+    .checkbox-list input[type="checkbox"] {
+      width: 18px;            /* más grande */
+      height: 18px;
+      margin-right: 0.6rem;
+      cursor: pointer;
+      transform: scale(1.1);  /* opcional, aumenta visual */
+    }
+    .checkbox-list label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: normal;
+      margin: 0;
     }
     .filter-buttons {
       display: flex;
-      gap: 0.3rem;
-      margin-bottom: 0.5rem;
+      gap: 0.5rem;
+      margin-bottom: 0.7rem;
     }
     .filter-buttons button {
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       background: #e9ecef;
       border: none;
       border-radius: 10px;
-      padding: 0.1rem 0.4rem;
+      padding: 0.2rem 0.5rem;
       cursor: pointer;
       flex: 1;
     }
@@ -120,6 +140,7 @@
       border-radius: 30px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
+    /* Tabla sticky */
     .dataTables_wrapper {
       position: relative;
       overflow-x: auto;
@@ -156,22 +177,25 @@
       display: none;
     }
     @media (max-width: 768px) {
-      .main-header { flex-direction: column; }
       .filters-container { justify-content: flex-start; }
       .filter-group, .filter-group.wide { min-width: 100%; }
-      #logo { max-height: 50px; }
-      .logo-area h1 { font-size: 1.2rem; }
+      #logo { max-height: 150px; }  /* en móvil un poco más pequeño pero aún grande */
+      .title-area h1 { font-size: 1.3rem; }
+      .checkbox-list input[type="checkbox"] { transform: scale(1); width: 20px; height: 20px; }
     }
   </style>
 </head>
 <body>
 <div class="main-header">
-  <div class="logo-area">
-    <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo" onerror="this.style.display='none'">
+  <div class="title-area">
     <h1>📅 Account Tracking & Availability Calendar</h1>
   </div>
-  <div id="controls" class="filters-container"></div>
+  <div class="logo-wrapper">
+    <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo" onerror="this.style.display='none'">
+  </div>
 </div>
+
+<div id="controls" class="filters-container"></div>
 
 <div class="stats-bar" id="statsContainer">
   <span>Loading...</span>
@@ -511,17 +535,15 @@
       }
     }
 
-    // EXPORT FIXED: maps correctly to Aplicante field
     function exportToCSV() {
       if (!dataTable) return;
       const filteredData = getFilteredData();
-      // Display headers as they appear in table
       const headers = ['Server', 'Applicant', 'Date', 'Time', 'Message'];
       let csvContent = "\uFEFF" + headers.join(';') + "\n";
       for (const row of filteredData) {
         const rowData = [
           row.Server || '',
-          row.Aplicante || '',   // <-- fixed: use Aplicante property
+          row.Aplicante || '',
           row.Date || '',
           row.Time || '',
           (row.Message || '').replace(/[\n\r]+/g, ' ').replace(/;/g, ',')
