@@ -15,7 +15,6 @@
       font-family: 'Segoe UI', Roboto, Arial, sans-serif;
       background: #f0f2f5;
     }
-    /* HEADER con filtros a la derecha */
     .main-header {
       display: flex;
       justify-content: space-between;
@@ -43,7 +42,6 @@
       color: #1e466e;
       margin: 0;
     }
-    /* Contenedor de filtros (derecha) */
     .filters-container {
       display: flex;
       flex-wrap: wrap;
@@ -58,7 +56,6 @@
       min-width: 180px;
       border: 1px solid #ddd;
     }
-    /* Aumentar tamaño para Applicant y Server */
     .filter-group.wide {
       min-width: 240px;
     }
@@ -123,7 +120,6 @@
       border-radius: 30px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-    /* Tabla con cabecera fija (sticky) */
     .dataTables_wrapper {
       position: relative;
       overflow-x: auto;
@@ -139,11 +135,6 @@
       top: 0;
       z-index: 10;
       border-bottom: 2px solid #0f2b44;
-    }
-    /* Asegurar que el sticky funcione en el wrapper */
-    .dataTables_scrollBody thead tr {
-      position: sticky;
-      top: 0;
     }
     table.dataTable tbody tr.odd {
       background-color: #ffffff;
@@ -197,11 +188,10 @@
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script>
   (function() {
-    // Configuración de colores (rango de meses)
     const COLOR_RANGE = {
       year: '2026',
-      monthsFrom: 1,   // enero
-      monthsTo: 12     // diciembre (ajusta según necesites)
+      monthsFrom: 1,
+      monthsTo: 12
     };
 
     function escapeHtml(str) {
@@ -225,8 +215,6 @@
         const mon = parseInt(yearMonth.split('-')[1], 10);
         if (mon >= COLOR_RANGE.monthsFrom && mon <= COLOR_RANGE.monthsTo) statusColor = '2026 Range';
         else statusColor = '';
-      } else {
-        statusColor = '';
       }
       return {
         Server: item.Server || '',
@@ -523,21 +511,22 @@
       }
     }
 
+    // EXPORT FIXED: maps correctly to Aplicante field
     function exportToCSV() {
       if (!dataTable) return;
       const filteredData = getFilteredData();
-      // Cabeceras visibles en la tabla
+      // Display headers as they appear in table
       const headers = ['Server', 'Applicant', 'Date', 'Time', 'Message'];
-      // Usar punto y coma para compatibilidad con Excel español, y BOM para UTF-8
       let csvContent = "\uFEFF" + headers.join(';') + "\n";
       for (const row of filteredData) {
-        const rowData = headers.map(h => {
-          let val = row[h] || '';
-          // Reemplazar saltos de línea y caracteres especiales
-          val = String(val).replace(/[\n\r]+/g, ' ').replace(/;/g, ',');
-          return val;
-        }).join(';');
-        csvContent += rowData + "\n";
+        const rowData = [
+          row.Server || '',
+          row.Aplicante || '',   // <-- fixed: use Aplicante property
+          row.Date || '',
+          row.Time || '',
+          (row.Message || '').replace(/[\n\r]+/g, ' ').replace(/;/g, ',')
+        ];
+        csvContent += rowData.join(';') + "\n";
       }
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
