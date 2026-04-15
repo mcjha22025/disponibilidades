@@ -15,111 +15,100 @@
       font-family: 'Segoe UI', Roboto, Arial, sans-serif;
       background: #f0f2f5;
     }
-    /* Contenedor principal del header: ahora con flex columna */
+    /* Header: izquierda (título + logo apilados) y derecha (filtros) */
     .main-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
       background: white;
-      padding: 1.5rem 1.5rem;  /* más espacio arriba/abajo */
+      padding: 1rem 1.5rem;
       border-radius: 12px;
-      margin-bottom: 2rem;      /* más separación con los filtros */
+      margin-bottom: 1.5rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-    /* Título centrado o izquierda, sin logo al lado */
-    .title-area {
-      text-align: left;
-      margin-bottom: 1.2rem;
+    .left-area {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
-    .title-area h1 {
-      font-size: 1.8rem;
+    .left-area h1 {
+      font-size: 1.5rem;
       color: #1e466e;
       margin: 0;
     }
-    /* Logo debajo del título, más grande */
-    .logo-wrapper {
-      text-align: left;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
     #logo {
-      max-height: 240px;   /* triple que antes (80px * 3) */
+      max-height: 360px;   /* 50% más grande que 240px */
       width: auto;
       display: block;
     }
-    /* Contenedor de filtros: más separación y espacio interno */
     .filters-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.2rem;
-      justify-content: flex-start;
-      margin-top: 1rem;
-      background: transparent;
+      gap: 0.8rem;
+      justify-content: flex-end;
+      flex: 1;
+      min-width: 280px;
     }
     .filter-group {
       background: #f8f9fc;
       border-radius: 12px;
-      padding: 0.8rem;
-      min-width: 200px;
+      padding: 0.5rem;
+      min-width: 180px;
       border: 1px solid #ddd;
     }
     .filter-group.wide {
-      min-width: 260px;
+      min-width: 240px;
     }
     .filter-group label {
       font-weight: bold;
       display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      font-size: 0.8rem;
       color: #1e466e;
     }
     .filter-group input.search-input {
       width: 100%;
-      padding: 0.4rem;
-      margin-bottom: 0.7rem;
+      padding: 0.3rem;
+      margin-bottom: 0.5rem;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
-    /* Checkbox list: aumentamos tamaño de filas y checkboxes */
     .checkbox-list {
-      max-height: 240px;
+      max-height: 220px;
       overflow-y: auto;
       border: 1px solid #e0e0e0;
       border-radius: 6px;
       background: white;
-      padding: 0.5rem;
+      padding: 0.3rem;
     }
+    /* Checkboxes más grandes y opciones más altas */
     .checkbox-list div {
-      padding: 0.4rem 0;      /* más altura entre opciones */
+      padding: 0.5rem 0;
       font-size: 0.9rem;
       display: flex;
       align-items: center;
     }
     .checkbox-list input[type="checkbox"] {
-      width: 18px;            /* más grande */
-      height: 18px;
+      width: 20px;
+      height: 20px;
       margin-right: 0.6rem;
       cursor: pointer;
-      transform: scale(1.1);  /* opcional, aumenta visual */
-    }
-    .checkbox-list label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-weight: normal;
-      margin: 0;
+      transform: scale(1.1);
     }
     .filter-buttons {
       display: flex;
-      gap: 0.5rem;
-      margin-bottom: 0.7rem;
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
     }
     .filter-buttons button {
       font-size: 0.75rem;
       background: #e9ecef;
       border: none;
       border-radius: 10px;
-      padding: 0.2rem 0.5rem;
+      padding: 0.2rem 0.4rem;
       cursor: pointer;
       flex: 1;
     }
@@ -140,7 +129,7 @@
       border-radius: 30px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-    /* Tabla sticky */
+    /* Tabla con cabecera fija */
     .dataTables_wrapper {
       position: relative;
       overflow-x: auto;
@@ -177,25 +166,22 @@
       display: none;
     }
     @media (max-width: 768px) {
+      .main-header { flex-direction: column; }
       .filters-container { justify-content: flex-start; }
       .filter-group, .filter-group.wide { min-width: 100%; }
-      #logo { max-height: 150px; }  /* en móvil un poco más pequeño pero aún grande */
-      .title-area h1 { font-size: 1.3rem; }
-      .checkbox-list input[type="checkbox"] { transform: scale(1); width: 20px; height: 20px; }
+      #logo { max-height: 180px; }
+      .left-area h1 { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
 <div class="main-header">
-  <div class="title-area">
+  <div class="left-area">
     <h1>📅 Account Tracking & Availability Calendar</h1>
-  </div>
-  <div class="logo-wrapper">
     <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo" onerror="this.style.display='none'">
   </div>
+  <div id="controls" class="filters-container"></div>
 </div>
-
-<div id="controls" class="filters-container"></div>
 
 <div class="stats-bar" id="statsContainer">
   <span>Loading...</span>
@@ -381,15 +367,15 @@
       });
       const uniqueStatuses = [...new Set(filterStatusData.map(r => r._statusColor).filter(s => s !== ''))].sort();
 
-      populateCheckboxList('server', uniqueServers, activeFilters.server, true);
-      populateCheckboxList('applicant', uniqueApplicants, activeFilters.applicant, true);
+      populateCheckboxList('server', uniqueServers, activeFilters.server);
+      populateCheckboxList('applicant', uniqueApplicants, activeFilters.applicant);
       populateCheckboxList('availability', availOptions, activeFilters.availability);
       populateCheckboxList('status', uniqueStatuses, activeFilters.status);
 
       updatingFilters = false;
     }
 
-    function populateCheckboxList(filterId, options, selectedSet, isWide = false) {
+    function populateCheckboxList(filterId, options, selectedSet) {
       const container = $(`#${filterId}-list`);
       if (!container.length) return;
       const searchVal = $(`#search-${filterId}`).val().toLowerCase();
