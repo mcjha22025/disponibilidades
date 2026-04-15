@@ -15,37 +15,41 @@
       font-family: 'Segoe UI', Roboto, Arial, sans-serif;
       background: #f0f2f5;
     }
-    header {
+    /* HEADER con filtros a la derecha */
+    .main-header {
       display: flex;
-      align-items: center;
+      justify-content: space-between;
+      align-items: flex-start;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1.5rem;
       background: white;
       padding: 0.5rem 1rem;
       border-radius: 12px;
+      margin-bottom: 1rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-shrink: 0;
     }
     #logo {
       max-height: 80px;
       width: auto;
     }
-    header h1 {
+    .logo-area h1 {
       font-size: 1.5rem;
       color: #1e466e;
       margin: 0;
     }
-    /* Panel de controles superior fijo al hacer scroll? No, solo la tabla */
-    #controls {
+    /* Contenedor de filtros (derecha) */
+    .filters-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
-      background: white;
-      padding: 1rem;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-      align-items: flex-start;
+      gap: 0.8rem;
+      justify-content: flex-end;
+      flex: 1;
     }
     .filter-group {
       background: #f8f9fc;
@@ -53,6 +57,10 @@
       padding: 0.5rem;
       min-width: 180px;
       border: 1px solid #ddd;
+    }
+    /* Aumentar tamaño para Applicant y Server */
+    .filter-group.wide {
+      min-width: 240px;
     }
     .filter-group label {
       font-weight: bold;
@@ -70,7 +78,7 @@
       font-size: 0.8rem;
     }
     .checkbox-list {
-      max-height: 180px;
+      max-height: 200px;
       overflow-y: auto;
       border: 1px solid #e0e0e0;
       border-radius: 6px;
@@ -115,9 +123,14 @@
       border-radius: 30px;
       box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     }
-    /* Tabla con cabecera fija */
+    /* Tabla con cabecera fija (sticky) */
     .dataTables_wrapper {
       position: relative;
+      overflow-x: auto;
+    }
+    table.dataTable {
+      width: 100%;
+      border-collapse: collapse;
     }
     table.dataTable thead th {
       background: #1e466e;
@@ -125,6 +138,12 @@
       position: sticky;
       top: 0;
       z-index: 10;
+      border-bottom: 2px solid #0f2b44;
+    }
+    /* Asegurar que el sticky funcione en el wrapper */
+    .dataTables_scrollBody thead tr {
+      position: sticky;
+      top: 0;
     }
     table.dataTable tbody tr.odd {
       background-color: #ffffff;
@@ -145,20 +164,24 @@
     .col-aux {
       display: none;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
+      .main-header { flex-direction: column; }
+      .filters-container { justify-content: flex-start; }
+      .filter-group, .filter-group.wide { min-width: 100%; }
       #logo { max-height: 50px; }
-      header h1 { font-size: 1.2rem; }
-      .filter-group { min-width: 140px; }
+      .logo-area h1 { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
-<header>
-  <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo" onerror="this.style.display='none'">
-  <h1>📅 Account Tracking & Availability Calendar</h1>
-</header>
+<div class="main-header">
+  <div class="logo-area">
+    <img src="CJJ.png" alt="CJJ Visas & Asesorías logo" id="logo" onerror="this.style.display='none'">
+    <h1>📅 Account Tracking & Availability Calendar</h1>
+  </div>
+  <div id="controls" class="filters-container"></div>
+</div>
 
-<div id="controls"></div>
 <div class="stats-bar" id="statsContainer">
   <span>Loading...</span>
 </div>
@@ -174,13 +197,12 @@
 <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 <script>
   (function() {
-    // ---------- CONFIGURACIÓN DE COLORES (ajusta aquí el rango de meses) ----------
+    // Configuración de colores (rango de meses)
     const COLOR_RANGE = {
       year: '2026',
-      monthsFrom: 1,   // enero (cambia a 4 si quieres abril)
-      monthsTo: 12     // diciembre (cambia a 9 si quieres septiembre)
+      monthsFrom: 1,   // enero
+      monthsTo: 12     // diciembre (ajusta según necesites)
     };
-    // ---------------------------------------------------------------------------
 
     function escapeHtml(str) {
       if (!str) return '';
@@ -196,7 +218,6 @@
       if (dateMatch) {
         yearMonth = `${dateMatch[1]}-${dateMatch[2]}`;
       }
-      // Determinar color para filtro Status
       let statusColor = '';
       if (hasAgendado) statusColor = 'Agendado';
       else if (yearMonth && yearMonth.startsWith('2025')) statusColor = '2025';
@@ -224,18 +245,14 @@
     let currentDataEnriched = [];
     let dataTable = null;
     let refreshTimer = null;
-    let currentRefreshSec = 0;
-
     let activeFilters = {
       server: new Set(),
       applicant: new Set(),
       availability: new Set(),
       status: new Set()
     };
-
     let updatingFilters = false;
 
-    // Generar opciones de disponibilidad con orden: AGENDADO, luego años y meses ascendentes
     function getUniqueAvailabilityOptions(data) {
       const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       const availSet = new Set();
@@ -246,10 +263,8 @@
           availSet.add(`${year}-${monthNames[parseInt(mon,10)-1]}`);
         }
       }
-      // Separar AGENDADO
       const agendado = Array.from(availSet).filter(v => v === 'AGENDADO');
       const others = Array.from(availSet).filter(v => v !== 'AGENDADO');
-      // Ordenar por año ascendente y mes ascendente
       others.sort((a,b) => {
         const [yearA, monA] = a.split('-');
         const [yearB, monB] = b.split('-');
@@ -260,12 +275,11 @@
       return [...agendado, ...others];
     }
 
-    // Obtener datos filtrados según filtros activos (excluyendo búsqueda global de DataTable)
     function getFilteredData() {
       return currentDataEnriched.filter(row => {
-        if (activeFilters.server.size > 0 && !activeFilters.server.has(row.Server)) return false;
-        if (activeFilters.applicant.size > 0 && !activeFilters.applicant.has(row.Aplicante)) return false;
-        if (activeFilters.availability.size > 0) {
+        if (activeFilters.server.size && !activeFilters.server.has(row.Server)) return false;
+        if (activeFilters.applicant.size && !activeFilters.applicant.has(row.Aplicante)) return false;
+        if (activeFilters.availability.size) {
           let match = false;
           for (let opt of activeFilters.availability) {
             if (opt === 'AGENDADO' && row._hasAgendado) { match = true; break; }
@@ -278,20 +292,18 @@
           }
           if (!match) return false;
         }
-        if (activeFilters.status.size > 0 && !activeFilters.status.has(row._statusColor)) return false;
+        if (activeFilters.status.size && !activeFilters.status.has(row._statusColor)) return false;
         return true;
       });
     }
 
-    // Reconstruir opciones de filtros (escalonamiento)
     function rebuildFilterOptions() {
       if (updatingFilters) return;
       updatingFilters = true;
 
-      // Datos base sin aplicar el propio filtro que estamos reconstruyendo
       const filterServerData = currentDataEnriched.filter(row => {
-        if (activeFilters.applicant.size > 0 && !activeFilters.applicant.has(row.Aplicante)) return false;
-        if (activeFilters.availability.size > 0) {
+        if (activeFilters.applicant.size && !activeFilters.applicant.has(row.Aplicante)) return false;
+        if (activeFilters.availability.size) {
           let match = false;
           for (let opt of activeFilters.availability) {
             if (opt === 'AGENDADO' && row._hasAgendado) { match = true; break; }
@@ -304,14 +316,14 @@
           }
           if (!match) return false;
         }
-        if (activeFilters.status.size > 0 && !activeFilters.status.has(row._statusColor)) return false;
+        if (activeFilters.status.size && !activeFilters.status.has(row._statusColor)) return false;
         return true;
       });
       const uniqueServers = [...new Set(filterServerData.map(r => r.Server))].sort();
 
       const filterApplicantData = currentDataEnriched.filter(row => {
-        if (activeFilters.server.size > 0 && !activeFilters.server.has(row.Server)) return false;
-        if (activeFilters.availability.size > 0) {
+        if (activeFilters.server.size && !activeFilters.server.has(row.Server)) return false;
+        if (activeFilters.availability.size) {
           let match = false;
           for (let opt of activeFilters.availability) {
             if (opt === 'AGENDADO' && row._hasAgendado) { match = true; break; }
@@ -324,23 +336,23 @@
           }
           if (!match) return false;
         }
-        if (activeFilters.status.size > 0 && !activeFilters.status.has(row._statusColor)) return false;
+        if (activeFilters.status.size && !activeFilters.status.has(row._statusColor)) return false;
         return true;
       });
       const uniqueApplicants = [...new Set(filterApplicantData.map(r => r.Aplicante))].sort();
 
       const filterAvailData = currentDataEnriched.filter(row => {
-        if (activeFilters.server.size > 0 && !activeFilters.server.has(row.Server)) return false;
-        if (activeFilters.applicant.size > 0 && !activeFilters.applicant.has(row.Aplicante)) return false;
-        if (activeFilters.status.size > 0 && !activeFilters.status.has(row._statusColor)) return false;
+        if (activeFilters.server.size && !activeFilters.server.has(row.Server)) return false;
+        if (activeFilters.applicant.size && !activeFilters.applicant.has(row.Aplicante)) return false;
+        if (activeFilters.status.size && !activeFilters.status.has(row._statusColor)) return false;
         return true;
       });
       const availOptions = getUniqueAvailabilityOptions(filterAvailData);
 
       const filterStatusData = currentDataEnriched.filter(row => {
-        if (activeFilters.server.size > 0 && !activeFilters.server.has(row.Server)) return false;
-        if (activeFilters.applicant.size > 0 && !activeFilters.applicant.has(row.Aplicante)) return false;
-        if (activeFilters.availability.size > 0) {
+        if (activeFilters.server.size && !activeFilters.server.has(row.Server)) return false;
+        if (activeFilters.applicant.size && !activeFilters.applicant.has(row.Aplicante)) return false;
+        if (activeFilters.availability.size) {
           let match = false;
           for (let opt of activeFilters.availability) {
             if (opt === 'AGENDADO' && row._hasAgendado) { match = true; break; }
@@ -357,15 +369,15 @@
       });
       const uniqueStatuses = [...new Set(filterStatusData.map(r => r._statusColor).filter(s => s !== ''))].sort();
 
-      populateCheckboxList('server', uniqueServers, activeFilters.server);
-      populateCheckboxList('applicant', uniqueApplicants, activeFilters.applicant);
+      populateCheckboxList('server', uniqueServers, activeFilters.server, true);
+      populateCheckboxList('applicant', uniqueApplicants, activeFilters.applicant, true);
       populateCheckboxList('availability', availOptions, activeFilters.availability);
       populateCheckboxList('status', uniqueStatuses, activeFilters.status);
 
       updatingFilters = false;
     }
 
-    function populateCheckboxList(filterId, options, selectedSet) {
+    function populateCheckboxList(filterId, options, selectedSet, isWide = false) {
       const container = $(`#${filterId}-list`);
       if (!container.length) return;
       const searchVal = $(`#search-${filterId}`).val().toLowerCase();
@@ -382,26 +394,21 @@
         html += `<div><label><input type="checkbox" value="${escapeHtml(opt)}" ${checked}> ${escapeHtml(opt)}</label></div>`;
       });
       container.html(html);
-      // Eventos a los checkboxes
       container.find('input[type="checkbox"]').on('change', function() {
         const val = $(this).val();
-        if ($(this).prop('checked')) {
-          activeFilters[filterId].add(val);
-        } else {
-          activeFilters[filterId].delete(val);
-        }
+        if ($(this).prop('checked')) selectedSet.add(val);
+        else selectedSet.delete(val);
         applyFiltersAndRefresh();
       });
-      // Select all
-      container.find(`.select-all-btn`).off('click').on('click', function() {
+      container.find('.select-all-btn').off('click').on('click', function() {
         const allCurrent = container.find('input[type="checkbox"]').map(function() { return $(this).val(); }).get();
-        activeFilters[filterId] = new Set(allCurrent);
+        selectedSet.clear();
+        allCurrent.forEach(v => selectedSet.add(v));
         container.find('input[type="checkbox"]').prop('checked', true);
         applyFiltersAndRefresh();
       });
-      // Deselect all
-      container.find(`.deselect-all-btn`).off('click').on('click', function() {
-        activeFilters[filterId].clear();
+      container.find('.deselect-all-btn').off('click').on('click', function() {
+        selectedSet.clear();
         container.find('input[type="checkbox"]').prop('checked', false);
         applyFiltersAndRefresh();
       });
@@ -421,7 +428,6 @@
     function updateStatsDisplay(filteredData) {
       const total = filteredData.length;
       const agendados = filteredData.filter(r => r._hasAgendado).length;
-      // Disp. 2026: filas con yearMonth empezando con '2026' (las que se colorean)
       const disponibilidad2026 = filteredData.filter(r => r._yearMonth && r._yearMonth.startsWith('2026')).length;
       $('#statsContainer').html(`
         <span>📊 Total: ${total}</span>
@@ -450,12 +456,12 @@
       const controlsDiv = $('#controls');
       controlsDiv.empty();
 
-      const serverGroup = $(`<div class="filter-group">
+      const serverGroup = $(`<div class="filter-group wide">
         <label>🖥️ Server</label>
         <input type="text" class="search-input" id="search-server" placeholder="Search...">
         <div id="server-list" class="checkbox-list"></div>
       </div>`);
-      const applicantGroup = $(`<div class="filter-group">
+      const applicantGroup = $(`<div class="filter-group wide">
         <label>👤 Applicant</label>
         <input type="text" class="search-input" id="search-applicant" placeholder="Search...">
         <div id="applicant-list" class="checkbox-list"></div>
@@ -470,9 +476,6 @@
         <input type="text" class="search-input" id="search-status" placeholder="Search...">
         <div id="status-list" class="checkbox-list"></div>
       </div>`);
-
-      controlsDiv.append(serverGroup, applicantGroup, availGroup, statusGroup);
-
       const refreshGroup = $(`<div class="filter-group">
         <label>🔄 Refresh</label>
         <select id="refresh-interval">
@@ -485,9 +488,10 @@
         <button id="export-csv" style="margin-top:5px; width:100%;">📎 Export CSV</button>
         <span class="countdown" style="font-size:0.7rem;"></span>
       </div>`);
-      controlsDiv.append(refreshGroup);
 
-      $('#search-server, #search-applicant, #search-availability, #search-status').on('keyup', () => { rebuildFilterOptions(); });
+      controlsDiv.append(serverGroup, applicantGroup, availGroup, statusGroup, refreshGroup);
+
+      $('#search-server, #search-applicant, #search-availability, #search-status').on('keyup', () => rebuildFilterOptions());
 
       const savedInterval = parseInt(localStorage.getItem('refresh-interval') || '0', 10);
       $('#refresh-interval').val(savedInterval);
@@ -499,15 +503,13 @@
 
     function setRefreshInterval(seconds) {
       if (refreshTimer) clearInterval(refreshTimer);
-      currentRefreshSec = seconds;
       localStorage.setItem('refresh-interval', seconds);
       if (seconds > 0) {
         let remaining = seconds;
         const $cd = $('#refresh-group .countdown');
         const interval = setInterval(() => {
-          if (remaining <= 1) {
-            // recarga ocurrirá en timer principal
-          } else {
+          if (remaining <= 1) { /* do nothing */ }
+          else {
             remaining--;
             $cd.text(` (${remaining}s)`);
           }
@@ -524,17 +526,20 @@
     function exportToCSV() {
       if (!dataTable) return;
       const filteredData = getFilteredData();
+      // Cabeceras visibles en la tabla
       const headers = ['Server', 'Applicant', 'Date', 'Time', 'Message'];
-      const csvRows = [headers.join(',')];
+      // Usar punto y coma para compatibilidad con Excel español, y BOM para UTF-8
+      let csvContent = "\uFEFF" + headers.join(';') + "\n";
       for (const row of filteredData) {
-        const line = headers.map(h => {
+        const rowData = headers.map(h => {
           let val = row[h] || '';
-          if (h === 'Message') val = row.Message.replace(/"/g, '""');
-          return `"${val}"`;
-        }).join(',');
-        csvRows.push(line);
+          // Reemplazar saltos de línea y caracteres especiales
+          val = String(val).replace(/[\n\r]+/g, ' ').replace(/;/g, ',');
+          return val;
+        }).join(';');
+        csvContent += rowData + "\n";
       }
-      const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
       link.href = url;
